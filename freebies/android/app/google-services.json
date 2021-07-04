@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "835255957386",
+    "firebase_url": "https://freebies-96dc8-default-rtdb.firebaseio.com",
+    "project_id": "freebies-96dc8",
+    "storage_bucket": "freebies-96dc8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835255957386:android:97997faa8fd59808d8fa73",
+        "android_client_info": {
+          "package_name": "com.company.FreeBees"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835255957386-eo0va02gmu1uefj6m17r0o0itc72flo5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKBGHKQ1J0PWT32YAnOX_MQaKg6utnEq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835255957386-eo0va02gmu1uefj6m17r0o0itc72flo5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

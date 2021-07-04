@@ -1,0 +1,182 @@
+//     const player = YoutubePlayerIFrame(
+
+//      aspectRatio: 16/9,
+//     );
+
+//     return YoutubePlayerControllerProvider(
+//       controller: _controller,
+
+//       child: Scaffold(
+//         backgroundColor: Colors.black,
+//         appBar: AppBar(
+//           title: const Text('Youtube Player IFrame'),
+//         ),
+//         body: LayoutBuilder(
+//           builder: (context, constraints) {
+//             if (kIsWeb && constraints.maxWidth > 800) {
+//               return  Column(  children: [
+
+// //               Center(
+// //                               child: Container(
+// //                   width: 150,
+// //                   height: 50,
+// //                   color: Colors.black,
+// //                   child: Visibility(
+// //                     visible: vis,
+// //                                       child: FloatingActionButton(onPressed: (){
+// //                                         _controller.play();
+// //                                         print(_controller.value.position.inSeconds);
+
+// //               },
+// // child: Icon(
+// //                     Icons.monetization_on_sharp,
+// //                     size: 30,
+// //                     color: Colors.yellow,
+// //                   ),
+// // mini: true,),
+// //                   )
+// //        ),
+// //               ),
+//                   // withDrawButton(_controller),
+//                      Container(
+//                     child: player),
+
+//                 ]);
+
+//             }
+//             return ListView(
+//               children: [
+//                 player,
+//                 Text('ssss'),
+//               ],
+//             );
+//           },
+//         ),
+//       ),
+//     );
+//   }
+
+
+
+
+
+
+
+
+
+
+
+    //YoutubeValueBuilder(
+    //   controller:
+    //       _controller, // This can be omitted, if using `YoutubePlayerControllerProvider`
+    //   builder: (context, value) {
+    //     return Container(
+    //       child: Row(
+    //         children: [
+    //           Expanded(child: pageContent),
+    //           Expanded(child: RaisedButton(onPressed: () {})),
+    //         ],
+    //       ),
+    //     );
+    //   },
+    // );
+  }
+}
+
+// import 'package:flutter/material.dart';
+// import '../Widgets/components/vedio_controls_widget.dart';
+// import 'package:video_player/video_player.dart';
+
+// class VideoPlayerWidget extends StatefulWidget {
+
+//   @override
+//   _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
+// }
+
+// class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
+//   VideoPlayerController controller;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     controller = VideoPlayerController.network(
+//       'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4',
+//     );
+
+//     controller.addListener(() {
+//       setState(() {});
+//     });
+//     controller.setLooping(true);
+//     controller.initialize();
+//   }
+
+//   @override
+//   void dispose() {
+//     controller.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) => SingleChildScrollView(
+//       child: Container(
+
+//         // height: MediaQuery.of(context).size.height*0.60,
+//         // width: MediaQuery.of(context).size.width*0.60,
+//         child: Column(
+//             children: [
+//               AspectRatio(
+//                 aspectRatio: controller.value.aspectRatio,
+//                 child: Stack(
+//                   fit: StackFit.expand,
+//                  alignment: Alignment.center,
+//                   children: <Widget>[
+//                     VideoPlayer(controller),
+//                     VideoControlsWidget(controller: controller),
+//                    // Text('saad')
+
+//                     // CustomVideoProgressIndicator(
+//                     //   controller,
+//                     //   allowScrubbing: true,
+//                     //   timestamps: widget.timestamps,
+//                     // ),
+//                   ],
+//                 ),
+//               ),
+//               // SizedBox(height: 12),
+//               // CustomControlsWidget(
+//               //   controller: controller,
+//               //   timestamps: widget.timestamps,
+//               // ),
+//               // SizedBox(height: 12),
+//             ],
+//           ),
+//       ),
+//   );
+// }
+class Controls extends StatelessWidget {
+  const Controls();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _space,
+          //  MetaDataSection(),
+          _space,
+          // SourceInputSection(),
+          _space,
+          // RaisedButton(onPressed: () {}),
+          _space,
+          // VolumeSlider(),
+          _space,
+          // PlayerStateSection(),
+          //Text(PlayerState.playing.toString())
+        ],
+      ),
+    );
+  }
+
+  Widget get _space => const SizedBox(height: 10);
