@@ -31,7 +31,7 @@ class _IntertainmentState extends State<Entertainment> {
                     child: Center(
                         child: FlatButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/games');
+                        Navigator.pushNamed(context, '/AllGames');
                       },
                       child: Text(
                         'Games',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freebies/Pages/Cart.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 import '../Scoped-Model/mainModel.dart';
@@ -10,6 +11,8 @@ import '../Models/enum.dart';
 
 
 class Login extends StatefulWidget {
+  String navigation;
+  Login({this.navigation});
   @override
   State<StatefulWidget> createState() {
     return _LoginPageState();
@@ -301,17 +304,22 @@ class _LoginPageState extends State<Login> {
     );
   }
 
-  void _submitForm(Function logIn,Function signUp, ) async {
+  void _submitForm(Function logIn,Function signUp,String nav ) async {
     if (!_formKey.currentState.validate() || !_formData['acceptTerms']) {
       return;
     }
     _formKey.currentState.save();
      Map<String, dynamic> successInformation;
+
      if(_authMode==AuthMode.SignUp){
 successInformation = await signUp(_formData['email'], _formData['password'],_authMode,_formData['address'],_formData['name'],_formData['cnic'],_formData['number'],false,'img');
     print(successInformation['success']);
       if (successInformation['success']) {
-        if (_formData['email']=='qq@qq.com' ){
+        if (_formData['email']=='qq@qq.com'  ){
+          if(nav=='From Cart'){
+             Navigator.pushReplacementNamed(context, '/cart'); 
+            
+          }
           Navigator.pushReplacementNamed(context, '/homes'); 
          
         } else {
@@ -484,7 +492,7 @@ successInformation = await logIn(_formData['email'], _formData['password'],_auth
                         child: _authMode == AuthMode.SignUp
                             ? Text('Register')
                             : Text('LOGIN'),
-                      onPressed: () =>_submitForm(model.logIn,model.signUp),
+                      onPressed: () =>_submitForm(model.logIn,model.signUp,widget.navigation),
                       );
                     }),
                     

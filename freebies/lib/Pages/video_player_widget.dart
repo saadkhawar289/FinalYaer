@@ -166,6 +166,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
       ),
     );
   }
+  
 Widget webAppBar() {
     return AppBar(
       toolbarHeight: 120,

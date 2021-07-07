@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:freebies/Pages/Login.dart';
+import 'package:freebies/Pages/home.dart';
 import 'package:freebies/Widgets/Cards/CartTile.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -49,8 +51,7 @@ class _CartPageState extends State<Cart> {
     );
   }
 
-
-Widget webAppBar() {
+  Widget webAppBar() {
     return AppBar(
       toolbarHeight: 120,
       automaticallyImplyLeading: true,
@@ -208,9 +209,7 @@ Widget webAppBar() {
     );
   }
 
-
-
-Widget _buildDrawer(BuildContext context) {
+  Widget _buildDrawer(BuildContext context) {
     return Drawer(
       child: Column(
         children: <Widget>[
@@ -257,6 +256,7 @@ Widget _buildDrawer(BuildContext context) {
       ),
     );
   }
+
   Widget _acceptFromWallet() {
     return SwitchListTile(
       activeColor: Colors.green,
@@ -290,8 +290,8 @@ Widget _buildDrawer(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
         return Scaffold(
-           drawer: deviceWidth < 500 ? _buildDrawer(context) : null,
-        appBar: deviceWidth < 500 ? mobileAppBar() : webAppBar(),
+            drawer: deviceWidth < 500 ? _buildDrawer(context) : null,
+            appBar: deviceWidth < 500 ? mobileAppBar() : webAppBar(),
             body: model.cartItems.length == 0
                 ? Scaffold(body: Center(child: Text("Cart Empty")))
                 : Center(
@@ -368,7 +368,6 @@ Widget _buildDrawer(BuildContext context) {
                                               model.cartItems.removeAt(index);
                                             });
                                           }),
-                                        
                                     ],
                                   ),
                                 );
@@ -461,7 +460,6 @@ Widget _buildDrawer(BuildContext context) {
                                                                           : 28),
                                                               child: Text(
                                                                   '${model.totalBill.toString()} RS',
-                                                                      
                                                                   style: TextStyle(
                                                                       fontWeight:
                                                                           FontWeight
@@ -515,7 +513,9 @@ Widget _buildDrawer(BuildContext context) {
                                                       ],
                                                     ),
                                                     Padding(
-                                                      padding: const EdgeInsets.all(18.0),
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              18.0),
                                                       child: Divider(
                                                         color: Colors.amber,
                                                         height: 2,
@@ -552,8 +552,7 @@ Widget _buildDrawer(BuildContext context) {
                                                                         ? 10
                                                                         : 28),
                                                             child: Text(
-                                                               '${model.subtotal.toString()} RS',
-                                                                    
+                                                                '${model.subtotal.toString()} RS',
                                                                 style: TextStyle(
                                                                     fontWeight:
                                                                         FontWeight
@@ -604,13 +603,15 @@ Widget _buildDrawer(BuildContext context) {
                                                 onEditingComplete: () {
                                                   setState(() {
                                                     loading = true;
-                                                    
-                                                      walletamount = _walletAmountController.text;
-                                                      var xx = int.parse( walletamount);
-                                                      var zz=model.totalBill;
-                                                      model.subtotal =zz-xx;
-                                                      loading = false;
-                                                    
+
+                                                    walletamount =
+                                                        _walletAmountController
+                                                            .text;
+                                                    var xx =
+                                                        int.parse(walletamount);
+                                                    var zz = model.totalBill;
+                                                    model.subtotal = zz - xx;
+                                                    loading = false;
                                                   });
                                                 },
                                               )))
@@ -646,6 +647,22 @@ Widget _buildDrawer(BuildContext context) {
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.white)),
                                         onPressed: () async {
+                                          if (model.singleUser == null) {
+                                            print('object');
+
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                              builder: (BuildContext context) {
+                                                return Login(
+                                                    navigation: 'From Cart');
+                                              },
+                                            ));
+                                          } else {
+                                            print('login');
+                                            //place order
+                                            //navigate to my orders
+
+                                          }
                                           //             //  var ff= amount*100;
                                           //             //  int fts=ff.toInt();
                                           //       // String ss=fts.toString();

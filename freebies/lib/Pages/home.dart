@@ -9,6 +9,7 @@ import '../Scoped-Model/mainModel.dart';
 class AllProductPage extends StatefulWidget {
   final MainModel model;
 
+
   AllProductPage(this.model);
 
   @override
@@ -21,7 +22,7 @@ class _AllProductPageState extends State<AllProductPage> {
   @override
   initState() {
     widget.model.fetchProducts();
-
+//widget.model.wallet=(widget.model.singleUser.wallet) as int;
     super.initState();
   }
 
@@ -208,7 +209,15 @@ class _AllProductPageState extends State<AllProductPage> {
                   padding: const EdgeInsets.only(right: 58),
                   child: Row(
                     children: [
-                      Text(widget.model.wallet==null?'':widget.model.wallet.toString(),style: TextStyle(color: Color(0xFFFF335C),fontSize: 18,fontWeight:FontWeight.bold ),),
+
+ ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        return  Text(model.wallet==null?0.toString():model.wallet.toString(),style: TextStyle(color: Color(0xFFFF335C),fontSize: 18,fontWeight:FontWeight.bold ));
+      },
+    ),
+
+
+                     // Text(widget.model.wallet==null?'':widget.model.wallet.toString(),style: TextStyle(color: Color(0xFFFF335C),fontSize: 18,fontWeight:FontWeight.bold ),),
                       GestureDetector(
                           onTap: () {
                             //   Navigator.pushNamed(context, '/games');
@@ -222,10 +231,17 @@ class _AllProductPageState extends State<AllProductPage> {
                   padding: const EdgeInsets.only(right: 58),
                   child: Row(
                     children: [
-                      Text('SIGN IN'),
+                      widget.model.singleUser==null? Text('LOGIN'):Text('LOGOUT'),
                       GestureDetector(
                           onTap: () {
-                            //   Navigator.pushNamed(context, '/entertainment');
+                            if(widget.model.singleUser==null){
+Navigator.pushNamed(context, '/auth');
+                            }
+                            else{
+                              widget.model.logout();
+                              Navigator.pushNamed(context, '/homes');
+                            }
+                               
                           },
                           child: Icon(Icons.supervised_user_circle,
                               color: Colors.yellow))

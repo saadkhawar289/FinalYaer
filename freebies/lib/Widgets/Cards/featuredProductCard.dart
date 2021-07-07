@@ -229,7 +229,7 @@ Widget _addToCart(BuildContext context) {
                       child: Padding(
                         padding: const EdgeInsets.all(0.0),
                         
-                        child: Align(
+                        child:model.singleUser==null?Container(): Align(
                           alignment: Alignment.bottomRight,
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),

@@ -97,7 +97,7 @@ class _MyAppState extends State<MyApp> {
             // child: Text('ezentu',style:TextStyle(
             //          fontSize: 50.0, fontWeight: FontWeight.bold, color: Colors.black,) ,),
           
-             navigateAfterSeconds: Login(),
+             navigateAfterSeconds: AllProductPage(_model),
            // navigateAfterFuture:  loadFromFuture(),
           photoSize: sizeee,
              useLoader: true,

@@ -305,13 +305,35 @@ Product cartItem = Product(
                                 
                               
                             try {
-
-
-                              model.addToCart(cartItem);
-                              print('good ');
-                              setState(() {
+                                    if(model.cartItems.contains(cartItem)){
+                                      showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Product Already Added'),
+                  content: Text('Please Try another product'),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: () =>{
+                         setState(() {
                               loading=false;  
-                              });
+                              }),
+                         Navigator.of(context).pop(),
+                      },
+                      child: Text('Okay'),
+                    )
+                  ],
+                );
+              });
+                                    }
+                                    else{
+model.addToCart(cartItem);
+loading=false;
+
+                                    }
+
+
+                              
                               
                             // print(widcartItems.length);
                             } catch (e) {

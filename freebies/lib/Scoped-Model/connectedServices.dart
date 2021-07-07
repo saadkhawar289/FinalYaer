@@ -37,24 +37,27 @@ mixin ConnectedServicesModel on Model {
   String _selcectedVedioId;
   String _selcectedUserID;
 
-  void addToCart(Product ppp) {
-    _isLoading = true;
+ void addToCart(Product ppp) {
+   
     notifyListeners();
     print('in add fnctn');
     print(ppp.price);
-    print(ppp.quantity);
-
-    Timer(Duration(seconds: 2), () {
-      print('in timer');
-      cartItems.add(ppp);
+    print(ppp.quantity);  
+    Timer(Duration(seconds: 1), () {
+     if(cartItems.contains(ppp)){
+       print(ppp);
+     }
+cartItems.add(ppp);
       num2 = ppp.price;
       num1 = ppp.quantity;
       result = num1 * num2;
       totalBill = totalBill + result;
       subtotal = totalBill;
       _isLoading = false;
-      notifyListeners();
+       notifyListeners();
+      return false;    
     });
+  
   }
 
 //   String privacy;
@@ -527,10 +530,12 @@ mixin UserModel on ConnectedServicesModel {
   List<User> get allusers {
     return List.from(_users);
   }
+  
 
-  Future<Map<String, dynamic>> logIn(
-      String email, String password, AuthMode mode) async {
+  Future<Map<String, dynamic>> logIn(String email, String password, AuthMode mode) async {
     bool hasError = true;
+        _isLoading = true;
+
     String message = 'Some thing went wrong';
     notifyListeners();
     final Map<String, dynamic> authData = {
@@ -575,6 +580,8 @@ mixin UserModel on ConnectedServicesModel {
           fetchedProductslist.add(product);
         });
         _users = fetchedProductslist;
+            _isLoading = false;
+
       }).catchError((error) {
         print('error');
         print(error);
@@ -663,7 +670,7 @@ if (sourceOfMoney =='Vedio Points') {
       'address': authUser.address,
       'name': authUser.name,
       'cnic': authUser.cnic,
-      
+
       'wallet': wallet,
       'number': authUser.number,
       'isProvider': authUser.isProvider,
@@ -721,6 +728,7 @@ if (sourceOfMoney =='Vedio Points') {
     print('depositeAmount');
    
     print('result');
+
         wallet = wallet+10;
 
     final Map<String, dynamic> userData = {
@@ -766,7 +774,9 @@ if (sourceOfMoney =='Vedio Points') {
           );
       clear();
       _authenticationUser = newUser;
-      id = null;
+      wallet=newUser.wallet as int;
+      notifyListeners();
+            id = null;
       _isLoading = false;
       notifyListeners();
       return true;
@@ -960,11 +970,8 @@ if (sourceOfMoney =='Vedio Points') {
     print('Logout');
     _authenticationUser = null;
     _authTimer.cancel();
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('token');
-    prefs.remove('userEmail');
-    prefs.remove('userId');
-    prefs.remove('id');
+    wallet=0;
+ notifyListeners();
   }
 
 // void updateProfileData(String name,String email,String firebaseID,String number,String address,String image,)async{

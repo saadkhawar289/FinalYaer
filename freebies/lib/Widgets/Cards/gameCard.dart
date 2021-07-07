@@ -72,7 +72,7 @@ class GameCard extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  height: 180,
+                  height: size.width * 0.10,
                   width: size.width * 0.99,
                   decoration: BoxDecoration(image: _buildServiceBoxImage()),
                 ),
