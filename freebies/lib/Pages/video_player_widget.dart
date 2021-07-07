@@ -126,7 +126,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                        // model.ss(5);
                         
                             model.depositeToUserWallet(model.singleUser,sourceOfMoney: 'Vedio Points').then((value) => {
-                              //Navigator.pushNamed(context, '/AllVedios')
+                            Navigator.pushNamed(context, '/AllVedios')
                          
 
                                               });

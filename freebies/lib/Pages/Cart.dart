@@ -603,6 +603,7 @@ class _CartPageState extends State<Cart> {
                                                 onEditingComplete: () {
                                                   var val= _walletAmountController.text.toString();
                                                  int enterdAmount =int.parse(val);
+                                                 print(enterdAmount);
 
                                                   if (model.wallet!=0 && enterdAmount <=  model.wallet) {
                                                     setState(() {
@@ -681,9 +682,16 @@ class _CartPageState extends State<Cart> {
                                               },
                                             ));
                                           } else {
-                                            print('login');
-                                            //place order
+                                            if(walletamount.isNotEmpty){
+                                              int billAmount=int.parse(walletamount);
+                                              model.wallet=model.wallet-billAmount;
+                                                model.deductFromUSerWallet(model.singleUser);
+                                                //place order
                                             //navigate to my orders
+                                            }
+                                            else{
+
+                                            }
 
                                           }
                                           //             //  var ff= amount*100;

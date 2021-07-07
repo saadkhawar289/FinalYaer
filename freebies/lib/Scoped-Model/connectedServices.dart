@@ -649,6 +649,97 @@ mixin UserModel on ConnectedServicesModel {
 
  
 
+
+Future<bool> deductFromUSerWallet(User authUser){
+
+
+  _isLoading = true;
+
+    print('deposite');
+    
+    print('previous');
+    print('depositeAmount');
+    
+   print(wallet);
+    print('result');
+    final Map<String, dynamic> userData = {
+      'email': authUser.email,
+      'password': authUser.pass,
+      'address': authUser.address,
+      'name': authUser.name,
+      'cnic': authUser.cnic,
+
+      'wallet': wallet,
+      'number': authUser.number,
+      'isProvider': authUser.isProvider,
+      'image': authUser.image,
+      'FireBaseID': authUser.fireBaseID,
+    };
+  
+  
+    String id = authUser.id;
+    print('in deposite');
+    return http.put(
+        'https://freebies-96dc8-default-rtdb.firebaseio.com/User/$id.json',
+        body: json.encode(userData),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json'
+        }).then((http.Response response) {
+      print('object');
+      final Map<String, dynamic> productListData = json.decode(response.body);
+
+      print(productListData);
+
+      User newUser = User(
+          pass: authUser.pass,
+          fireBaseID: authUser.fireBaseID,
+          id: authUser.id,
+          email: authUser.email,
+          token: authUser.token,
+          address: authUser.address,
+          wallet: productListData['wallet'],
+          image: authUser.image,
+          isProvider: authUser.isProvider, // userData.isProvider,
+          cnic: authUser.cnic, // userData.cnic,
+          name: authUser.name,
+          number: authUser.number //userData.number
+          );
+      clear();
+      _authenticationUser = newUser;
+      id = null;
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    }).catchError((error) {
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    });
+
+
+
+
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   Future<bool> depositeToUserWallet(User authUser,{String sourceOfMoney}) {
 
 
