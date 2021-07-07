@@ -601,7 +601,11 @@ class _CartPageState extends State<Cart> {
                                                     labelText:
                                                         'Enter Amount From Wallet'),
                                                 onEditingComplete: () {
-                                                  setState(() {
+                                                  var val= _walletAmountController.text.toString();
+                                                 int enterdAmount =int.parse(val);
+
+                                                  if (model.wallet!=0 && enterdAmount <=  model.wallet) {
+                                                    setState(() {
                                                     loading = true;
 
                                                     walletamount =
@@ -613,6 +617,25 @@ class _CartPageState extends State<Cart> {
                                                     model.subtotal = zz - xx;
                                                     loading = false;
                                                   });
+                                                  } else {
+                                                    showDialog(
+            context: context,
+              builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('An Error Occured'),
+                content:Text('Insufficent balance') ,
+                actions: [
+                  FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Okay'))
+                ],
+              );
+            },
+            );
+                                                  }
+                                                  
                                                 },
                                               )))
                                         ],

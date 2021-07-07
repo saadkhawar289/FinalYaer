@@ -239,7 +239,7 @@ Navigator.pushNamed(context, '/auth');
                             }
                             else{
                               widget.model.logout();
-                              Navigator.pushNamed(context, '/homes');
+                              Navigator.pushReplacementNamed(context, '/homes');
                             }
                                
                           },

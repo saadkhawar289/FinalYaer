@@ -315,17 +315,13 @@ class _LoginPageState extends State<Login> {
 successInformation = await signUp(_formData['email'], _formData['password'],_authMode,_formData['address'],_formData['name'],_formData['cnic'],_formData['number'],false,'img');
     print(successInformation['success']);
       if (successInformation['success']) {
-        if (_formData['email']=='qq@qq.com'  ){
           if(nav=='From Cart'){
              Navigator.pushReplacementNamed(context, '/cart'); 
             
           }
           Navigator.pushReplacementNamed(context, '/homes'); 
          
-        } else {
-        Navigator.pushReplacementNamed(context, '/homes');
-
-        }
+        
       } else {
         showDialog(
             context: context,
@@ -354,8 +350,14 @@ else{
 successInformation = await logIn(_formData['email'], _formData['password'],_authMode);
     print(successInformation['success']);
       if (successInformation['success']) {
-        if (_formData['email']=='raybhillsocialwork@outlook.com' ||_formData['email']=='qq@qq.com' ){
-          Navigator.pushReplacementNamed(context, '/homes');
+        if (_formData['email']=='qq@qq.com' ){
+           if(nav=='From Cart'){
+             Navigator.pushReplacementNamed(context, '/cart'); 
+            
+          }else{
+             Navigator.pushReplacementNamed(context, '/homes');
+          }
+         
          
         } else {
         Navigator.pushReplacementNamed(context, '/productEdit');
