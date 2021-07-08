@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
+import 'package:freebies/Pages/VendorLogin.dart';
 import 'package:freebies/Widgets/Helpers/webUploadImage.dart';
 
 import 'package:scoped_model/scoped_model.dart';
@@ -127,7 +128,7 @@ class _MyAppState extends State<MyApp> {
           '/auth': (BuildContext context) =>Login(),
 
           '/productEdit': (BuildContext context) =>ProductEditPage(),
-         // '/SingleProductPage': (BuildContext context) =>SingleProductPage(_model,),
+          '/VendorLogin': (BuildContext context) =>VendorLogin(),
           '/cart': (BuildContext context) =>Cart(_model),
           '/vedios':(BuildContext context) =>YoutubeAppDemo(),
          '/entertainment':(BuildContext context) => Entertainment(),

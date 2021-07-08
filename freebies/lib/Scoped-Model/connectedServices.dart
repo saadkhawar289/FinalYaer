@@ -532,6 +532,50 @@ mixin UserModel on ConnectedServicesModel {
   }
   
 
+  Future<bool> vendorSignUpRequest( String email,
+      String password,
+      AuthMode mode,
+      String address,
+      String name,
+      String cnic,
+      String number,
+      bool isProvider,
+      String image) async {
+    _isLoading = true;
+    notifyListeners();
+    final Map<String, dynamic> vendorData = {
+      'Name': name,
+      'Address': address,
+      'Image': image,
+      'Cnic': cnic,
+      'Number': number,
+      'email':email,
+      'password': password,
+      'IsProvider':isProvider,
+
+    };
+    print(vendorData);
+    try {
+      final http.Response response = await http.post(
+          'https://freebies-cf2cd-default-rtdb.firebaseio.com/VendorsRequest.json',
+          body: json.encode(vendorData));
+      print(response.body);
+      print(response.statusCode);
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        _isLoading = false;
+        notifyListeners();
+        return false;
+      }
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (error) {
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+  }
+
   Future<Map<String, dynamic>> logIn(String email, String password, AuthMode mode) async {
     bool hasError = true;
         _isLoading = true;
@@ -558,7 +602,6 @@ mixin UserModel on ConnectedServicesModel {
         print(';;;;');
         final Map<String, dynamic> productListData =
             json.decode(userResponse.body);
-        print(productListData);
         if (productListData == null) {
           print('data not avalble');
         }
@@ -596,12 +639,12 @@ mixin UserModel on ConnectedServicesModel {
       if (responseData.containsKey('idToken')) {
         print("userFounding");
         User userData = _users.firstWhere((User user) {
-          return user.email == email;
+          return user.email == email && user.isProvider==true;
         });
         print('ok');
         hasError = false;
         message = 'Authentication Successeded';
-        wallet = int.parse(userData.wallet);
+      
         _authenticationUser = User(
             pass: userData.pass,
             fireBaseID: responseData['localId'],
@@ -611,7 +654,7 @@ mixin UserModel on ConnectedServicesModel {
             address: userData.address,
             wallet: userData.wallet,
             image: userData.image,
-            isProvider: true, // userData.isProvider,
+            isProvider:  userData.isProvider,
             cnic: '222', // userData.cnic,
             name: 'userData.name',
             number: '22222' //userData.number
@@ -637,9 +680,12 @@ mixin UserModel on ConnectedServicesModel {
       } else if (responseData['error']['message'] == 'EMAIL_EXISTS') {
         message = 'Email Exsist';
       } else if (responseData['error']['message'] == 'EMAIL_NOT_FOUND') {
-        message = 'Email Dont Exsist!';
+        message = 'Email Dont Exsist!. Verfication Pending ';
       } else if (responseData['error']['message'] == 'INVALID_PASSWORD') {
         message = 'Invalid Password';
+      }
+      else{
+        
       }
       _isLoading = false;
       notifyListeners();

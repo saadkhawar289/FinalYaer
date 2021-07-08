@@ -21,12 +21,14 @@ class VedioCard extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
               child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+         // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-              Text("Sample Vedio"),
-              SizedBox(
-              width: 90.0,
-            ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Text("Sample Vedio")),
+            //   SizedBox(
+            //   width: 90.0,
+            // ),
               //  Text(''),
           ],
         ),
@@ -70,57 +72,60 @@ Future<bool> _settProviderID(String id) async {
         print(id);
         Navigator.pushNamed(context, '/vedios');
       },
-          child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
   shadowColor: Colors.amber,elevation: 30,
         child: Column(
-          children: <Widget>[
-            
-            Stack(children: [
-              Container(
-                height: 180,
-                width: size.width * 0.99,
-                decoration: BoxDecoration(
-                  image:_buildServiceBoxImage()
+            children: <Widget>[
+              
+              Stack(children: [
+                Container(
+                  height: size.height * 0.20,
+                  width: size.width * 0.99,
+                  decoration: BoxDecoration(
+                    image:_buildServiceBoxImage()
+                  ),
                 ),
+              //  Positioned(
+              //    top: 145,
+              //    left: 260,
+              //    child: Align(alignment: Alignment.topCenter,
+              //               child: SmoothStarRating(
+              //       color: Colors.amber,
+              //       rating: service.rating,
+              //       isReadOnly: true,
+              //     ),
+                  
+                  
+              //   ),)
+                 
+              ],
+                            
               ),
-            //  Positioned(
-            //    top: 145,
-            //    left: 260,
-            //    child: Align(alignment: Alignment.topCenter,
-            //               child: SmoothStarRating(
-            //       color: Colors.amber,
-            //       rating: service.rating,
-            //       isReadOnly: true,
-            //     ),
-                
-                
-            //   ),)
-               
-            ],
-                          
-            ),
-            _buildTitlePriceRow(),
+              _buildTitlePriceRow(),
 SizedBox(height: 20,),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 100),
-              child: Row(children: [ 
-                
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 100),
+                child: Row(children: [ 
+                  
         //              FlatButton(onPressed: (){
         //                   var id= service.providerID;
         // _settProviderID(id);
         // print(id);
         // Navigator.pushNamed(context, '/ttt');
         //              },child: Text('View All Providers ',style: TextStyle(fontFamily: 'Oswald', color: Color(0xff36332e),fontSize: 14,fontWeight:FontWeight.normal)),),
-              SizedBox(width: 20,),
-              Icon(Icons.person,size: 30,)
-              ],),
-              
-            ),
+                SizedBox(width: 20,),
+                Icon(Icons.person,size: 30,)
+                ],),
+                
+              ),
          
-            Container(height: 20,)
-          ],
+              Container(height: 20,)
+            ],
         ),
       ),
+          ),
     );
   }
 }

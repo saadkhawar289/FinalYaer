@@ -20,7 +20,7 @@ Widget _buildServiceList(List<Vedios> _provider){
 Widget providerCard;
 
 if(_provider.length>0) {
-      providerCard = GridView.builder(gridDelegate:SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 200,childAspectRatio: 0.60),
+      providerCard = GridView.builder(gridDelegate:SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 200,childAspectRatio: 0.55),
        itemBuilder: (BuildContext context, int index) =>VedioCard(_provider[index],index),
            addAutomaticKeepAlives: false, 
         itemCount: _provider.length,

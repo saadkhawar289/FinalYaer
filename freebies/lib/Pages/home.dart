@@ -172,12 +172,17 @@ class _AllProductPageState extends State<AllProductPage> {
       //centerTitle:true ,
       title: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 30),
-        child: Text('FreeBiees',
-            style: TextStyle(
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFFFF335C))),
-      ),
+        child: Container(
+          height: 150,
+          width: 150,
+          child: Image.asset('assets/logooBlack.jpeg',fit: BoxFit.contain,))
+        
+      //   Text('FreeBiees',
+      //       style: TextStyle(
+      //           fontSize: 30.0,
+      //           fontWeight: FontWeight.bold,
+      //           color: Color(0xFFFF335C))),
+     ),
       actions: <Widget>[
         Container(
           child: SingleChildScrollView(
