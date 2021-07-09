@@ -22,7 +22,7 @@ class _AllProductPageState extends State<AllProductPage> {
   @override
   initState() {
     widget.model.fetchProducts();
-//widget.model.wallet=(widget.model.singleUser.wallet) as int;
+//widget.model.wallet=int.parse(widget.model.singleUser.wallet) ;
     super.initState();
   }
 
@@ -172,16 +172,17 @@ class _AllProductPageState extends State<AllProductPage> {
       //centerTitle:true ,
       title: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 30),
-        child: Container(
-          height: 150,
-          width: 150,
-          child: Image.asset('assets/logooBlack.jpeg',fit: BoxFit.contain,))
+        child:
+        //  Container(
+        //   height: 70,
+        //   width: 90,
+        //   child:Image.asset('assets/logoo.jpeg'))
         
-      //   Text('FreeBiees',
-      //       style: TextStyle(
-      //           fontSize: 30.0,
-      //           fontWeight: FontWeight.bold,
-      //           color: Color(0xFFFF335C))),
+        Text('FreeBiees',
+            style: TextStyle(
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFFF335C))),
      ),
       actions: <Widget>[
         Container(
@@ -380,7 +381,7 @@ Navigator.pushNamed(context, '/auth');
                       ),
                       height: deviceWidth < 650
                           ? deviceHeight * 0.20
-                          : deviceHeight * 0.66,
+                          : deviceHeight * 0.35,
                       width: deviceWidth * 0.75,
                       child: Carousel(
                         autoplayDuration: Duration(milliseconds: 2500),

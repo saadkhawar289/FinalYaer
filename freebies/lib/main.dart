@@ -131,7 +131,7 @@ class _MyAppState extends State<MyApp> {
           '/VendorLogin': (BuildContext context) =>VendorLogin(),
           '/cart': (BuildContext context) =>Cart(_model),
           '/vedios':(BuildContext context) =>YoutubeAppDemo(),
-         '/entertainment':(BuildContext context) => Entertainment(),
+         '/entertainment':(BuildContext context) => Entertainment(_model),
        '/admin' :(BuildContext context) => AdminControll(_model),
        '/AllVedios' :(BuildContext context) =>AllVedios(_model),
        '/AllGames' :(BuildContext context) =>GameSelection(_model)

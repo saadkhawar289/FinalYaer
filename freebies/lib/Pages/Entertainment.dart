@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:freebies/Scoped-Model/mainModel.dart';
 
 class Entertainment extends StatefulWidget {
+  MainModel model;
+  Entertainment(this.model);
   @override
   _IntertainmentState createState() => _IntertainmentState();
 }
@@ -31,7 +34,28 @@ class _IntertainmentState extends State<Entertainment> {
                     child: Center(
                         child: FlatButton(
                       onPressed: () {
+                        if(widget.model.singleUser!=null){
                         Navigator.pushNamed(context, '/AllGames');
+
+                        }
+                        else{
+                                                                      showDialog(
+            context: context,
+              builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Attention'),
+                content:Text('you are not login') ,
+                actions: [
+                  FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Okay'))
+                ],
+              );
+            },
+            );
+                        }
                       },
                       child: Text(
                         'Games',
@@ -109,7 +133,28 @@ class _IntertainmentState extends State<Entertainment> {
                     child: Center(
                         child: FlatButton(
                       onPressed: () {
+                        if(widget.model.singleUser!=null){
                         Navigator.pushNamed(context, '/AllGames');
+
+                        }
+                        else{
+                                                                      showDialog(
+            context: context,
+              builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Attention'),
+                content:Text('you are not login') ,
+                actions: [
+                  FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Okay'))
+                ],
+              );
+            },
+            );
+                        }
                       },
                       child: Text(
                         'Games',
@@ -142,7 +187,33 @@ class _IntertainmentState extends State<Entertainment> {
                     child: Center(
                         child: FlatButton(
                       onPressed: () {
+
+
+                         if(widget.model.singleUser!=null){
                         Navigator.pushNamed(context, '/AllVedios');
+
+                        }
+                        else{
+                                                                      showDialog(
+            context: context,
+              builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Attention'),
+                content:Text('you are not login') ,
+                actions: [
+                  FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Okay'))
+                ],
+              );
+            },
+            );
+                        }
+
+
+                        //Navigator.pushNamed(context, '/AllVedios');
                       },
                       child: Text(
                         'Vedios',

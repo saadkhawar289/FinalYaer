@@ -639,7 +639,7 @@ mixin UserModel on ConnectedServicesModel {
       if (responseData.containsKey('idToken')) {
         print("userFounding");
         User userData = _users.firstWhere((User user) {
-          return user.email == email && user.isProvider==true;
+          return user.email == email;// && user.isProvider==true;
         });
         print('ok');
         hasError = false;
@@ -659,7 +659,8 @@ mixin UserModel on ConnectedServicesModel {
             name: 'userData.name',
             number: '22222' //userData.number
             );
-
+print(userData.wallet);
+wallet=int.parse(userData.wallet);
         setAuthTimeout(int.parse(responseData['expiresIn']));
         // _userSubject.add(true);
         final DateTime currentTime =
