@@ -454,7 +454,7 @@ class _LoginPageState extends State<Login> {
                               hoverColor: Colors.red,
                               splashRadius: 15,
                             ),
-                            Text('Login As Vendor',style: TextStyle(color: Colors.red),)
+                            Text('Login As Vendor',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),)
                           ]),
                         ),
 

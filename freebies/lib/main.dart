@@ -21,6 +21,7 @@ import 'Pages/Login.dart';
 import 'Pages/SelectGames.dart';
 import 'Pages/SelectVedio.dart';
 import 'Pages/SingleProduct.dart';
+import 'Pages/VendorDashBoard.dart';
 import 'Pages/gameView.dart';
 import 'Pages/home.dart';
 import 'Pages/video_player_widget.dart';
@@ -75,7 +76,7 @@ class _MyAppState extends State<MyApp> {
         model: _model,   
         child: MaterialApp(
           theme: ThemeData(
-
+            backgroundColor: Colors.black,
             brightness: Brightness.light,
             primarySwatch: Colors.indigo, 
             buttonColor: Colors.red,
@@ -98,7 +99,7 @@ class _MyAppState extends State<MyApp> {
             // child: Text('ezentu',style:TextStyle(
             //          fontSize: 50.0, fontWeight: FontWeight.bold, color: Colors.black,) ,),
           
-             navigateAfterSeconds: AllProductPage(_model),
+             navigateAfterSeconds: VendorDashboard(),
            // navigateAfterFuture:  loadFromFuture(),
           photoSize: sizeee,
              useLoader: true,
