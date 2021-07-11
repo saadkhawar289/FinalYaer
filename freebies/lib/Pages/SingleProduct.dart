@@ -129,9 +129,7 @@ bool loading=false;
                             'https://m.media-amazon.com/images/S/aplus-media/sc/a829e124-4375-41c4-b0be-e699ebb974b2.__CR0,0,220,220_PT0_SX220_V1___.jpg'),
                         NetworkImage(
                             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQubf5b89mP5fjIfUYGvtak5L0w1m0p2wLj0g&usqp=CAU'),
-                        NetworkImage(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDT1-fmn2GJM9xT0jXf4adtqmiRVBD8iqZRQ&usqp=CAU')
-                        // ExactAssetImage("assets/bbb.jpg"),
+                        NetworkImage(widget.product.image ),                       // ExactAssetImage("assets/bbb.jpg"),
                       ],
                     ),
                   ),

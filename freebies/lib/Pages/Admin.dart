@@ -76,7 +76,7 @@ return Drawer(
           ),
         ),
         body: TabBarView(children:<Widget>[
-              AddGames(),
+              ProductEditPage(model: model,),
               ProductEditPage(),
               ProductEditPage(),
               ProductEditPage(),              

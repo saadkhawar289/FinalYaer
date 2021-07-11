@@ -11,8 +11,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase/firebase.dart'as fb;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:freebies/Scoped-Model/mainModel.dart';
 
 class UploadImage extends StatefulWidget {
+  MainModel model;
+  UploadImage({this.model});
   @override
   State<StatefulWidget> createState() {
     return _UploadImageState();
@@ -65,7 +68,13 @@ void upload()async{
    // print(url);
     setState(() {
       imgurl=url.toString();
+      
+      widget.model.addPicToLocal(imgurl);
+      widget.model.uploadedImage=imgurl;
+
       print(imgurl);
+      print('model Image');
+      print(widget.model.uploadedImage);
     });
       Navigator.pop(context);
     });

@@ -12,7 +12,7 @@ final String image;
 final bool isfavourite; //  type
 final String userId;
 final bool isFeatured;
-List<String>images;
+//List<String>images;
 double rating;
 List<String> reviews;
 int quantity;

@@ -25,7 +25,7 @@ class _AllProductPageState extends State<AllProductPage> {
 //widget.model.wallet=int.parse(widget.model.singleUser.wallet) ;
     super.initState();
   }
-
+TextEditingController _emailController= TextEditingController();
   Widget _buildDrawer(BuildContext context) {
     return Drawer(
       child: Column(
@@ -283,7 +283,7 @@ Navigator.pushNamed(context, '/auth');
 
     return AppBar(
       toolbarHeight: 120,
-      backgroundColor: Colors.grey[850],
+      backgroundColor: Colors.black26,
       //   backgroundColor: Color(0xff36332e),
       elevation: 0,
       //centerTitle:true ,
@@ -370,6 +370,45 @@ Navigator.pushNamed(context, '/auth');
               return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 30,left: MediaQuery.of(context).size.width*0.30,right: MediaQuery.of(context).size.width*0.30,),
+                        child: Container(
+                          child: TextFormField(
+      decoration: InputDecoration(
+        labelText: "Search",
+        prefixIcon: const Icon(
+          Icons.search,
+          color: Colors.green,
+        ),
+        fillColor: Colors.white,
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xff36332e),
+            width: 4.0,
+          ),
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+      ),
+
+      keyboardType: TextInputType.emailAddress,
+      controller: _emailController,
+      // ignore: missing_return
+      validator: (String value) {
+        if (_emailController.text.isEmpty ||
+            !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                .hasMatch(value)) {
+          return 'Please enter a valid email';
+        }
+      },
+      onSaved: (String value) {
+      //  _formData['email'] = value;
+      },
+    )
+                        
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 25,
                     ),
@@ -381,8 +420,8 @@ Navigator.pushNamed(context, '/auth');
                       ),
                       height: deviceWidth < 650
                           ? deviceHeight * 0.20
-                          : deviceHeight * 0.35,
-                      width: deviceWidth * 0.75,
+                          : deviceHeight * 0.45,
+                      width: deviceWidth * 0.85,
                       child: Carousel(
                       //  autoplayDuration: Duration(milliseconds: 2500),
                         //  boxFit: BoxFit.cover,
@@ -430,7 +469,7 @@ Navigator.pushNamed(context, '/auth');
                         height: constraints.maxHeight >= 800
                             ? deviceHeight * 0.45
                             : deviceHeight * 0.47,
-                        color: Colors.yellow[100],
+                        color: Colors.grey[400],
                         child: Container(
                           decoration: BoxDecoration(),
                           height: 50,
@@ -454,7 +493,7 @@ Navigator.pushNamed(context, '/auth');
                           height: deviceWidth <= 500
                               ? deviceHeight * 0.50
                               : deviceHeight * 0.70,
-                          color: Colors.grey[50],
+                          color: Colors.brown.shade100,
                           width: deviceWidth,
                           child: Container(
                             decoration: BoxDecoration(

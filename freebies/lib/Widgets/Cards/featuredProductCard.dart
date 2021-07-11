@@ -26,7 +26,7 @@ class ProductCard extends StatelessWidget {
       fit: BoxFit.fill,
       colorFilter:
           ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.screen),
-      image:NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQubf5b89mP5fjIfUYGvtak5L0w1m0p2wLj0g&usqp=CAU')
+      image:product.image==null?('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQubf5b89mP5fjIfUYGvtak5L0w1m0p2wLj0g&usqp=CAU'):NetworkImage(product.image)
 
     );
   }

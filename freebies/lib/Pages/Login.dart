@@ -9,6 +9,7 @@ import '../Models/enum.dart';
 // enums are the options  which you defined on your own choice and can be used by .
 
 class Login extends StatefulWidget {
+ 
   String navigation;
   Login({this.navigation});
   @override
@@ -306,7 +307,7 @@ class _LoginPageState extends State<Login> {
         Navigator.pushReplacementNamed(context, '/admin');
 
         }
-        Navigator.pushReplacementNamed(context, '/homes');
+        Navigator.pushReplacementNamed(context, '/admin');
       } else {
         showDialog(
           context: context,

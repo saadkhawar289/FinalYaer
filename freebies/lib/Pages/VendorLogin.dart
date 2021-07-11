@@ -8,8 +8,9 @@ import '../Models/enum.dart';
 // enums are the options  which you defined on your own choice and can be used by .
 
 class VendorLogin extends StatefulWidget {
+  MainModel model;
   String navigation;
-  VendorLogin({this.navigation});
+  VendorLogin(this.model,{this.navigation});
   @override
   State<StatefulWidget> createState() {
     return _VendorLoginState();
@@ -37,7 +38,7 @@ class _VendorLoginState extends State<VendorLogin> {
 
   final TextEditingController _numberController = TextEditingController();
 
-  AuthMode _authMode = AuthMode.Login;
+  AuthMode _authMode = AuthMode.VendorLogin;
 
   Widget _buildEmailTextField() {
     return TextFormField(
@@ -286,7 +287,7 @@ class _VendorLoginState extends State<VendorLogin> {
 
     Map<String, dynamic> successInformation;
 
-    if (_authMode == AuthMode.SignUp) {
+    if (_authMode == AuthMode.VendorSignup) {
       await requestForm(
               _formData['email'],
               _formData['password'],
@@ -295,7 +296,7 @@ class _VendorLoginState extends State<VendorLogin> {
               _formData['name'],
               _formData['cnic'],
               _formData['number'],
-              false,
+              true,
               'img')
           .then((value) => {
                 if (value)
@@ -324,11 +325,20 @@ class _VendorLoginState extends State<VendorLogin> {
                   }
               });
     } else {
-      successInformation =
-          await login(_formData['email'], _formData['password'], _authMode);
+      successInformation = await login(_formData['email'], _formData['password'], _authMode);
       print(successInformation['success']);
       if (successInformation['success']) {
-        Navigator.pushReplacementNamed(context, '/VendorDashBoard');
+        if (widget.model.singleUser.isAccepted==true) {
+          print('admin');
+          Navigator.pushReplacementNamed(context, '/providerOrders');
+
+        } else if (widget.model.singleUser.isProvider==false){
+            Navigator.pushReplacementNamed(context, '/notVendor');
+        }
+        else if(widget.model.singleUser.isAccepted==false){
+ Navigator.pushReplacementNamed(context, '/PendingVerification');
+        }
+      
       } else {
         showDialog(
           context: context,
@@ -409,7 +419,7 @@ class _VendorLoginState extends State<VendorLogin> {
                     SizedBox(
                       height: 10.0,
                     ),
-                    _authMode == AuthMode.SignUp
+                    _authMode == AuthMode.VendorSignup
                         ? Column(children: [
                             _buildPasswordConfirmTextField(),
                             SizedBox(
@@ -440,13 +450,13 @@ class _VendorLoginState extends State<VendorLogin> {
                     FlatButton(
                       onPressed: () {
                         setState(() {
-                          _authMode = _authMode == AuthMode.Login
-                              ? AuthMode.SignUp
-                              : AuthMode.Login;
+                          _authMode = _authMode == AuthMode.VendorLogin
+                              ? AuthMode.VendorSignup
+                              : AuthMode.VendorLogin;
                         });
                       },
                       child: Text(
-                          '${_authMode == AuthMode.Login ? 'Register' : 'LogIn'}',
+                          '${_authMode == AuthMode.VendorLogin ? 'Register' : 'LogIn'}',
                           style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
@@ -463,12 +473,12 @@ class _VendorLoginState extends State<VendorLogin> {
                           : RaisedButton(
                               color: Colors.black,
                               textColor: Colors.white,
-                              child: _authMode == AuthMode.SignUp
+                              child: _authMode == AuthMode.VendorSignup
                                   ? Text('Register')
                                   : Text('LOGIN'),
                               onPressed: () => _submitForm(
-                                  model.vendorSignUpRequest,
-                                  model.logIn,
+                                  model.venderSignUp,
+                                  model.venderlogIn,
                                   widget.navigation),
                             );
                     }),

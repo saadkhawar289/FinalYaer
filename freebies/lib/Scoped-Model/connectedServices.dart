@@ -40,6 +40,16 @@ mixin ConnectedServicesModel on Model {
   User _authenticationUser;
   String _selcectedVedioId;
   String _selcectedUserID;
+  String uploadedImage;
+
+
+void addPicToLocal(String img){
+
+uploadedImage=img;
+notifyListeners();
+
+}
+
 
  void addToCart(Product ppp) {
    
@@ -113,7 +123,8 @@ mixin ProductModel on ConnectedServicesModel {
   }
 
   Future<bool> addProducts(String tittle, String description, int price,
-      String image, String userID, bool featured) async {
+      String image, bool featured) async {
+        print('in add products');
     _isLoading = true;
     notifyListeners();
     final Map<String, dynamic> productData = {
@@ -123,7 +134,9 @@ mixin ProductModel on ConnectedServicesModel {
       'price': price,
       'UserID': _authenticationUser.id,
       'isFeatured': featured,
-      
+      'isFavourite':false,
+      'reviews':'ssss',
+      'rating':0
     };
     print(productData);
     try {
@@ -218,8 +231,7 @@ mixin ProductModel on ConnectedServicesModel {
               userId: productData['UserID'],
                isfavourite:productData['wishlistUsers'] == null ? false : (productData['wishlist'] as Map<String, dynamic>).containsKey(_authenticationUser.id),
               isFeatured: productData['isFeatured'],
-              reviews: productData['reviews'],
-              rating: productData['rating']);
+             );
           fetchedProductslist.add(product);
           print(product.id);
         });
@@ -351,7 +363,49 @@ mixin UserModel on ConnectedServicesModel {
   }
   
 
-  Future<bool> vendorSignUpRequest( String email,
+Future<bool> approvedProviders(User accptedUser){
+  _isLoading=true;
+var id=accptedUser.id;
+  final Map<String, dynamic> userData = {
+          'email': accptedUser.email,
+          'password':accptedUser.pass,
+          'address':accptedUser. address,
+          'name': accptedUser.name,
+          'cnic':accptedUser. cnic,
+          'wallet':accptedUser.wallet,
+          'number':accptedUser. number,
+          'isProvider':accptedUser.isProvider,
+          'image':accptedUser. image,
+          'FireBaseID':accptedUser.fireBaseID,
+          'isAcepted':true
+        };
+return http.put(
+        'https://freebies-96dc8-default-rtdb.firebaseio.com/User/$id.json',
+        body: json.encode(userData),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json'
+        })
+
+
+        
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   Future<Map<String, dynamic>> venderSignUp(
+      String email,
       String password,
       AuthMode mode,
       String address,
@@ -359,6 +413,135 @@ mixin UserModel on ConnectedServicesModel {
       String cnic,
       String number,
       bool isProvider,
+      String image) async {
+    bool hasError = true;
+    String message = 'Some thing went wrong';
+
+    _isLoading = true;
+    notifyListeners();
+    final Map<String, dynamic> authData = {
+      'email': email,
+      'password': password,
+      'returnSecureToken': true
+    };
+    Map<String, dynamic> responseData;
+
+    http.Response response;
+    http.Response userResponse;
+
+    if (mode == AuthMode.VendorSignup ) {
+      response = await http.post(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA6m-v4a4GVBlhWSBmIzLbzWKO1C3JXXbs',
+        body: json.encode(authData),
+        headers: {'Content-Type': 'application/json'},
+      );
+      print('sigupDone');
+
+      try {
+        responseData = json.decode(response.body);
+        final Map<String, dynamic> userData = {
+          'email': email,
+          'password': password,
+          'address': address,
+          'name': name,
+          'cnic': cnic,
+          'wallet': '0',
+          'number': number,
+          'isProvider': isProvider,
+          'image': image,
+          'FireBaseID': responseData['localId'],
+          'isAcepted':false
+        };
+
+        userResponse = await http.post(
+            'https://freebies-96dc8-default-rtdb.firebaseio.com/User.json',
+            body: json.encode(userData));
+        var userResponsess = userResponse.body;
+        print('userRespone $userResponsess');
+        if (response.statusCode != 200 && response.statusCode != 201) {
+          print('Usetadded');
+        }
+      } catch (error) {
+        _isLoading = false;
+        print('errror: $error');
+        notifyListeners();
+      }
+    }
+
+    print('1');
+    final Map<String, dynamic> userResponseData =
+        json.decode(userResponse.body);
+
+    print('2');
+
+    if (responseData.containsKey('idToken')) {
+      hasError = false;
+      message = 'Authentication Successeded';
+      print('3');
+
+      _authenticationUser = User(
+        isAccepted:false ,
+          pass: password,
+          fireBaseID: responseData['localId'],
+          id: userResponseData['name'],
+          email: email,
+          token: responseData['idToken'],
+          address: address,
+          wallet: '0',
+          image: image,
+          isProvider: isProvider,
+          cnic: cnic,
+          name: name,
+          number: number);
+      print('4');
+      setAuthTimeout(int.parse(responseData['expiresIn']));
+      // _userSubject.add(true);
+      final DateTime currentTime =
+          DateTime.now(); // this line gives us the current time
+      final DateTime expiryTime = currentTime
+          .add(Duration(seconds: int.parse(responseData['expiresIn'])));
+      final SharedPreferences pref = await SharedPreferences
+          .getInstance(); //this line allow us to get the access to the shared preffrence(3rd party PACKAGE)  which helps us in getting or allow us a storage on the device
+      pref.setString(
+          'token',
+          responseData[
+              'idToken']); // in this line the token is a keyword which will represnt the key of firebase in our auth data which we get on our response
+      pref.setString('userEmail', email);
+      pref.setString('userId', responseData['localId']);
+      pref.setString('uID', responseData['localId']);
+
+      pref.setString('expiryTime', expiryTime.toIso8601String());
+    } else if (responseData['error']['message'] == 'EMAIL_EXISTS') {
+      message = 'Email Exsist';
+    } else if (responseData['error']['message'] == 'EMAIL_NOT_FOUND') {
+      message = 'Email Dont Exsist!';
+    } else if (responseData['error']['message'] == 'INVALID_PASSWORD') {
+      message = 'Invalid Password';
+    }
+    _isLoading = false;
+    notifyListeners();
+    return {'success': !hasError, 'message': message};
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  Future<bool> vendorSignUpRequest( String email,
+      String password,
+      AuthMode mode,
+      String address,
+      String name,
+      String cnic,
+      String number,
+     
       String image) async {
     _isLoading = true;
     notifyListeners();
@@ -370,7 +553,7 @@ mixin UserModel on ConnectedServicesModel {
       'Number': number,
       'email':email,
       'password': password,
-      'IsProvider':isProvider,
+      'IsProvider':true,
 
     };
     print(vendorData);
@@ -395,7 +578,8 @@ mixin UserModel on ConnectedServicesModel {
     }
   }
 
-  Future<Map<String, dynamic>> logIn(String email, String password, AuthMode mode) async {
+
+Future<Map<String, dynamic>> venderlogIn(String email, String password, AuthMode mode) async {
     bool hasError = true;
         _isLoading = true;
 
@@ -407,7 +591,7 @@ mixin UserModel on ConnectedServicesModel {
       'returnSecureToken': true
     };
     http.Response response;
-    if (mode == AuthMode.Login) {
+    if (mode == AuthMode.VendorLogin) {
       response = await http.post(
         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA6m-v4a4GVBlhWSBmIzLbzWKO1C3JXXbs',
         body: json.encode(authData),
@@ -426,6 +610,157 @@ mixin UserModel on ConnectedServicesModel {
         }
         productListData.forEach((String id, dynamic productData) {
           final User product = User(
+            isAccepted: productData['isAcepted'],
+              pass: productData['password'],
+              id: id,
+              address: productData['address'],
+              cnic: productData['cnic'],
+              email: productData['email'],
+              fireBaseID: productData['fireBaseID'],
+              image: productData['image'],
+              isProvider: productData['isProvider'],
+              name: productData['name'],
+              number: productData['number'],
+              token: 'null',
+              wallet: productData['wallet'].toString());
+          print('in finding user');
+          fetchedProductslist.add(product);
+        });
+        _users = fetchedProductslist;
+        // .where((User user) {
+        //   return user.isAccepted==true;
+        // }).toList();
+            
+      }).catchError((error) {
+        print('error');
+        print(error);
+      });
+   // User userData ;
+      final Map<String, dynamic> responseData = json.decode(response.body);
+   final userData =   _users.firstWhere((User user) {
+    
+
+           return user.email == email;
+
+           
+        });
+      
+     print('good');
+//       if(_users.length<=0){
+        
+//         return {'success': !hasError, 'message': message};
+//       }
+//       else{
+//   userData = _users.firstWhere((User user) {
+//           return user.email == email;
+//         });
+//       }
+// bool ss=userData==null?true:false;
+
+      if (responseData.containsKey('idToken')) {
+       
+       
+
+
+        print('ok');
+        hasError = false;
+        message = 'Authentication Successeded';
+      
+        _authenticationUser = User(
+                      isAccepted: userData.isAccepted,
+
+            pass: userData.pass,
+            fireBaseID: responseData['localId'],
+            id: userData.id,
+            email: userData.email,
+            token: responseData['idToken'],
+            address: userData.address,
+            wallet: userData.wallet,
+            image: userData.image,
+            isProvider:  userData.isProvider,
+            cnic: '222', // userData.cnic,
+            name: 'userData.name',
+            number: '22222' //userData.number
+            );
+print(userData.wallet);
+wallet=int.parse(userData.wallet);
+        setAuthTimeout(int.parse(responseData['expiresIn']));
+        // _userSubject.add(true);
+        final DateTime currentTime =
+            DateTime.now(); // this line gives us the current time
+        final DateTime expiryTime = currentTime
+            .add(Duration(seconds: int.parse(responseData['expiresIn'])));
+        final SharedPreferences pref = await SharedPreferences
+            .getInstance(); //this line allow us to get the access to the shared preffrence(3rd party PACKAGE)  which helps us in getting or allow us a storage on the device
+        pref.setString(
+            'token',
+            responseData[
+                'idToken']); // in this line the token is a keyword which will represnt the key of firebase in our auth data which we get on our response
+        pref.setString('userEmail', email);
+        pref.setString('userId', responseData['localId']);
+        pref.setString('uID', responseData['localId']);
+
+        pref.setString('expiryTime', expiryTime.toIso8601String());
+      } else if (responseData['error']['message'] == 'EMAIL_EXISTS') {
+        message = 'Email Exsist';
+      } else if (responseData['error']['message'] == 'EMAIL_NOT_FOUND') {
+        message = 'Email Dont Exsist!. Verfication Pending ';
+      } else if (responseData['error']['message'] == 'INVALID_PASSWORD') {
+        message = 'Invalid Password';
+      }
+      else if (userData==null) {
+        message = 'Your Verification is pending';
+      }
+      _isLoading = false;
+      notifyListeners();
+      return {'success': !hasError, 'message': message};
+    }
+    
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  Future<Map<String, dynamic>> logIn(String email, String password, AuthMode mode) async {
+    bool hasError = true;
+        _isLoading = true;
+
+    String message = 'Some thing went wrong';
+    notifyListeners();
+    final Map<String, dynamic> authData = {
+      'email': email,
+      'password': password,
+      'returnSecureToken': true
+    };
+    http.Response response;
+    if (mode == AuthMode.Login ) {
+      response = await http.post(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA6m-v4a4GVBlhWSBmIzLbzWKO1C3JXXbs',
+        body: json.encode(authData),
+        headers: {'Content-type': 'application/json'},
+      );
+
+      await http
+          .get('https://freebies-96dc8-default-rtdb.firebaseio.com/User.json')
+          .then<Null>((http.Response userResponse) {
+        final List<User> fetchedProductslist = [];
+        print(';;;;');
+        final Map<String, dynamic> productListData =
+            json.decode(userResponse.body);
+        if (productListData == null) {
+          print('data not avalble');
+        }
+        productListData.forEach((String id, dynamic productData) {
+          final User product = User(
+            isAccepted: productData['isAcepted'],
               pass: productData['password'],
               id: id,
               address: productData['address'],
@@ -458,13 +793,15 @@ mixin UserModel on ConnectedServicesModel {
       if (responseData.containsKey('idToken')) {
         print("userFounding");
         User userData = _users.firstWhere((User user) {
-          return user.email == email;// && user.isProvider==true;
+          return user.email == email ;// && user.isProvider==true;
         });
         print('ok');
         hasError = false;
         message = 'Authentication Successeded';
       
         _authenticationUser = User(
+                      isAccepted: userData.isAccepted,
+
             pass: userData.pass,
             fireBaseID: responseData['localId'],
             id: userData.id,
@@ -511,6 +848,10 @@ wallet=int.parse(userData.wallet);
       notifyListeners();
       return {'success': !hasError, 'message': message};
     }
+    else{
+            return {'success': hasError, 'message': message};
+
+    }
   }
 
  
@@ -534,7 +875,7 @@ Future<bool> deductFromUSerWallet(User authUser){
       'address': authUser.address,
       'name': authUser.name,
       'cnic': authUser.cnic,
-
+      'isAcepted':authUser.isAccepted,
       'wallet': wallet,
       'number': authUser.number,
       'isProvider': authUser.isProvider,
@@ -557,6 +898,8 @@ Future<bool> deductFromUSerWallet(User authUser){
       print(productListData);
 
       User newUser = User(
+                    isAccepted: authUser.isAccepted,
+
           pass: authUser.pass,
           fireBaseID: authUser.fireBaseID,
           id: authUser.id,
@@ -632,6 +975,8 @@ if (sourceOfMoney =='Vedio Points') {
       print(productListData);
 
       User newUser = User(
+                    isAccepted: authUser.isAccepted,
+
           pass: authUser.pass,
           fireBaseID: authUser.fireBaseID,
           id: authUser.id,
@@ -698,6 +1043,8 @@ if (sourceOfMoney =='Vedio Points') {
       print(productListData);
 
       User newUser = User(
+                    isAccepted: authUser.isAccepted,
+
           pass: authUser.pass,
           fireBaseID: authUser.fireBaseID,
           id: authUser.id,
@@ -758,7 +1105,7 @@ if (sourceOfMoney =='Vedio Points') {
     http.Response response;
     http.Response userResponse;
 
-    if (mode == AuthMode.SignUp || mode == AuthMode.Coustomer) {
+    if (mode == AuthMode.SignUp ) {
       response = await http.post(
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA6m-v4a4GVBlhWSBmIzLbzWKO1C3JXXbs',
         body: json.encode(authData),
@@ -778,7 +1125,8 @@ if (sourceOfMoney =='Vedio Points') {
           'number': number,
           'isProvider': isProvider,
           'image': image,
-          'FireBaseID': responseData['localId']
+          'FireBaseID': responseData['localId'],
+          'isAcepted':false
         };
 
         userResponse = await http.post(
@@ -808,6 +1156,7 @@ if (sourceOfMoney =='Vedio Points') {
       print('3');
 
       _authenticationUser = User(
+        isAccepted:false ,
           pass: password,
           fireBaseID: responseData['localId'],
           id: userResponseData['name'],
@@ -1414,7 +1763,7 @@ print(fetchedProductslist);
     orders =  fetchedProductslist.where((Orders order)  {// this 'WHERE method' will give all the products of authenticated userId
          
         
-       return order.providerIDS.contains('_authenticationUser.id');
+       return order.providerIDS.contains(_authenticationUser.id);
         
               
         

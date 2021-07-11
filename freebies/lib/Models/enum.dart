@@ -1,7 +1,8 @@
 enum AuthMode  {
 SignUp,
 Login,
-Vendor,
+VendorLogin,
+VendorSignup,
 Coustomer
 
 }

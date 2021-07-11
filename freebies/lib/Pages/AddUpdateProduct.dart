@@ -14,6 +14,9 @@ import '../Widgets/Helpers/mobileUploadImage.dart';
 
 
 class ProductEditPage extends StatefulWidget {
+MainModel model;
+ProductEditPage({this.model});
+
   @override
   _ProductEditPageState createState() => _ProductEditPageState();
 }
@@ -27,6 +30,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
     'price': null,
     'image': 'https://www.bentleymotors.com/content/dam/bentley/Master/Models/Hero/New%20Continental%20GT%20V8/Bentley-Continental-GT-V8-static-front-1920x670.jpg/_jcr_content/renditions/Bentley-Continental-GT-V8-static-front-699x309.jpg./Bentley-Continental-GT-V8-static-front-699x309.jpg',
     'isfeatured':false,
+    'rating':null
         
   };
   
@@ -93,9 +97,8 @@ class _ProductEditPageState extends State<ProductEditPage> {
     
      if (product == null && _descpTextControllerzz.text.trim() == '') {
       _descpTextControllerzz.text = '';
-    } 
-    else if (product != null && _descpTextControllerzz.text.trim() == '') {
-      _descpTextControllerzz.text = product.description;
+    } else if (product != null && _descpTextControllerzz.text.trim() == '') {
+      _descpTextControllerzz.text = product.tittle;
     } else if (product != null && _descpTextControllerzz.text.trim() != '') {
       _descpTextControllerzz.text = _descpTextControllerzz.text;
     } else if (product == null && _descpTextControllerzz.text.trim() != '') {
@@ -106,16 +109,15 @@ class _ProductEditPageState extends State<ProductEditPage> {
     return EnsureVisibleWhenFocused(
       focusNode: _titleFocusNode,
       child:TextFormField(
-      decoration: InputDecoration(labelText: 'Product Descripition'),
+      decoration: InputDecoration(labelText: 'Product Title'),
      controller: _descpTextControllerzz,
-     maxLines: 4,
-    
-      
+     maxLines: 3,
+  
+      // ignore: missing_return
       validator: (String value) {
-        if (value.isEmpty || value.length < 10) {
-          return 'Descripition is required and should be 10+ characters long';
+        if (value.isEmpty || value.length < 5) {
+          return 'Title is required and should be 5+ characters long';
         }
-       return 'Descripition is required and should be 10+ characters long';
       },
       
       onSaved: (String value) {
@@ -203,8 +205,9 @@ void _submitForm(
         _formValues['tittle'],
         _formValues['description'],
         _formValues['price'],
-        _formValues['image'],
-        _formValues['featured'],
+        widget.model.uploadedImage,
+        _formValues['isfeatured'],
+        
 
      
       ).then((bool success) {
@@ -290,7 +293,11 @@ void _submitForm(
                   height: 29.0,
                 ),
               
-          //  UploadImage(),
+              ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        return UploadImage(model: model,);
+    }),
+            
          
           
                  SizedBox(

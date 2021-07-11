@@ -15,12 +15,14 @@ final String cnic;
 final String token;
 final bool isProvider;
 final String fireBaseID;
+ bool isAccepted;
 
 
 
 
   User({
     @required this.pass,
+    @required this.isAccepted,
     @required this.id,
     @required this.fireBaseID,
     @required this.name,

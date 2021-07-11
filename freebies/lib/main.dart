@@ -20,6 +20,8 @@ import 'Pages/Admin.dart';
 import 'Pages/Cart.dart';
 import 'Pages/Entertainment.dart';
 import 'Pages/Login.dart';
+import 'Pages/NotVendorScreen.dart';
+import 'Pages/PendingVerfication.dart';
 import 'Pages/SelectGames.dart';
 import 'Pages/SelectVedio.dart';
 import 'Pages/SingleProduct.dart';
@@ -133,14 +135,16 @@ class _MyAppState extends State<MyApp> {
           '/auth': (BuildContext context) =>Login(),
 
           '/productEdit': (BuildContext context) =>ProductEditPage(),
-          '/VendorLogin': (BuildContext context) =>VendorLogin(),
+          '/VendorLogin': (BuildContext context) =>VendorLogin(_model),
           '/cart': (BuildContext context) =>Cart(_model),
           '/vedios':(BuildContext context) =>YoutubeAppDemo(),
          '/entertainment':(BuildContext context) => Entertainment(_model),
        '/admin' :(BuildContext context) => AdminControll(_model),
        '/AllVedios' :(BuildContext context) =>AllVedios(_model),
        '/AllGames' :(BuildContext context) =>GameSelection(_model),
-       '/providerOrders':(BuildContext context) =>VendorControll(_model)
+       '/providerOrders':(BuildContext context) =>VendorControll(_model),
+      '/notVendor':(BuildContext context) => NotVendorScreen(),
+      '/PendingVerification':(BuildContext context) =>PendingVerification()
      
         
           },
