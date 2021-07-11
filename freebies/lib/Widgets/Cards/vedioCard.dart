@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:freebies/Models/Vedios.dart';
+import 'package:freebies/Pages/addvedios.dart';
+import 'package:freebies/Scoped-Model/mainModel.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -15,6 +18,51 @@ class VedioCard extends StatelessWidget {
     this.vedioIndex,
   );
 
+Widget _buildSubmitButton() {
+    return ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        return IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    model.selectVedio(model.allvedios[vedioIndex].id);
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return  AddVedios();
+                        },
+                      ),
+                    ).then((_) {
+                      model.selectVedio(null);
+                    });
+                  },
+                );
+      },
+    );
+  }
+
+
+
+
+
+
+
+
+Widget _buildSubmitButtondel() {
+    return ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        return IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    model.selectVedio(model.allvedios[vedioIndex].id);
+                    model.delVedio();
+                   
+                     model.selectProudct(null);
+                    
+                  },
+                );
+      },
+    );
+  }
   Widget _buildTitlePriceRow() {
     return Container(
       padding: EdgeInsets.only(top: 10.0),
@@ -25,7 +73,7 @@ class VedioCard extends StatelessWidget {
           children: <Widget>[
               Align(
                 alignment: Alignment.topRight,
-                child: Text("Sample Vedio")),
+                child: Text(vedio.link)),
             //   SizedBox(
             //   width: 90.0,
             // ),
@@ -104,6 +152,8 @@ Future<bool> _settProviderID(String id) async {
                             
               ),
               _buildTitlePriceRow(),
+              _buildSubmitButton(),
+              _buildSubmitButtondel(),
 SizedBox(height: 20,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 100),

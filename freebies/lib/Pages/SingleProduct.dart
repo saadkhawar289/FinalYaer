@@ -290,8 +290,11 @@ ScopedModelDescendant<MainModel>(
                           ),
                           onPressed: () {
                             setState(() {
+                              
                               loading =true;
                                                            Timer(Duration(seconds: 2), (){
+                                                             model.providerids.add(widget.product.userId);
+                             print(model.providerids.length);
 Product cartItem = Product(
                                 id: widget.product.id,
                                 tittle: widget.product.tittle,
@@ -327,7 +330,9 @@ Product cartItem = Product(
               });
                                     }
                                     else{
+                                
 model.addToCart(cartItem);
+
 loading=false;
 
                                     }

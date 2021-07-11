@@ -1,9 +1,16 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:freebies/Models/Games.dart';
 import 'package:freebies/Models/Vedios.dart';
+import 'package:freebies/Pages/addGames.dart';
 import 'package:freebies/Pages/gameView.dart';
+import 'package:freebies/Scoped-Model/mainModel.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+
+import '../../Pages/AddUpdateProduct.dart';
 
 class GameCard extends StatelessWidget {
   final Games game;
@@ -14,6 +21,58 @@ class GameCard extends StatelessWidget {
     this.gameIndex,
   );
 
+
+
+
+
+
+
+
+
+Widget _buildSubmitButton() {
+    return ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        return IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    model.selectGame(model.allGames[gameIndex].id);
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return  AddGames();
+                        },
+                      ),
+                    ).then((_) {
+                      model.selectProudct(null);
+                    });
+                  },
+                );
+      },
+    );
+  }
+
+
+Widget _buildSubmitButtondel() {
+    return ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        return IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    model.selectGame(model.allGames[gameIndex].id);
+                    model.delGame();
+                   
+                    //  model.selectProudct(null);
+                    
+                  },
+                );
+      },
+    );
+  }
+
+
+
+
+
   Widget _buildTitlePriceRow() {
     return Container(
       padding: EdgeInsets.only(top: 10.0),
@@ -22,16 +81,21 @@ class GameCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("Sample Game"),
+            Text(game.tittle),
             SizedBox(
-              width: 90.0,
+              //width: 90.0,
             ),
+            //Text(game.link),
+           _buildSubmitButton(),
+           _buildSubmitButtondel()
+                
             //  Text(''),
           ],
         ),
       ),
     );
   }
+
 
   DecorationImage _buildServiceBoxImage() {
     return DecorationImage(
@@ -93,26 +157,7 @@ class GameCard extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 100),
-              child: Row(
-                children: [
-                  //              FlatButton(onPressed: (){
-                  //                   var id= service.providerID;
-                  // _settProviderID(id);
-                  // print(id);
-                  // Navigator.pushNamed(context, '/ttt');
-                  //              },child: Text('View All Providers ',style: TextStyle(fontFamily: 'Oswald', color: Color(0xff36332e),fontSize: 14,fontWeight:FontWeight.normal)),),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    Icons.person,
-                    size: 30,
-                  )
-                ],
-              ),
-            ),
+           
             Container(
               height: 20,
             )

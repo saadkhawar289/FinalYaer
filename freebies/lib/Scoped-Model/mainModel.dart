@@ -4,7 +4,7 @@ import 'connectedServices.dart';
 
 
 
-class MainModel extends Model with  ConnectedServicesModel,ProductModel,UserModel,VediosModel,GamesModel,UtilityModel {
+class MainModel extends Model with  ConnectedServicesModel,ProductModel,UserModel,VediosModel,GamesModel,OrderModel,UtilityModel {
 
   
 }

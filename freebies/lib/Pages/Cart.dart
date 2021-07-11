@@ -685,7 +685,20 @@ class _CartPageState extends State<Cart> {
                                             if(walletamount.isNotEmpty){
                                               int billAmount=int.parse(walletamount);
                                               model.wallet=model.wallet-billAmount;
-                                                model.deductFromUSerWallet(model.singleUser);
+                                                model.deductFromUSerWallet(model.singleUser).then((value) => {
+                                                      
+                                                    if(value){
+                                                        model.placeOrder(model.cartItems,model.providerids,model.singleUser.fireBaseID,model.totalBill,TimeOfDay.now().toString(),DateTime.now().toString())
+                                                                                                              }
+                                                      else{
+                                                        print(value)
+
+                                                                                                              }
+
+
+
+
+                                                });
                                                 //place order
                                             //navigate to my orders
                                             }

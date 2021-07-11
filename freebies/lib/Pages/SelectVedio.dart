@@ -15,7 +15,7 @@ class _AllVediosState extends State<AllVedios> {
 
 @override
 initState() {
-    widget.model.fetchAllVedios();
+    widget.model.fetchVedios();
 
     super.initState();
   }

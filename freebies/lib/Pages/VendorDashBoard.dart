@@ -4,16 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:freebies/Models/Product.dart';
 import 'package:freebies/Models/User.dart';
+import 'package:freebies/Widgets/WidgetsControllers/GameController.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../Scoped-Model/mainModel.dart';
 
 class VendorDashboard extends StatefulWidget {
-  
-//  final User user;
-//   VendorDashboard(
+  MainModel model;
+
+  VendorDashboard(
     
-//     this.user
-//   );
+    this.model
+  );
 
   @override
   State<StatefulWidget> createState() {
@@ -24,11 +25,29 @@ class VendorDashboard extends StatefulWidget {
 class _VendorDashboardPageState extends State<VendorDashboard> {
   @override
   initState() {
-    //widget.model.fetchProducts();
+  widget.model.fetchGames();
 
     super.initState();
   }
 bool loading=false;
+
+Widget _buildFeaturedProductsList(BuildContext context){
+
+    return ScopedModelDescendant<MainModel>(builder: (BuildContext context, Widget child, MainModel model){
+      Widget content = Center(child:Text('No Games Available'));
+      
+
+      if(model.allGames.length > 0 && !model.isLoading) {
+          content = GameController();
+      }
+      else if(model.isLoading){
+        content = Center(child:CircularProgressIndicator());
+
+      }
+      return RefreshIndicator( onRefresh:model.fetchGames,child: content);// this is used to refresh the page by swiping down the screen
+    }
+    );
+  }
   Widget _buildDrawer(BuildContext context) {
     return Drawer(
       child: Column(
@@ -87,12 +106,53 @@ bool loading=false;
     });
   }
 
+Widget buildButtonRow(BuildContext context){
+  String text = 'My Products';
+return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top:30.0),
+                height:40.0,
+                child: Stack(
+                  children:<Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30/7),
+                      child: Text(text,
+                      style:TextStyle(fontSize: 20.0, fontWeight:FontWeight.bold),
+                      ),
+                    ),
+                    
+                ]
+                ),
+                ),
+                SizedBox(width: MediaQuery.of(context).size.width*0.40,),
+                FlatButton(child: Text('Add Products',
+                style:TextStyle(fontSize: 15.0, 
+                fontWeight:FontWeight.bold,
+                color: Colors.white,
+                ),
+                ),
+                color: Colors.black,
+                onPressed: (){
+                  Navigator.pushReplacementNamed(context, '/products');
+                },
+                shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(30),
+                ),
+                ),
+            ]
+          ),
+        );
+
+  
+}
   Widget webPageContent() {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;
 
     final double targetWidth =
-        deviceWidth > 550.0 ? deviceWidth*0.20 : deviceWidth * 0.20;
+        deviceWidth > 550.0 ? deviceWidth*0.25 : deviceWidth * 0.20;
 
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -103,42 +163,6 @@ bool loading=false;
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(
-                //     horizontal: 80,
-                //   ),
-                //   child: Container(
-                //     margin: EdgeInsets.only(top: 130),
-                //     width: targetWidth,
-                //     height: deviceHeight * 0.60,
-                //     color: Colors.white,
-                //     child: Carousel(
-                //       borderRadius: true,
-                //       boxFit: BoxFit.contain,
-                //       autoplay: true,
-                //       animationCurve: Curves.bounceOut,
-                //       animationDuration: Duration(milliseconds: 1500),
-                //       dotSize: 6.0,
-                //       dotIncreasedColor: Color(0xFFFF335C),
-                //       dotBgColor: Colors.yellow,
-                //       dotPosition: DotPosition.topRight,
-                //       dotVerticalPadding: 10.0,
-                //       showIndicator: true,
-                //       indicatorBgPadding: 7.0,
-                //       images: [
-                //         NetworkImage(
-                //             'https://m.media-amazon.com/images/S/aplus-media/sc/a829e124-4375-41c4-b0be-e699ebb974b2.__CR0,0,220,220_PT0_SX220_V1___.jpg'),
-                //         NetworkImage(
-                //             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQubf5b89mP5fjIfUYGvtak5L0w1m0p2wLj0g&usqp=CAU'),
-                //         NetworkImage(
-                //             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDT1-fmn2GJM9xT0jXf4adtqmiRVBD8iqZRQ&usqp=CAU')
-                //         // ExactAssetImage("assets/bbb.jpg"),
-                //       ],
-                //     ),
-                //   ),
-                //   //  Container(width: targetWidth,height: deviceHeight*0.60,child: Image.asset('assets/bbb.jpg',fit: BoxFit.fitHeight,)
-                //   //  )
-                // ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.03),
                   child: Container(
@@ -146,14 +170,14 @@ bool loading=false;
                     color: Colors.white,
                     width: targetWidth,
                     height: //300,
-                        deviceHeight * 0.55,
+                        deviceHeight * 0.70,
                     child: Padding(
                       padding:  EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width*0.05, vertical: 20),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child: Column(
-                         crossAxisAlignment: CrossAxisAlignment.end,
+                       //  crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             CircleAvatar(backgroundImage: AssetImage('assets/logoo.jpeg'), radius: MediaQuery.of(context).size.width*0.030,foregroundImage:AssetImage('assets/bbb.jpg') ,),
                                                         SizedBox(height: 20),
@@ -175,7 +199,7 @@ bool loading=false;
                                 children: [
                                   Expanded(
                                     flex: 1,
-                                    child:  Text('Bussiness Name:',
+                                    child:  Text('Company:',
                                   style: TextStyle(
                                       fontSize: deviceWidth * 0.010,
                                       fontWeight: FontWeight.bold,
@@ -248,31 +272,26 @@ bool loading=false;
                               endIndent: 30,
                             ),
                            
-                            Text('About Comapny',
-                                style: TextStyle(
-                                    fontSize: deviceWidth * 0.010,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black)),
-                            SizedBox(height: 10),
-                           Align(alignment: Alignment.centerLeft,
-                              child:Row(
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child:  Text('Email:',
-                                  style: TextStyle(
-                                      fontSize: deviceWidth * 0.010,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.yellow)),),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text('childzzzzzzzzzzz',style: TextStyle(
-                                      fontSize: deviceWidth * 0.010,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.yellow),),)
-                                ],
-                              )
-                            ),
+                          // //   Text('About Comapny',
+                          // //       style: TextStyle(
+                          // //           fontSize: deviceWidth * 0.010,
+                          // //           fontWeight: FontWeight.normal,
+                          // //           color: Colors.black)),
+                          // //   SizedBox(height: 10),
+                          // //  Align(alignment: Alignment.centerLeft,
+                          // //     child:Row(
+                          // //       children: [
+                          // //         Expanded(
+                          // //           flex: 1,
+                          // //           child: Text('childzzzzzzzzzzz',style: TextStyle(
+                          // //             fontSize: deviceWidth * 0.010,
+                          // //             fontWeight: FontWeight.bold,
+                          // //             color: Colors.yellow),),),
+                          // //             SizedBox(height: 20,),
+                          // //       ],
+                          // //     )
+                          //   ),
+                                      Center(child: ElevatedButton(onPressed: (){}, child: Text('Edit Profile')))
 
                             //ListTileStyle.drawer
                           ],
@@ -285,170 +304,20 @@ bool loading=false;
                   padding: const EdgeInsets.symmetric(horizontal: 14),
                   child: Column(
                     children: [
-                      Padding(
-                        padding:  EdgeInsets.only(left:MediaQuery.of(context).size.width*0.65,top:MediaQuery.of(context).size.height*0.010),
-                        child: Container(
-                          height: 30,
-                          width: 30,
-                          child: Align( 
-                          alignment: Alignment.bottomRight,
-                          child: FloatingActionButton(onPressed: (){},child: Icon(Icons.add),tooltip: 'Add Products',)),
-                     
-                          color: Colors.red,
-                        ),
-                      ),
-                        
-                     
-                        
-                    
+                          buildButtonRow(context),
                       Container(
                         width: deviceWidth * 0.68,
                         margin: EdgeInsets.only(top: 30),
                         height: deviceHeight <= 800
-                            ? deviceHeight * 0.65
-                            : deviceHeight * 0.99,
+                            ? deviceHeight * 0.70
+                            : deviceHeight * 0.80,
                         decoration: BoxDecoration(
                           border: Border.all(width: 2, color: Colors.black),
                           color: Colors.white,
                         ),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(28.0),
-                              child: Row(
-                                children: [
-                                  Text('Name'),
-                                  Spacer(),
-                                  Text('Hp Laptop')
-                                ],
-                              ),
-                            ),
-                            Divider(
-                              thickness: 2,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(28.0),
-                              child: Row(
-                                children: [Text('Price'), Spacer(), Text('250')],
-                              ),
-                            ),
-                            Divider(
-                              thickness: 2,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(28.0),
-                              child: Row(
-                                children: [
-                                  Text('Quantity'),
-                                  Spacer(),
-                                  GestureDetector(
-                                      onTap: () {
-                                        _decrementCounter();
-                                      },
-                                      child: Icon(Icons.arrow_back_ios_sharp,
-                                          color: Colors.greenAccent[700])),
-                                  Text(_counter.toString()),
-                                  GestureDetector(
-                                      onTap: () {
-                                        _incrementCounter();
-                                      },
-                                      child: Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Colors.greenAccent[700],
-                                      ))
-                                ],
-                              ),
-                            ),
-
-
-
-ScopedModelDescendant<MainModel>(
-      builder: (BuildContext context, Widget child, MainModel model) {
-        return model.isLoading
-            ? Center(child: CircularProgressIndicator())
-            : ElevatedButton(
-                              child:loading==false? Text("Add to Cart"):CircularProgressIndicator(),
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                    if (states.contains(MaterialState.hovered)) {
-                                      return Colors.green;
-                                    } else {
-                                      return Color(0xFFFF335C);
-                                    }
-                                  },
-                                ),
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  loading =true;
-                                                               Timer(Duration(seconds: 2), (){
-
-                                    
-                                  
-                                try {
-                                        if(model.cartItems.contains('cartItem')){
-                                          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                      title: Text('Product Already Added'),
-                      content: Text('Please Try another product'),
-                      actions: <Widget>[
-                        FlatButton(
-                          onPressed: () =>{
-                             setState(() {
-                                  loading=false;  
-                                  }),
-                             Navigator.of(context).pop(),
-                          },
-                          child: Text('Okay'),
-                        )
-                      ],
-                );
-              });
-                                        }
-                                        else{
-//model.addToCart('cartItem');
-loading=false;
-
-                                        }
-
-
-                                  
-                                  
-                                // print(widcartItems.length);
-                                } catch (e) {
-                                  print('Not ok');
-                                  print(e);
-                                }
-                              });
-
-                                });
-                                
-                              },
-                            );
-      },
-    ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            
-                          ],
+                        child:Center(child: _buildFeaturedProductsList(context))
                         ),
-                      ),
+                    
                     ],
                   ),
                 ),
@@ -456,23 +325,23 @@ loading=false;
             ),
           ),
          
-                    SizedBox(height: 200,),
-                  //  Container(
+                    SizedBox(height: 150,),
+                   Container(
                    
-                  //    height: 50,color: Colors.black ,width: deviceWidth,  child: Column(children: [
+                     height: 50,color: Colors.black ,width: deviceWidth,  child: Column(children: [
 
                        
-                  //         Center(child: Padding(
-                  //           padding: const EdgeInsets.symmetric(vertical: 10),
-                  //           child: Text('Copyright \u00a9  FreeBies',style: TextStyle(color: Colors.white,fontSize: 18,),),
-                  //         )),
+                          Center(child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text('Copyright \u00a9  FreeBies',style: TextStyle(color: Colors.white,fontSize: 18,),),
+                          )),
                            
                          
                   
-                  // //      Text('targetheight ''$targetHeight'.toString() ),
-                  // //      Text('totalheight ''$deviceHeight'.toString() ),
-                  // //  Text('totalwidth ''$deviceWidth'.toString())
-                  //  ],),),
+                  //      Text('targetheight ''$targetHeight'.toString() ),
+                  //      Text('totalheight ''$deviceHeight'.toString() ),
+                  //  Text('totalwidth ''$deviceWidth'.toString())
+                   ],),),
         ],
       ),
     );
@@ -718,152 +587,7 @@ loading=false;
     return Scaffold(
         drawer: deviceWidth < 500 ? _buildDrawer(context) : null,
         backgroundColor: Colors.white,
-        appBar: deviceWidth > 500
-            ? AppBar(
-                toolbarHeight: 120,
-                backgroundColor: Colors.grey[850],
-                //   backgroundColor: Color(0xff36332e),
-
-                elevation: 0,
-                title: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 70, vertical: 30),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/homes');
-                    },
-                    child: Text('FreeBiees',
-                        style: TextStyle(
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFFFF335C))),
-                  ),
-                ),
-                actions: <Widget>[
-                  Container(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 58),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 58),
-                                  child: Row(
-                                    children: [
-                                      Text('Games'),
-                                      Icon(
-                                        Icons.games,
-                                        color: Color(0xFFFF335C),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Text(MediaQuery.of(context).size.height.toString()),
-                                Icon(Icons.account_balance_wallet,
-                                    color: Color(0xFFFF335C))
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 58),
-                            child: Row(
-                              children: [
-                                Text('SIGN IN'),
-                                Icon(Icons.supervised_user_circle,
-                                    color: Colors.yellow)
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 58),
-                            child: Row(
-                              children: [
-                                Text('Cart'),
-                                GestureDetector(
-                                  onTap: () {
-                                    
-                                  },
-                                  child: Icon(
-                                    Icons.shopping_cart,
-                                    color: Colors.yellow,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            : AppBar(
-                toolbarHeight: 120,
-                backgroundColor: Colors.grey[850],
-                //   backgroundColor: Color(0xff36332e),
-                elevation: 0,
-                //centerTitle:true ,
-                title: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
-                  child: Text('FreeBiees',
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white)),
-                ),
-                actions: <Widget>[
-                  Container(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 18),
-                            child: Row(
-                              children: [
-                                Text('Games'),
-                                Icon(
-                                  Icons.games,
-                                )
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 18),
-                            child: Row(
-                              children: [
-                                Text('Wallet'),
-                                Icon(Icons.account_balance_wallet)
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              bottomNavigationBar: Container(
-                   
-                     height: 50,color: Colors.black ,width: deviceWidth,  child: Column(children: [
-
-                       
-                          Center(child: Padding(
-                        
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text('Copyright \u00a9  FreeBies ',style: TextStyle(color: Colors.white,fontSize: 18,),),
-                          )),
-                           
-                         
-                  
-                  //      Text('targetheight ''$targetHeight'.toString() ),
-                  //      Text('totalheight ''$deviceHeight'.toString() ),
-                  //  Text('totalwidth ''$deviceWidth'.toString())
-                   ],),),
+      
         body: SafeArea(child: LayoutBuilder(builder: (context, constraints) {
           if (constraints.maxWidth <= 600) {
             return mobilepageContent(context);

@@ -302,6 +302,10 @@ class _LoginPageState extends State<Login> {
         if (nav == 'From Cart') {
           Navigator.pushReplacementNamed(context, '/cart');
         }
+        else if(_formData['email']=='qq@qq.com'){
+        Navigator.pushReplacementNamed(context, '/admin');
+
+        }
         Navigator.pushReplacementNamed(context, '/homes');
       } else {
         showDialog(
@@ -530,7 +534,7 @@ class _LoginPageState extends State<Login> {
 
                         FlatButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/ResetPass');
+                              Navigator.pushNamed(context, '/providerOrders');
                             },
                             child: Text('Forget Password'))
                       ],

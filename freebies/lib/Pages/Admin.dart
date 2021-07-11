@@ -5,6 +5,7 @@ import 'package:freebies/Pages/AddUpdateProduct.dart';
 // import 'edit_product.dart';
 // import  './products_list.dart';
 import '../Scoped-Model/mainModel.dart';
+import 'addGames.dart';
 
 class AdminControll extends StatelessWidget {
 final MainModel model;
@@ -75,7 +76,7 @@ return Drawer(
           ),
         ),
         body: TabBarView(children:<Widget>[
-              ProductEditPage(),
+              AddGames(),
               ProductEditPage(),
               ProductEditPage(),
               ProductEditPage(),              

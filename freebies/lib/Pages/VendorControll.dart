@@ -2,14 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:freebies/Pages/AddUpdateProduct.dart';
+import 'package:freebies/Pages/VendorDashBoard.dart';
+import 'package:freebies/Pages/vendorOrder.dart';
 // import 'edit_product.dart';
 // import  './products_list.dart';
 import '../Scoped-Model/mainModel.dart';
 
-class VenderControll extends StatelessWidget {
+class VendorControll extends StatelessWidget {
 final MainModel model;
 
-VenderControll(this.model);
+VendorControll(this.model);
 Widget _buildSideDrawer(BuildContext context){
 
 return Drawer(
@@ -47,7 +49,7 @@ return Drawer(
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         drawer: _buildSideDrawer(context),
         appBar: AppBar(
@@ -57,28 +59,20 @@ return Drawer(
             tabs: <Widget>[
               Tab(
                 icon:Icon(Icons.create),
-                text: 'Manage Account',
+                text: 'Manage Product',
               ),
               Tab(
                 icon:Icon(Icons.list),
-                text: 'Payments'
+                text: 'Sellers Request'
                 ),
-                Tab(
-                icon:Icon(Icons.dashboard),
-                text: 'All Orders'
-                ),
-                  Tab(
-                icon:Icon(Icons.create),
-                text: 'Manage Products',
-              ),
+                
             ],
           ),
         ),
         body: TabBarView(children:<Widget>[
-              ProductEditPage(),
-              ProductEditPage(),
-              ProductEditPage(),
-             // ProductEditPage(),              
+              VendorDashboard(model),
+              ProviderOrders(model),
+                            
 
 
         ] ),

@@ -26,9 +26,8 @@ class _ProductEditPageState extends State<ProductEditPage> {
     'description': null,
     'price': null,
     'image': 'https://www.bentleymotors.com/content/dam/bentley/Master/Models/Hero/New%20Continental%20GT%20V8/Bentley-Continental-GT-V8-static-front-1920x670.jpg/_jcr_content/renditions/Bentley-Continental-GT-V8-static-front-699x309.jpg./Bentley-Continental-GT-V8-static-front-699x309.jpg',
-    'userId':null,
-    'featured':false,
-    'rating':0.0    
+    'isfeatured':false,
+        
   };
   
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -41,24 +40,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
 
   
 
-// void _getDetails(String name,String image){
- 
-//  print('Details Added');
-//  print(name);
-//  print(image);
-//  Subservices _subService =  Subservices(
-//           name:name,
-//          image: image, 
-//          price: null,
-//           descp: null,
-//           id: null
-//           );
-        
-//           print(_subService.image);
-//       subss.add(_subService);  
-//       deleting();
- 
-// }
+
 
 
 
@@ -133,7 +115,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
         if (value.isEmpty || value.length < 10) {
           return 'Descripition is required and should be 10+ characters long';
         }
-       
+       return 'Descripition is required and should be 10+ characters long';
       },
       
       onSaved: (String value) {
@@ -200,224 +182,6 @@ Widget _buildPriceTextField(Product product) {
       },
     );
   }
-  // Widget _buildSubmitButton1() {
-  //   return ScopedModelDescendant<MainModel>(
-  //     builder: (BuildContext context, Widget child, MainModel model) {
-  //       return model.isLoading
-  //           ? Center(child: CircularProgressIndicator())
-  //           : RaisedButton(
-  //               color: Theme.of(context).accentColor,
-  //               textColor: Colors.white,
-  //               child: Text('SAVE'),
-  //               onPressed: () => _submitForm1(
-  //                 model.addAnnoucment,
-  //                   model.selectedProductIndex,
-  //                 //  model.selectedSSIndex
-  //                  ),
-  //             );
-  //     },
-  //   );
-  // }
-
-// Widget _buildSubmitButton2() {
-//     return ScopedModelDescendant<MainModel>(
-//       builder: (BuildContext context, Widget child, MainModel model) {
-//         return model.isLoading
-//             ? Center(child: CircularProgressIndicator())
-//             : RaisedButton(
-//                 color: Theme.of(context).accentColor,
-//                 textColor: Colors.white,
-//                 child: Text('SAVE'),
-//                 onPressed: () => _submitForm2(
-                    
-                    
-//                 model.addTips,
-//                     model.selectedProductIndex,
-//                   //  model.selectedSSIndex
-//                    ),
-//               );
-//       },
-//     );
-//   }
-
-////////////////////////////////////////////////////////
-/////////////////////////////////
-
-
-Widget buildButtonRow(BuildContext context){
-
- String text = 'Biking-Tips';
-return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top:30.0),
-                height:40.0,
-                child: Stack(
-                  children:<Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30/7),
-                      child: Text(text,
-                      style:TextStyle(fontSize: 20.0, fontWeight:FontWeight.bold),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        margin: EdgeInsets.only(right:80/90),
-                      height:7,
-                      color:Colors.black.withOpacity(0.5),
-                      ),
-                    ),  
-                ]
-                ),
-                ),
-                Spacer(),
-                FlatButton(child:Row(children: [
-                  Icon(Icons.add,color: Colors.white,),
-                  Text('ADD',style:TextStyle(fontSize: 20.0, fontWeight:FontWeight.normal,color:Colors.white)),
-                ],) ,
-                color: Colors.black,
-                onPressed: ()async{
-                  
-                // showPop(context);
-                },
-                shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(30),
-                ),
-                ),
-            ]
-          ),
-        );
-
-
-}
-
-
-
- 
-
-// Widget _buildNameTextField() {
-//     return TextFormField(
-//       keyboardType: TextInputType.name,
-//       decoration: InputDecoration(labelText: 'Service Name'),
-//       controller: _nameTextController,
-//       // ignore: missing_return
-//       validator: (String value) {
-//         if (value.isEmpty ||
-//             !RegExp(r'^(?:[1-9]\d*|0)?(?:\.\d+)?$').hasMatch(value)) {
-//           // this is regular expression whichb means number
-//           return 'Price is required and should be a number.';
-//         }
-//       },
-//       onSaved: (String value)  {
-//         _subServiceValues['name'] = value;
-//       },
-//     );
-//   }
-
-// Future<dynamic>showimg()async{
-//   print('in showing');
-//      final SharedPreferences pref = await SharedPreferences.getInstance();
-//                         final String imageUrl = pref.getString('ImgUrl'); 
-//                         print('imgs');
-//                         _subServiceValues['image']=imageUrl;
-//                         print(_subServiceValues['image']);
-//                         pref.remove('ImgUrl');
-                        
-//                          return _subServiceValues['image'];
-// }
-
-// Future<dynamic>deleting()async{
-//      final SharedPreferences pref = await SharedPreferences.getInstance();
-//                         final String imageUrl = pref.getString('ImgUrl'); 
-//                          pref.remove('ImgUrl'); 
-//                         print('img');
-//                         print(imageUrl);
-//                         return imageUrl;
-// }
-
-
-// Future showPop(BuildContext context) {
-  
-
-//   return showDialog(
-//               context: context,
-//               builder: (BuildContext context) {
-//                 return AlertDialog(
-//                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(37) ),
-//                   backgroundColor: Colors.amber[400],
-//                   title: Text('Add Details'),
-//                   content: SingleChildScrollView(
-//                     scrollDirection: Axis.vertical,
-//                child: Column(children: [                        
-//                 Container(
-//                            child: Container(
-                  
-//                     child: SingleChildScrollView(
-//                       scrollDirection: Axis.vertical,
-//                                           child: Column(
-//                         children: <Widget>[
-//                           _buildNameTextField(),
-//                        //    ImageInput(),
-//                             //   _buildPriceTextField(),
-//                             // _buildDescriptionTextField(),
-//                         ]),
-//                     )
-//                       ),
-//                 )
-//                     ]),
-//                   ),
-//                   actions: <Widget>[
-//                     ScopedModelDescendant<MainModel>(
-//       builder: (BuildContext context, Widget child, MainModel model) {
-//         return (
-//                          FlatButton(
-
-//                         onPressed: () {
-//                                  DateTime pickedDate;
-// TimeOfDay time;
-// pickedDate=DateTime.now();
-//  time=TimeOfDay.now();
-//       //                     var _imgs;
-//       //                     try {
-//                              showimg().then((value) => {
-//   setState(() { 
-//                          try {
-//                       var zzz=value;
-                          
-//                        var sss= _nameTextController.text;
-                       
-//                        _subServiceValues['name']=sss;
-//                        model.addTips(sss, pickedDate, time);
-//                        //  _getDetails(_subServiceValues['name'],zzz);
-//                           _nameTextController.clear();
-//                          } catch (e) {
-//                            print(e);
-//                          }
-                       
-//                           }
-//                           )
-
-
-//                              });      
-//                           Navigator.of(context).pop();
-//                           },
-//                         child: Text('Save',
-//                         style:TextStyle(fontSize: 20.0, 
-//                             fontWeight:FontWeight.bold,
-//                             color: Colors.black),
-//                       ),
-    
-//                       ));
-//                     })],
-//                 );
-//               });
-//       }
-
-
 
 
 
@@ -440,9 +204,8 @@ void _submitForm(
         _formValues['description'],
         _formValues['price'],
         _formValues['image'],
-        _formValues['userId'],
         _formValues['featured'],
-        _formValues['rating']
+
      
       ).then((bool success) {
         if (success) {
@@ -483,9 +246,7 @@ void _submitForm(
         _formValues['description'],
         _formValues['price'],
         _formValues['image'],
-        _formValues['userId'],
         _formValues['featured'],
-        _formValues['isFavourites']
       ).then((_) => Navigator.pushReplacementNamed(context, '/Services')
           .then((value) => setSelectedProduct(null)));
     }
@@ -528,41 +289,13 @@ void _submitForm(
                  SizedBox(
                   height: 29.0,
                 ),
-                // Center(child: _buildSubmitButton1()),
-                //  SizedBox(
-                //   height: 29.0,
-                // ),
-            
-               // _buildTitleTextField(product),
-        
-         
+              
           //  UploadImage(),
          
           
                  SizedBox(
                   height: 25.0,
                 ),
-                // Center(child: _buildSubmitButton2()),
-                //  SizedBox(
-                //   height: 29.0,
-                // ),                        
-              // buildButtonRow(context), 
-              //        SizedBox(
-              //     height: 20.0,
-              //   ),
-            // Container(alignment: Alignment.center,
-            //    height: 300,
-            //    padding:EdgeInsets.all(16) ,
-               
-            //   color: Colors.white,
-            //    child:SingleChildScrollView(
-            //      scrollDirection: Axis.horizontal,
-            //                     child: Container(
-            //        child:subss.length == 0 ? Center(child: Text('NO Sub-Service Added Yet !')):_buildServiceList(displayServices),
-            //      ),
-            //    ),
-            //  ),
-            
                 SizedBox(
                   height: 15.0,
                 ),
@@ -609,12 +342,7 @@ void _submitForm(
                  SizedBox(
                   height: 29.0,
                 ),
-                // Center(child: _buildSubmitButton1()),
-                //  SizedBox(
-                //   height: 29.0,
-                // ),
-            
-               // _buildTitleTextField(product),
+              
            ImageInputMobile(),
       
           
@@ -623,26 +351,7 @@ void _submitForm(
                  SizedBox(
                   height: 29.0,
                 ),
-                // Center(child: _buildSubmitButton2()),
-                //  SizedBox(
-                //   height: 29.0,
-                // ),                        
-              // buildButtonRow(context), 
-              //        SizedBox(
-              //     height: 20.0,
-              //   ),
-            // Container(alignment: Alignment.center,
-            //    height: 300,
-            //    padding:EdgeInsets.all(16) ,
-               
-            //   color: Colors.white,
-            //    child:SingleChildScrollView(
-            //      scrollDirection: Axis.horizontal,
-            //                     child: Container(
-            //        child:subss.length == 0 ? Center(child: Text('NO Sub-Service Added Yet !')):_buildServiceList(displayServices),
-            //      ),
-            //    ),
-            //  ),
+           
             
                 SizedBox(
                   height: 10.0,

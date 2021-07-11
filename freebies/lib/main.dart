@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 import 'package:freebies/Pages/VendorLogin.dart';
+import 'package:freebies/Pages/addGames.dart';
+import 'package:freebies/Pages/addvedios.dart';
 import 'package:freebies/Widgets/Helpers/webUploadImage.dart';
 
 import 'package:scoped_model/scoped_model.dart';
@@ -21,9 +23,11 @@ import 'Pages/Login.dart';
 import 'Pages/SelectGames.dart';
 import 'Pages/SelectVedio.dart';
 import 'Pages/SingleProduct.dart';
+import 'Pages/VendorControll.dart';
 import 'Pages/VendorDashBoard.dart';
 import 'Pages/gameView.dart';
 import 'Pages/home.dart';
+import 'Pages/vendorOrder.dart';
 import 'Pages/video_player_widget.dart';
 import 'Widgets/Helpers/mobileUploadImage.dart';
 
@@ -86,20 +90,20 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
            home:SplashScreen(
              seconds: 5 ,
-             title:   Text(
-      'FreeBies',
-      style: TextStyle(
-        fontSize: 45,
-        foreground: Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 3.1
-          ..color =Color(0xFFFF335C),
-      ),
-    ),
+    //          title:   Text(
+    //   'FreeBies',
+    //   style: TextStyle(
+    //     fontSize: 45,
+    //     foreground: Paint()
+    //       ..style = PaintingStyle.stroke
+    //       ..strokeWidth = 3.1
+    //       ..color =Color(0xFFFF335C),
+    //   ),
+    // ),
             // child: Text('ezentu',style:TextStyle(
             //          fontSize: 50.0, fontWeight: FontWeight.bold, color: Colors.black,) ,),
           
-             navigateAfterSeconds: VendorDashboard(),
+             navigateAfterSeconds:AllProductPage(_model),
            // navigateAfterFuture:  loadFromFuture(),
           photoSize: sizeee,
              useLoader: true,
@@ -135,7 +139,8 @@ class _MyAppState extends State<MyApp> {
          '/entertainment':(BuildContext context) => Entertainment(_model),
        '/admin' :(BuildContext context) => AdminControll(_model),
        '/AllVedios' :(BuildContext context) =>AllVedios(_model),
-       '/AllGames' :(BuildContext context) =>GameSelection(_model)
+       '/AllGames' :(BuildContext context) =>GameSelection(_model),
+       '/providerOrders':(BuildContext context) =>VendorControll(_model)
      
         
           },

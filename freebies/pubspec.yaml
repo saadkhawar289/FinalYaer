@@ -44,6 +44,10 @@ dependencies:
   image_picker: ^0.6.7+12 
   firebase_storage:  
   file_picker:  
+  firebase: 
+  universal_html: 
+  image_picker_web: ^2.0.3
+
 
 
 
