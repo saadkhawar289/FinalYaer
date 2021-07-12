@@ -200,8 +200,9 @@ void _submitForm(
     _formKey.currentState.save();
     if (selectedProductIndex == -1 ) {
 
-    
+
       addProduct(
+
         _formValues['tittle'],
         _formValues['description'],
         _formValues['price'],
@@ -220,7 +221,7 @@ void _submitForm(
                   content: Text('Service Added'),
                   actions: <Widget>[
                     FlatButton(
-                      onPressed: () => Navigator.pushNamed(context, '/admin'),
+                      onPressed: () => Navigator.pushNamed(context, '/providerOrders'),
                       child: Text('Okay'),
                     )
                   ],
@@ -247,10 +248,13 @@ void _submitForm(
       updateProduct(
         _formValues['tittle'],
         _formValues['description'],
+         widget.model.uploadedImage,
         _formValues['price'],
-        _formValues['image'],
-        _formValues['featured'],
-      ).then((_) => Navigator.pushReplacementNamed(context, '/Services')
+        widget.model.singleUser.id,
+        widget.model.singleUser.id
+        
+
+      ).then((_) => Navigator.pushReplacementNamed(context, '/admin')
           .then((value) => setSelectedProduct(null)));
     }
   }

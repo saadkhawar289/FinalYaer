@@ -25,8 +25,10 @@ import 'Pages/PendingVerfication.dart';
 import 'Pages/SelectGames.dart';
 import 'Pages/SelectVedio.dart';
 import 'Pages/SingleProduct.dart';
+import 'Pages/UserOrders.dart';
 import 'Pages/VendorControll.dart';
 import 'Pages/VendorDashBoard.dart';
+import 'Pages/editProfile.dart';
 import 'Pages/gameView.dart';
 import 'Pages/home.dart';
 import 'Pages/vendorOrder.dart';
@@ -144,7 +146,10 @@ class _MyAppState extends State<MyApp> {
        '/AllGames' :(BuildContext context) =>GameSelection(_model),
        '/providerOrders':(BuildContext context) =>VendorControll(_model),
       '/notVendor':(BuildContext context) => NotVendorScreen(),
-      '/PendingVerification':(BuildContext context) =>PendingVerification()
+      '/PendingVerification':(BuildContext context) =>PendingVerification(),
+      '/chnageProfile':(BuildContext context) =>ADDProfile(_model),
+      '/UserDashBoard':(BuildContext context) =>UserDashboard(_model),
+     //'/gameview':(BuildContext context) => GameView()
      
         
           },

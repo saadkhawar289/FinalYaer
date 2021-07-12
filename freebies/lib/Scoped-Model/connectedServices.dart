@@ -161,40 +161,50 @@ mixin ProductModel on ConnectedServicesModel {
   }
 
   Future<bool> updateProduct(
-      String id,
+      
       String tittle,
       String description,
       String image,
       int price,
-      bool isfeatured,
       bool isFavourite,
       String userId) {
     _isLoading = true;
     notifyListeners();
+ final Map<String, dynamic> productData = {
+      'tittle': tittle,
+      'description': description,
+      'image': image,
+      'price': price,
+      'UserID': _authenticationUser.id,
+      'isFeatured': selectedProduct.isFeatured,
+      'isFavourite':false,
+      'reviews':'ssss',
+      'rating':0
+    };
+
     Map<String, dynamic> updatedData = {
       'tittle': tittle,
       'description': description,
       'image':
           'https://www.bentleymotors.com/content/dam/bentley/Master/Models/Hero/New%20Continental%20GT%20V8/Bentley-Continental-GT-V8-static-front-1920x670.jpg/_jcr_content/renditions/Bentley-Continental-GT-V8-static-front-699x309.jpg./Bentley-Continental-GT-V8-static-front-699x309.jpg',
       'price': price,
-      'userEamail': _authenticationUser.email,
       'userId': _authenticationUser.id
     };
     return http
         .put(
             'https://freebies-96dc8-default-rtdb.firebaseio.com/Poducts/${selectedProduct.id}.json}',
-            body: json.encode(updatedData))
+            body: json.encode(productData))
         .then((http.Response response) {
       _isLoading = false;
       final Product updatedProduct = Product(
-          id: id,
+          id: selectedProduct.id,
           tittle: tittle,
           description: description,
           image: image,
           price: price,
           isfavourite: isFavourite,
           userId: userId,
-          isFeatured: isfeatured);
+          isFeatured: selectedProduct.isFeatured);
       _products[selectedProductIndex] = updatedProduct;
       notifyListeners();
       return true;
@@ -236,7 +246,12 @@ Future<Null> fetchWhishlitProducts({onlyForUser = false}) {
           fetchedProductslist.add(product);
           print(product.id);
         });
-        _products =  fetchedProductslist;
+        _products = onlyForUser ?  fetchedProductslist.where((Product product)  {// this 'WHERE method' will give all the products of authenticated userId
+        return product.userId == _authenticationUser.id;
+        
+      }).toList() : fetchedProductslist;
+      print('sadd');
+      print('length ${_products.length}');
         _isLoading = false;
         notifyListeners();
         _selServiceId = null;
@@ -352,13 +367,14 @@ Future<Null> fetchWhishlitProducts({onlyForUser = false}) {
     }
   }
 
-Future<bool> delService(String id) async {
+Future<bool> delService() async {
     _isLoading = true;
-    id=selectedProduct.id;
+  String  id=selectedProduct.id;
+  print(id);
     notifyListeners();
 try {
    http.Response response= await http.delete(
-          'https://arphar.herokuapp.com/Product/$id');
+          'https://freebies-96dc8-default-rtdb.firebaseio.com/Products/$id.json');
 
  if (response.statusCode != 200 && response.statusCode != 201) {
         _isLoading = false;
@@ -849,9 +865,9 @@ Future<Map<String, dynamic>> venderlogIn(String email, String password, AuthMode
             wallet: userData.wallet,
             image: userData.image,
             isProvider:  userData.isProvider,
-            cnic: '222', // userData.cnic,
-            name: 'userData.name',
-            number: '22222' //userData.number
+            cnic:  userData.cnic,
+            name: userData.name,
+            number:userData.number
             );
 print(userData.wallet);
 wallet=int.parse(userData.wallet);
@@ -982,9 +998,9 @@ wallet=int.parse(userData.wallet);
             wallet: userData.wallet,
             image: userData.image,
             isProvider:  userData.isProvider,
-            cnic: '222', // userData.cnic,
-            name: 'userData.name',
-            number: '22222' //userData.number
+            cnic:  userData.cnic,
+            name: userData.name,
+            number: userData.number
             );
 print(userData.wallet);
 wallet=int.parse(userData.wallet);
@@ -1401,51 +1417,57 @@ if (sourceOfMoney =='Vedio Points') {
  notifyListeners();
   }
 
-// void updateProfileData(String name,String email,String firebaseID,String number,String address,String image,)async{
-// _isLoading=true;
-// notifyListeners();
+Future<bool> updateProfileData(String name,String number,String address,String image,)async{
+_isLoading=true;
+notifyListeners();
 
-//  final SharedPreferences pref = await SharedPreferences.getInstance();
-//     final String profileID = pref.getString(
-//         'profileID');
 
-// Map<String ,dynamic>profileData={
 
-// 'name':name,
-// 'email':email,
-// 'firebaseId':firebaseID,
-// 'mobileNo':number,
-// 'address':address,
-// 'image':image,
 
-// };
+Map<String ,dynamic>profileData={
+'pass':_authenticationUser.pass,
+'email':_authenticationUser.email,
+'name':name,
+'token':null,
+'firebaseId':_authenticationUser.fireBaseID,
+'number':number,
+'address':address,
+'image':image,
+'isProvider':_authenticationUser.isProvider,
+'wallet':_authenticationUser.wallet,
+'cnic':_authenticationUser.cnic,
+'isAcepted':_authenticationUser.isAccepted
 
-// try {
-//       final http.Response response = await http.put(
-//           'https://socialservices-6478e-default-rtdb.firebaseio.com/Profile/$profileID.json',
-//           body: json.encode(profileData),);
 
-//       if (response.statusCode != 200 && response.statusCode != 201) {
-//         print('Sending error');
-//         print(response.statusCode );
-//         _isLoading = false;
-//         notifyListeners();
-//         return ;
-//       }
 
-// print(response.statusCode);
-// print(response.body);
-//       _isLoading = false;
-//       notifyListeners();
-//       return ;
-//     } catch (error) {
-//       print(error);
-//       _isLoading = false;
-//       notifyListeners();
-//       return;
-//     }
+};
 
-// }
+try {
+      final http.Response response = await http.put(
+          'https://freebies-96dc8-default-rtdb.firebaseio.com/User/${_authenticationUser.id}.json',
+          body: json.encode(profileData),);
+
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        print('Sending error');
+        print(response.statusCode );
+        _isLoading = false;
+        notifyListeners();
+        return false;
+      }
+
+print(response.statusCode);
+print(response.body);
+      _isLoading = false;
+      notifyListeners();
+      return true ;
+    } catch (error) {
+      print(error);
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+
+}
 
 
 // Future<void> fetchProfileData()async{

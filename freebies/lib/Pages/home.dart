@@ -44,28 +44,39 @@ TextEditingController _emailController= TextEditingController();
             backgroundColor: Color(0xff36332e),
             automaticallyImplyLeading:
                 false, // this for the button to hide when drawer is open
-            title: Text('Choose'),
+            title: ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        return  Text(model.wallet==null?'WALLET'.toString():model.wallet.toString(),style: TextStyle(color: Colors.white,fontSize: 14, ));
+      },
+    ),
           ),
 
           ListTile(
             leading: Icon(Icons.shopping_cart_rounded),
             title: Text('Cart'),
             onTap: () {
-              Navigator.pushNamed(context, '/productEdit');
+              Navigator.pushNamed(context, '/cart');
             },
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.favorite),
-            title: Text('Wish List'),
+            title:widget.model.singleUser==null? Text('LOGIN'):Text('LOGOUT'),
+
             onTap: () {
-              Navigator.pushNamed(context, '/aboutUS');
+                 if(widget.model.singleUser==null){
+Navigator.pushNamed(context, '/auth');
+                            }
+                            else{
+                              widget.model.logout();
+                              Navigator.pushReplacementNamed(context, '/homes');
+                            }
             },
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.pan_tool),
-            title: Text('Logout'),
+            title: Text('Orders'),
             onTap: () {
               Navigator.pushNamed(context, '/privacy');
             },
@@ -73,9 +84,9 @@ TextEditingController _emailController= TextEditingController();
           Divider(),
           ListTile(
             leading: Icon(Icons.pan_tool),
-            title: Text('Admin'),
+            title: Text('Entertainment'),
             onTap: () {
-              Navigator.pushNamed(context, '/admin');
+              Navigator.pushNamed(context, '/entertainment');
             },
           ),
           //  LogoutListTile()
@@ -102,7 +113,7 @@ TextEditingController _emailController= TextEditingController();
                 style: TextStyle(
                     fontSize: deviceHeight * 0.030,
                     fontWeight: FontWeight.bold,
-                    color: Colors.yellow[700]),
+                    color: Colors.yellow),
               ),
             ),
             Positioned(
@@ -188,11 +199,12 @@ TextEditingController _emailController= TextEditingController();
         //   width: 90,
         //   child:Image.asset('assets/logoo.jpeg'))
         
-        Text('FreeBiees',
-            style: TextStyle(
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFFFF335C))),
+        // Text('FreeBiees',
+        //     style: TextStyle(
+        //         fontSize: 30.0,
+        //         fontWeight: FontWeight.bold,
+        //         color: Color(0xFFFF335C))),
+        Image(image:AssetImage('assets/Untitled.png',),height: MediaQuery.of(context).size.height*0.12,width:MediaQuery.of(context).size.width*0.05 ,fit:BoxFit.fill ,),
      ),
       actions: <Widget>[
         Container(
@@ -209,7 +221,7 @@ TextEditingController _emailController= TextEditingController();
                   padding: const EdgeInsets.only(right: 58),
                   child: Row(
                     children: [
-                      Text('Entertainment'),
+                      Text('ENTERTAINMENT'),
                       GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(context, '/entertainment');
@@ -228,7 +240,7 @@ TextEditingController _emailController= TextEditingController();
 
  ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
-        return  Text(model.wallet==null?0.toString():model.wallet.toString(),style: TextStyle(color: Color(0xFFFF335C),fontSize: 18,fontWeight:FontWeight.bold ));
+        return  Text(model.wallet==null?'WALLET'.toString():model.wallet.toString(),style: TextStyle(color: Colors.white,fontSize: 14, ));
       },
     ),
 
@@ -268,7 +280,7 @@ Navigator.pushNamed(context, '/auth');
                   padding: const EdgeInsets.only(right: 58),
                   child: Row(
                     children: [
-                      Text('Cart'),
+                      Text('CART'),
                       GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(context, '/cart');
@@ -278,6 +290,25 @@ Navigator.pushNamed(context, '/auth');
                             color: Colors.yellow,
                           ))
                     ],
+                  ),
+                ),
+                  Padding(
+                  padding: const EdgeInsets.only(right: 58),
+                  child: Visibility(
+                    visible:widget.model.singleUser==null?false:true,
+                    child: Row(
+                      children: [
+                        Text('ORDERS'),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/UserDashBoard');
+                            },
+                            child: Icon(
+                              Icons.book,
+                              color: Colors.yellow,
+                            ))
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -290,62 +321,25 @@ Navigator.pushNamed(context, '/auth');
 
   Widget mobileAppBar() {
     final double deviceWidth = MediaQuery.of(context).size.width;
-
+final targetWidth=deviceWidth<650?deviceWidth*0.30:0.30;
     return AppBar(
       toolbarHeight: 120,
-      backgroundColor: Colors.black26,
+      backgroundColor: Colors.black,
       //   backgroundColor: Color(0xff36332e),
       elevation: 0,
       //centerTitle:true ,
       title: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
-        child: Text('FreeBiees',
-            style: TextStyle(
-                fontSize: deviceWidth * 0.045,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFFFF335C))),
+        child:         Image(image:AssetImage('assets/Untitled.png',),height: MediaQuery.of(context).size.height*0.12,width:targetWidth ,fit:BoxFit.fill ,),
+
       ),
       actions: <Widget>[
-        Container(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 18),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Games',
-                        style: TextStyle(fontSize: deviceWidth * 0.030),
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/AllVedios');
-                          },
-                          child: Icon(
-                            Icons.extension_sharp,
-                            color: Colors.yellow,
-                          ))
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 18),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Wallet',
-                        style: TextStyle(fontSize: deviceWidth * 0.030),
-                      ),
-                      Icon(Icons.account_balance_wallet, color: Colors.yellow)
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        // Container(
+        //   child: SingleChildScrollView(
+        //     scrollDirection: Axis.horizontal,
+        //     child:
+        //   ),
+      
       ],
     );
   }
@@ -362,8 +356,8 @@ Navigator.pushNamed(context, '/auth');
     //   final double targetheight= deviceHeight * 0.60;
     return Scaffold(
         backgroundColor: Colors.white,
-        drawer: deviceWidth < 500 ? _buildDrawer(context) : null,
-        appBar: deviceWidth < 500 ? mobileAppBar() : webAppBar(),
+        drawer: deviceWidth <= 650 ? _buildDrawer(context) : null,
+        appBar: deviceWidth < 650 ? mobileAppBar() : webAppBar(),
         body: SafeArea(
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -466,7 +460,7 @@ Navigator.pushNamed(context, '/auth');
                     ),
                     Padding(
                         padding: const EdgeInsets.all(18.0),
-                        child: buildButtonRow(context, 'Featured Products')
+                        child: buildButtonRow(context, 'FEATURE PRODUCTS')
                         //Text('Featured Products', style: TextStyle(fontFamily: 'Oswald', color: Colors.amber,fontSize: deviceHeight*0.030,fontWeight:FontWeight.bold),
                         //),
 
@@ -489,7 +483,7 @@ Navigator.pushNamed(context, '/auth');
                     ),
                     Container(
                       decoration: BoxDecoration(color: Colors.white),
-                      child: buildButtonRow(context, 'Product'),
+                      child: buildButtonRow(context, 'PRODUCTS'),
                     ),
                     SizedBox(
                       height: 20,
@@ -503,7 +497,7 @@ Navigator.pushNamed(context, '/auth');
                           height: deviceWidth <= 500
                               ? deviceHeight * 0.50
                               : deviceHeight * 0.70,
-                          color: Colors.brown.shade100,
+                          color: Colors.grey[400],
                           width: deviceWidth,
                           child: Container(
                             decoration: BoxDecoration(

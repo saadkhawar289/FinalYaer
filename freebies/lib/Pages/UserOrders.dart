@@ -10,22 +10,22 @@ import 'package:freebies/Widgets/WidgetsControllers/productWidget.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../Scoped-Model/mainModel.dart';
 
-class VendorDashboard extends StatefulWidget {
+class UserDashboard extends StatefulWidget {
   MainModel model;
  String typeOfCard='zzzz';
 
-  VendorDashboard(
+  UserDashboard(
     
     this.model
   );
 
   @override
   State<StatefulWidget> createState() {
-    return _VendorDashboardPageState();
+    return _UserDashboardPageState();
   }
 }
 
-class _VendorDashboardPageState extends State<VendorDashboard> {
+class _UserDashboardPageState extends State<UserDashboard> {
   @override
   initState() {
   widget.model.fetchWhishlitProducts(onlyForUser: true);
@@ -110,7 +110,7 @@ Widget _buildFeaturedProductsList(BuildContext context){
   }
 
 Widget buildButtonRow(BuildContext context){
-  String text = 'My Products';
+  String text = 'My Orders';
 return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
@@ -131,25 +131,25 @@ return Padding(
                 ),
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width*0.40,),
-                FlatButton(child: Text('Add Products',
-                style:TextStyle(fontSize: 15.0, 
-                fontWeight:FontWeight.bold,
-                color: Colors.white,
-                ),
-                ),
-                color: Colors.black,
-                onPressed: (){
-                 Navigator.push(context,
-                                                MaterialPageRoute(
-                                              builder: (BuildContext context) {
-                                                return ProductEditPage(model:widget.model,)
-                                                    ;
-                                              },
-                                            ));
-                },
-                shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(30),
-                ),
-                ),
+                // FlatButton(child: Text('',
+                // style:TextStyle(fontSize: 15.0, 
+                // fontWeight:FontWeight.bold,
+                // color: Colors.white,
+                // ),
+                // ),
+                // color: Colors.black,
+                // onPressed: (){
+                //  Navigator.push(context,
+                //                                 MaterialPageRoute(
+                //                               builder: (BuildContext context) {
+                //                                 return ProductEditPage(model:widget.model,)
+                //                                     ;
+                //                               },
+                //                             ));
+                // },
+                // shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(30),
+                // ),
+                // ),
             ]
           ),
         );
@@ -598,6 +598,7 @@ return Padding(
         deviceHeight > 550.0 ? 420.0 : deviceHeight * 0.60;
 //   final double targetheight= deviceHeight * 0.60;
     return Scaffold(
+      appBar: AppBar(),
         drawer: deviceWidth < 500 ? _buildDrawer(context) : null,
         backgroundColor: Colors.white,
       

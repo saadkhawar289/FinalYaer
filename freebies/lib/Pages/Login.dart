@@ -335,7 +335,7 @@ class _LoginPageState extends State<Login> {
           if (nav == 'From Cart') {
             Navigator.pushReplacementNamed(context, '/cart');
           } else {
-            Navigator.pushReplacementNamed(context, '/admin');
+            Navigator.pushReplacementNamed(context, '/homes');
           }
         } else {
           Navigator.pushReplacementNamed(context, '/homes');

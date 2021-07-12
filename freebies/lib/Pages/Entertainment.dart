@@ -120,112 +120,159 @@ class _IntertainmentState extends State<Entertainment> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.red,
-                        ),
-                        color: Colors.white54,
-                        image: _buildGameBoxImage()),
-                    width: deviceWidth * 0.49,
-                    height: deviceHeight * 0.75,
-                    child: Center(
-                        child: FlatButton(
-                      onPressed: () {
-                        if(widget.model.singleUser!=null){
-                        Navigator.pushNamed(context, '/AllGames');
+                  child: GestureDetector(
+                    onTap: (){
+                      if(widget.model.singleUser!=null){
+                          Navigator.pushNamed(context, '/AllGames');
 
-                        }
-                        else{
-                                                                      showDialog(
+                          }
+                          else{
+                                                                        showDialog(
             context: context,
               builder: (BuildContext context) {
               return AlertDialog(
                 title: Text('Attention'),
                 content:Text('you are not login') ,
                 actions: [
-                  FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('Okay'))
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Okay'))
                 ],
               );
             },
             );
-                        }
-                      },
-                      child: Text(
-                        'Games',
-                        style: TextStyle(
-                          fontSize: 45,
-                          foreground: Paint()
-                            ..style = PaintingStyle.stroke
-                            ..strokeWidth = 3.1
-                            ..color = Color(0xFFFF335C),
+                          }
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 2,
+                            color: Colors.red,
+                          ),
+                          color: Colors.white54,
+                          image: _buildGameBoxImage()),
+                      width: deviceWidth * 0.49,
+                      height: deviceHeight * 0.75,
+                      child: Center(
+                          child: FlatButton(
+                        onPressed: () {
+                          if(widget.model.singleUser!=null){
+                          Navigator.pushNamed(context, '/AllGames');
+
+                          }
+                          else{
+                                                                        showDialog(
+            context: context,
+              builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Attention'),
+                content:Text('you are not login') ,
+                actions: [
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Okay'))
+                ],
+              );
+            },
+            );
+                          }
+                        },
+                        child: Text(
+                          'Games',
+                          style: TextStyle(
+                            fontSize: 45,
+                            color : Color(0xFFFF335C)
+                          
+                          ),
                         ),
-                      ),
-                      hoverColor: Colors.amber,
-                    )),
+                       // hoverColor: Colors.amber,
+                      )),
+                    ),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.red,
-                        ),
-                        color: Colors.white54,
-                        image: _buildVedioBoxImage()),
-                    width: deviceWidth * 0.49,
-                    height: deviceHeight * 0.75,
-                    child: Center(
-                        child: FlatButton(
-                      onPressed: () {
+                  child: GestureDetector(
+                    onTap: (){
+                      if(widget.model.singleUser!=null){
+                          Navigator.pushNamed(context, '/AllVedios');
 
-
-                         if(widget.model.singleUser!=null){
-                        Navigator.pushNamed(context, '/AllVedios');
-
-                        }
-                        else{
-                                                                      showDialog(
+                          }
+                          else{
+                                                                        showDialog(
             context: context,
               builder: (BuildContext context) {
               return AlertDialog(
                 title: Text('Attention'),
                 content:Text('you are not login') ,
                 actions: [
-                  FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('Okay'))
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Okay'))
                 ],
               );
             },
             );
-                        }
+                          }
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 2,
+                            color: Colors.red,
+                          ),
+                          color: Colors.white54,
+                          image: _buildVedioBoxImage()),
+                      width: deviceWidth * 0.49,
+                      height: deviceHeight * 0.75,
+                      child: Center(
+                          child: FlatButton(
+                        onPressed: () {
 
 
-                        //Navigator.pushNamed(context, '/AllVedios');
-                      },
-                      child: Text(
-                        'Vedios',
-                        style: TextStyle(
-                            fontSize: 45,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 3.1
-                              ..color = Color(0xFFFF335C),),
-                      ),
-                      hoverColor: Colors.amber,
-                    )),
+                           if(widget.model.singleUser!=null){
+                          Navigator.pushNamed(context, '/AllVedios');
+
+                          }
+                          else{
+                                                                        showDialog(
+            context: context,
+              builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Attention'),
+                content:Text('you are not login') ,
+                actions: [
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Okay'))
+                ],
+              );
+            },
+            );
+                          }
+
+
+                          //Navigator.pushNamed(context, '/AllVedios');
+                        },
+                        child: Text(
+                          'Vedios',
+                          style: TextStyle(
+                              fontSize: 45,
+                              color : Color(0xFFFF335C),),
+                        ),
+                        hoverColor: Colors.amber,
+                      )),
+                    ),
                   ),
                 ),
               ),

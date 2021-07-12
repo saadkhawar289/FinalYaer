@@ -288,7 +288,7 @@ class _VendorLoginState extends State<VendorLogin> {
     Map<String, dynamic> successInformation;
 
     if (_authMode == AuthMode.VendorSignup) {
-      await requestForm(
+   successInformation =   await requestForm(
               _formData['email'],
               _formData['password'],
               _authMode,
@@ -297,12 +297,12 @@ class _VendorLoginState extends State<VendorLogin> {
               _formData['cnic'],
               _formData['number'],
               true,
-              'img')
-          .then((value) => {
-                if (value)
+              'img');
+        
+                if (successInformation['success'])
                   {
                     Navigator.pushReplacementNamed(
-                        context, '/PendingVeriFication')
+                        context, '/PendingVeriFication');
                   }
                 else
                   {
@@ -321,9 +321,9 @@ class _VendorLoginState extends State<VendorLogin> {
                           ],
                         );
                       },
-                    )
+                    );
                   }
-              });
+             
     } else {
       successInformation = await login(_formData['email'], _formData['password'], _authMode);
       print(successInformation['success']);

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:freebies/Widgets/Cards/featuredProductCard.dart';
 import 'package:freebies/Widgets/Cards/simpleProductCard.dart';
+import 'package:freebies/Widgets/Cards/vendorProductCard.dart';
 
 import '../../Models/Product.dart';
 import 'package:flutter/material.dart'; 
@@ -32,7 +33,7 @@ if(products.length > 0) {
       var target= width <=500?0.55:0.70;
       double target2= width <=500?290:260;
   serviceCard =  typeOfCard=='zzzz'? GridView.builder(padding: EdgeInsets.all(10), gridDelegate:SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: target2,childAspectRatio:target) ,
-        itemBuilder: (BuildContext context, int index) =>SimpleProductCard(products[index],index),
+        itemBuilder: (BuildContext context, int index) => VendorProductCard(products[index],index),
           addAutomaticKeepAlives: true, 
         itemCount: products.length,
         scrollDirection: Axis.vertical,

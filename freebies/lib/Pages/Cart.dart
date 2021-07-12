@@ -586,7 +586,7 @@ class _CartPageState extends State<Cart> {
                                       ),
                                       child: Column(
                                         children: [
-                                          _acceptOnlinePayment(),
+                                         // _acceptOnlinePayment(),
                                           _acceptFromWallet(),
                                           Visibility(
                                               visible: _walletTextField,

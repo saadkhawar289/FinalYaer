@@ -69,7 +69,7 @@ void upload()async{
     setState(() {
       imgurl=url.toString();
       
-      widget.model.addPicToLocal(imgurl);
+     // widget.model.addPicToLocal(imgurl);
       widget.model.uploadedImage=imgurl;
 
       print(imgurl);
