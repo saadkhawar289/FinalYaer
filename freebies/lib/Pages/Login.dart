@@ -331,14 +331,14 @@ class _LoginPageState extends State<Login> {
           await logIn(_formData['email'], _formData['password'], _authMode);
       print(successInformation['success']);
       if (successInformation['success']) {
-        if (_formData['email'] == 'qq@qq.com') {
+        if (_formData['email'] == 'ss@ss.com') {
           if (nav == 'From Cart') {
             Navigator.pushReplacementNamed(context, '/cart');
           } else {
-            Navigator.pushReplacementNamed(context, '/homes');
+            Navigator.pushReplacementNamed(context, '/admin');
           }
         } else {
-          Navigator.pushReplacementNamed(context, '/productEdit');
+          Navigator.pushReplacementNamed(context, '/homes');
         }
       } else {
         showDialog(

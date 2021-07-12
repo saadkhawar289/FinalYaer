@@ -205,6 +205,55 @@ mixin ProductModel on ConnectedServicesModel {
     });
   }
 
+Future<Null> fetchWhishlitProducts({onlyForUser = false}) {
+    _isLoading = true;
+    notifyListeners();
+    return http
+        .get(
+            'https://freebies-96dc8-default-rtdb.firebaseio.com/Products.json') // here in the of this link we are accessing the token of authenticated user
+        .then<Null>((http.Response response) {
+      final List<Product> fetchedProductslist = [];
+      final Map<String, dynamic> productListData = json.decode(response.body);
+      if (productListData == null) {
+        _isLoading = false;
+        notifyListeners();
+        return;
+      }
+
+      try {
+        productListData.forEach((productId, dynamic productData) {
+          final Product product = Product(
+              id: productId,
+              tittle: productData['tittle'],
+              description: productData['description'],
+              image: productData['image'],
+              price: productData['price'],
+              userId: productData['UserID'],
+               isfavourite: productData['isFavourite'],
+
+              isFeatured: productData['isFeatured'],
+             );
+          fetchedProductslist.add(product);
+          print(product.id);
+        });
+        _products =  fetchedProductslist;
+        _isLoading = false;
+        notifyListeners();
+        _selServiceId = null;
+      } catch (e) {
+        print('jjjjjjjjjjjjjj');
+        print('erroe;');
+        print(e);
+      }
+    }).catchError((error) {
+      _isLoading = false;
+      notifyListeners();
+      return;
+    });
+  }
+
+
+
   Future<Null> fetchProducts({onlyForUser = false}) {
     _isLoading = true;
     notifyListeners();
@@ -229,9 +278,10 @@ mixin ProductModel on ConnectedServicesModel {
               image: productData['image'],
               price: productData['price'],
               userId: productData['UserID'],
-               isfavourite:productData['wishlistUsers'] == null ? false : (productData['wishlist'] as Map<String, dynamic>).containsKey(_authenticationUser.id),
+               isfavourite:productData['wishlistUsers'] == null ? false : (productData['wishlistUsers'] as Map<String, dynamic>).containsKey(_authenticationUser.fireBaseID),
               isFeatured: productData['isFeatured'],
              );
+        print('status   ${product.isfavourite} ');
           fetchedProductslist.add(product);
           print(product.id);
         });
@@ -245,6 +295,7 @@ mixin ProductModel on ConnectedServicesModel {
         notifyListeners();
         _selServiceId = null;
       } catch (e) {
+        print('xxxxxxxxxxx');
         print('erroe;');
         print(e);
       }
@@ -256,9 +307,12 @@ mixin ProductModel on ConnectedServicesModel {
   }
 
   void favouiteToogleButton() async {
-    var saad = 'saad';
+   print('in fav');
     final bool isCurrentStatus = selectedProduct.isfavourite;
+    print('currentStatus $isCurrentStatus');
     final bool currentFavStatus = !isCurrentStatus;
+        print('currentFavStatus $currentFavStatus');
+
     final Product updatedProduct = Product(
       id: selectedProduct.id,
       tittle: selectedProduct.tittle,
@@ -274,11 +328,11 @@ mixin ProductModel on ConnectedServicesModel {
     http.Response response;
     if (currentFavStatus) {
       response = await http.put(
-          'https://freebies-cf2cd-default-rtdb.firebaseio.com/Products/${selectedProduct.id}/wishlistUsers/$saad.json',
+          'https://freebies-96dc8-default-rtdb.firebaseio.com/Products/${selectedProduct.id}/wishlistUsers/${_authenticationUser.fireBaseID}.json',
           body: json.encode(true));
     } else {
       response = await http.delete(
-          'https://freebies-cf2cd-default-rtdb.firebaseio.com/Products/${selectedProduct.id}/wishlistUsers/$saad.json');
+          'https://freebies-96dc8-default-rtdb.firebaseio.com/Products/${selectedProduct.id}/wishlistUsers/${_authenticationUser.fireBaseID}.json');
     }
     if (response.statusCode != 200 && response.statusCode != 201) {
       final Product updatedProduct = Product(
@@ -333,6 +387,17 @@ try {
 mixin UserModel on ConnectedServicesModel {
   Timer _authTimer;
  
+
+
+
+ int get selectedUserIndex {
+    return _users.indexWhere((User product) {
+      return product.id == _selcectedUserID;
+    });
+  }
+
+
+
   User get user {
     if (_selcectedUserID == null) {
       return null;
@@ -363,30 +428,136 @@ mixin UserModel on ConnectedServicesModel {
   }
   
 
-Future<bool> approvedProviders(User accptedUser){
-  _isLoading=true;
-var id=accptedUser.id;
-  final Map<String, dynamic> userData = {
-          'email': accptedUser.email,
-          'password':accptedUser.pass,
-          'address':accptedUser. address,
-          'name': accptedUser.name,
-          'cnic':accptedUser. cnic,
-          'wallet':accptedUser.wallet,
-          'number':accptedUser. number,
-          'isProvider':accptedUser.isProvider,
-          'image':accptedUser. image,
-          'FireBaseID':accptedUser.fireBaseID,
-          'isAcepted':true
-        };
-return http.put(
+
+
+Future<Null>fetchUsers(){
+_isLoading = true;
+    notifyListeners();
+    return http
+        .get(
+            'https://freebies-96dc8-default-rtdb.firebaseio.com/User.json') // here in the of this link we are accessing the token of authenticated user
+        .then<Null>((http.Response response) {
+      final List<User> fetchedProductslist = [];
+      final Map<String, dynamic> productListData = json.decode(response.body);
+      if (productListData == null) {
+        _isLoading = false;
+        notifyListeners();
+        return;
+      }
+
+      try {
+        productListData.forEach((productId, dynamic productData) {
+         final User allUsers=User(
+          isAccepted: productData['isAcepted'],
+              pass: productData['password'],
+              id: productId,
+              address: productData['address'],
+              cnic: productData['cnic'],
+              email: productData['email'],
+              fireBaseID: productData['fireBaseID'],
+              image: productData['image'],
+              isProvider: productData['isProvider'],
+              name: productData['name'],
+              number: productData['number'],
+              token: 'null',
+              wallet: productData['wallet'].toString());
+         
+          fetchedProductslist.add(allUsers);
+         
+        });
+      _users =  fetchedProductslist.where((User user) {
+               
+                return user.isAccepted==false && user.isProvider==true;
+              }).toList();
+        _isLoading = false;
+        notifyListeners();
+        _selServiceId = null;
+      } catch (e) {
+        print('erroe;');
+        print(e);
+      }
+    }).catchError((error) {
+      _isLoading = false;
+      notifyListeners();
+      return;
+    });
+
+
+
+
+
+
+}
+
+Future<bool> approvedProviders(User authUser){
+//   _isLoading=true;
+// var id=accptedUser.id;
+//   final Map<String, dynamic> userData = {
+//           'email': accptedUser.email,
+//           'password':accptedUser.pass,
+//           'address':accptedUser. address,
+//           'name': accptedUser.name,
+//           'cnic':accptedUser. cnic,
+//           'wallet':accptedUser.wallet,
+//           'number':accptedUser. number,
+//           'isProvider':accptedUser.isProvider,
+//           'image':accptedUser. image,
+//           'FireBaseID':accptedUser.fireBaseID,
+//           'isAcepted':true
+//         };
+// return http.put(
+//         'https://freebies-96dc8-default-rtdb.firebaseio.com/User/$id.json',
+//         body: json.encode(userData),
+//         headers: {
+//           HttpHeaders.contentTypeHeader: 'application/json'
+//         })
+
+_isLoading = true;
+
+    print('in Accept request');
+    
+    
+    final Map<String, dynamic> userData = {
+      'email': authUser.email,
+      'password': authUser.pass,
+      'address': authUser.address,
+      'name': authUser.name,
+      'cnic': authUser.cnic,
+      'isAcepted':true,
+      'wallet':authUser.wallet,
+      'number': authUser.number,
+      'isProvider': authUser.isProvider,
+      'image': authUser.image,
+      'FireBaseID': authUser.fireBaseID,
+      
+    };
+  
+  
+    String id = authUser.id;
+    print('in deposite');
+    return http.put(
         'https://freebies-96dc8-default-rtdb.firebaseio.com/User/$id.json',
         body: json.encode(userData),
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json'
-        })
+        }).then((http.Response response) {
+      print('object');
+      final Map<String, dynamic> productListData = json.decode(response.body);
 
-
+      print(productListData);
+_users.removeAt(selectedUserIndex);
+          
+      _isLoading = false;
+      notifyListeners();
+      print('kkkkk');
+      return true;
+    }).catchError((error) {
+      _isLoading = false;
+      print(error);
+      notifyListeners();
+      return false;
+    });
+  
         
   
 }
@@ -881,6 +1052,7 @@ Future<bool> deductFromUSerWallet(User authUser){
       'isProvider': authUser.isProvider,
       'image': authUser.image,
       'FireBaseID': authUser.fireBaseID,
+      
     };
   
   

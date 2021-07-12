@@ -34,8 +34,9 @@ initState(){
 void _submitForm(Function approveProvider,String id,User selectedVendor) async{
  
  
-        approveProvider(id,selectedVendor).then((bool success) {
+        approveProvider(selectedVendor).then((bool success) {
         if (success) {
+          
                      
                        Scaffold.of(context).showSnackBar(
             SnackBar(shape: RoundedRectangleBorder(  borderRadius: BorderRadius.only(
@@ -90,6 +91,7 @@ void _submitForm(Function approveProvider,String id,User selectedVendor) async{
                 onPressed: () =>{
                   ss= model.allusers[index].id,
                   model.selectUser(ss),
+                  print(model.user.email),
                   _submitForm(
                   model.approvedProviders,
                   ss,

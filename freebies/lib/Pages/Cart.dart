@@ -703,7 +703,7 @@ class _CartPageState extends State<Cart> {
                                             //navigate to my orders
                                             }
                                             else{
-
+print('saaad in cart');
                                             }
 
                                           }

@@ -21,7 +21,17 @@ class AllProductPage extends StatefulWidget {
 class _AllProductPageState extends State<AllProductPage> {
   @override
   initState() {
-    widget.model.fetchProducts();
+    if(widget.model.singleUser == null){
+      print('simple products');
+ widget.model.fetchWhishlitProducts();
+
+    }
+else{
+        print('wishlist products');
+widget.model.fetchProducts();
+}
+
+   
 //widget.model.wallet=int.parse(widget.model.singleUser.wallet) ;
     super.initState();
   }
