@@ -369,183 +369,164 @@ class _LoginPageState extends State<Login> {
       backgroundColor: Colors.white, //Color(0xfff2e1cf),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xff36332e),
-        toolbarHeight: 80,
-        title: _authMode == AuthMode.SignUp
-            ? Text(
-                'ezentu',
-                style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              )
-            : Text(
-                'ezentu',
-                style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
+        backgroundColor:Colors.black,
+        toolbarHeight: 120,
+        title: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 30),
+        child:
+        //  Container(
+        //   height: 70,
+        //   width: 90,
+        //   child:Image.asset('assets/logoo.jpeg'))
+        
+        // Text('FreeBiees',
+        //     style: TextStyle(
+        //         fontSize: 30.0,
+        //         fontWeight: FontWeight.bold,
+        //         color: Color(0xFFFF335C))),
+  GestureDetector(
+          onTap: (){
+Navigator.pushNamed(context, "/homes");
+
+          },
+          child: Image(image:AssetImage('assets/Untitled.png',),height: MediaQuery.of(context).size.height*0.12,width:MediaQuery.of(context).size.width*0.05 ,fit:BoxFit.fill ,)),
+        ),
         // centerTitle: true,
       ),
-      body: Row(
-        children: [
-           Padding(
-             padding: const EdgeInsets.symmetric(horizontal:50 ),
-             child: Container(
-                      margin: EdgeInsets.only(top: 130),
-                      width: targetWidth,
-                      height: MediaQuery.of(context).size.height * 0.60,
-                      color: Colors.white,
-                      child: Carousel(
-                        borderRadius: true,
-                        boxFit: BoxFit.contain,
-                        autoplay: true,
-                        animationCurve: Curves.bounceOut,
-                        animationDuration: Duration(milliseconds: 1500),
-                        dotSize: 6.0,
-                        dotIncreasedColor: Color(0xFFFF335C),
-                        dotBgColor: Colors.yellow,
-                        dotPosition: DotPosition.topRight,
-                        dotVerticalPadding: 10.0,
-                        showIndicator: true,
-                        indicatorBgPadding: 7.0,
-                        images: [
-                          NetworkImage(
-                              'https://m.media-amazon.com/images/S/aplus-media/sc/a829e124-4375-41c4-b0be-e699ebb974b2.__CR0,0,220,220_PT0_SX220_V1___.jpg'),
-                          NetworkImage(
-                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQubf5b89mP5fjIfUYGvtak5L0w1m0p2wLj0g&usqp=CAU'),
-                          NetworkImage(
-                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDT1-fmn2GJM9xT0jXf4adtqmiRVBD8iqZRQ&usqp=CAU')
-                          // ExactAssetImage("assets/bbb.jpg"),
-                        ],
+      body: Container(
+        child: Center(
+          child: Column(
+              children: [
+               
+                 Center(
+                   child: Container(
+                      decoration: BoxDecoration(
+                          //image: _buildBackgroundImage(),
+                          ),
+                      padding: EdgeInsets.only(left: 0,right: 0),
+                      child: Align(
+                       // alignment: Alignment.centerRight,
+                        child: SingleChildScrollView(
+                          child: Container(
+                            width: targetWidth,
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                  // _buildBackgroundImage(),
+
+                                  GestureDetector(
+                                      onLongPress: () => print('working'),
+                                      child: Container(
+                                          height: 120,
+                                          child: Image.asset('assets/logoo.jpeg'))),
+
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: Column(children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          Navigator.pushNamed(context, '/VendorLogin');
+                                        },
+                                        icon: Icon(Icons.person_outlined),
+                                        hoverColor: Colors.red,
+                                        splashRadius: 15,
+                                      ),
+                                      Text('Login As Vendor',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),)
+                                    ]),
+                                  ),
+
+                                  _buildEmailTextField(),
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  _buildPasswordTextField(),
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  _authMode == AuthMode.SignUp
+                                      ? Column(children: [
+                                          _buildPasswordConfirmTextField(),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          _buildAddressTextField(),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          _buildNumberTextField(),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          _buildNameTextField(),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          _buildCnicTextField()
+                                        ])
+                                      : Container(),
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  _buildAcceptSwitch(),
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  FlatButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _authMode = _authMode == AuthMode.Login
+                                            ? AuthMode.SignUp
+                                            : AuthMode.Login;
+                                      });
+                                    },
+                                    child: Text(
+                                        '${_authMode == AuthMode.Login ? 'Register' : 'LogIn'}',
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        )),
+                                  ),
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  ScopedModelDescendant(builder:
+                                      (BuildContext context, Widget child, MainModel model) {
+                                    return model.isLoading
+                                        ? CircularProgressIndicator()
+                                        : RaisedButton(
+                                            color: Colors.black,
+                                            textColor: Colors.white,
+                                            child: _authMode == AuthMode.SignUp
+                                                ? Text('Register')
+                                                : Text('LOGIN'),
+                                            onPressed: () => _submitForm(
+                                                model.logIn, model.signUp, widget.navigation),
+                                          );
+                                  }),
+
+                                  FlatButton(
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, '/providerOrders');
+                                      },
+                                      child: Text('Forget Password'))
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-           ),
-           SizedBox(width: 150,),
-          Container(
-            decoration: BoxDecoration(
-                //image: _buildBackgroundImage(),
-                ),
-            padding: EdgeInsets.only(left: 10,right: MediaQuery.of(context).size.width*0.15),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: SingleChildScrollView(
-                child: Container(
-                  width: targetWidth,
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 30,
-                        ),
-                        // _buildBackgroundImage(),
-
-                        GestureDetector(
-                            onLongPress: () => print('working'),
-                            child: Container(
-                                height: 120,
-                                child: Image.asset('assets/logoo.jpeg'))),
-
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Column(children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/VendorLogin');
-                              },
-                              icon: Icon(Icons.person_outlined),
-                              hoverColor: Colors.red,
-                              splashRadius: 15,
-                            ),
-                            Text('Login As Vendor',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),)
-                          ]),
-                        ),
-
-                        _buildEmailTextField(),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        _buildPasswordTextField(),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        _authMode == AuthMode.SignUp
-                            ? Column(children: [
-                                _buildPasswordConfirmTextField(),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                _buildAddressTextField(),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                _buildNumberTextField(),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                _buildNameTextField(),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                _buildCnicTextField()
-                              ])
-                            : Container(),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        _buildAcceptSwitch(),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        FlatButton(
-                          onPressed: () {
-                            setState(() {
-                              _authMode = _authMode == AuthMode.Login
-                                  ? AuthMode.SignUp
-                                  : AuthMode.Login;
-                            });
-                          },
-                          child: Text(
-                              '${_authMode == AuthMode.Login ? 'Register' : 'LogIn'}',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              )),
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        ScopedModelDescendant(builder:
-                            (BuildContext context, Widget child, MainModel model) {
-                          return model.isLoading
-                              ? CircularProgressIndicator()
-                              : RaisedButton(
-                                  color: Colors.black,
-                                  textColor: Colors.white,
-                                  child: _authMode == AuthMode.SignUp
-                                      ? Text('Register')
-                                      : Text('LOGIN'),
-                                  onPressed: () => _submitForm(
-                                      model.logIn, model.signUp, widget.navigation),
-                                );
-                        }),
-
-                        FlatButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/providerOrders');
-                            },
-                            child: Text('Forget Password'))
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+                 ),
+                
+              ],
             ),
-          ),
-        ],
+        ),
+      
       ),
     );
   }

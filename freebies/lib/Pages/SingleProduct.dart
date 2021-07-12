@@ -125,10 +125,10 @@ bool loading=false;
                       showIndicator: true,
                       indicatorBgPadding: 7.0,
                       images: [
-                        NetworkImage(
-                            'https://m.media-amazon.com/images/S/aplus-media/sc/a829e124-4375-41c4-b0be-e699ebb974b2.__CR0,0,220,220_PT0_SX220_V1___.jpg'),
-                        NetworkImage(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQubf5b89mP5fjIfUYGvtak5L0w1m0p2wLj0g&usqp=CAU'),
+                        // NetworkImage(
+                        //     'https://m.media-amazon.com/images/S/aplus-media/sc/a829e124-4375-41c4-b0be-e699ebb974b2.__CR0,0,220,220_PT0_SX220_V1___.jpg'),
+                        // NetworkImage(
+                        //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQubf5b89mP5fjIfUYGvtak5L0w1m0p2wLj0g&usqp=CAU'),
                         NetworkImage(widget.product.image ),                       // ExactAssetImage("assets/bbb.jpg"),
                       ],
                     ),
@@ -164,17 +164,7 @@ bool loading=false;
                               endIndent: 30,
                             ),
                             SizedBox(height: 20),
-                            Text('Reviews',
-                                style: TextStyle(
-                                    fontSize: deviceWidth * 0.010,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.grey)),
-                            SizedBox(height: 20),
-                            Divider(
-                              thickness: 3,
-                              indent: 20,
-                              endIndent: 30,
-                            ),
+                            
                             SizedBox(height: 20),
                             Text(widget.product.price.toString(),
                                 style: TextStyle(
@@ -208,8 +198,8 @@ bool loading=false;
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Container(
-                    width: deviceWidth * 0.25,
-                    margin: EdgeInsets.only(top: 70),
+                    width: deviceWidth * 0.20,
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.25),
                     height: deviceHeight <= 800
                         ? deviceHeight * 0.40
                         : deviceHeight * 0.30,
@@ -225,7 +215,7 @@ bool loading=false;
                             children: [
                               Text('Name'),
                               Spacer(),
-                              Text('Hp Laptop')
+                              Text(widget.product.tittle)
                             ],
                           ),
                         ),
@@ -235,7 +225,7 @@ bool loading=false;
                         Padding(
                           padding: const EdgeInsets.all(28.0),
                           child: Row(
-                            children: [Text('Price'), Spacer(), Text('250')],
+                            children: [Text('Price'), Spacer(), Text(widget.product.price.toString())],
                           ),
                         ),
                         Divider(
@@ -279,9 +269,9 @@ ScopedModelDescendant<MainModel>(
                                 MaterialStateProperty.resolveWith<Color>(
                               (Set<MaterialState> states) {
                                 if (states.contains(MaterialState.hovered)) {
-                                  return Colors.green;
+                                  return Colors.yellow;
                                 } else {
-                                  return Color(0xFFFF335C);
+                                  return Colors.black;
                                 }
                               },
                             ),
@@ -435,12 +425,14 @@ loading=false;
                     showIndicator: true,
                     indicatorBgPadding: 7.0,
                     images: [
-                      NetworkImage(
-                          'https://m.media-amazon.com/images/S/aplus-media/sc/a829e124-4375-41c4-b0be-e699ebb974b2.__CR0,0,220,220_PT0_SX220_V1___.jpg'),
-                      NetworkImage(
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQubf5b89mP5fjIfUYGvtak5L0w1m0p2wLj0g&usqp=CAU'),
-                      NetworkImage(
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDT1-fmn2GJM9xT0jXf4adtqmiRVBD8iqZRQ&usqp=CAU')
+                                              NetworkImage(widget.product.image ),                       // ExactAssetImage("assets/bbb.jpg"),
+
+                      // NetworkImage(
+                      //     'https://m.media-amazon.com/images/S/aplus-media/sc/a829e124-4375-41c4-b0be-e699ebb974b2.__CR0,0,220,220_PT0_SX220_V1___.jpg'),
+                      // NetworkImage(
+                      //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQubf5b89mP5fjIfUYGvtak5L0w1m0p2wLj0g&usqp=CAU'),
+                      // NetworkImage(
+                      //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDT1-fmn2GJM9xT0jXf4adtqmiRVBD8iqZRQ&usqp=CAU')
                     ],
                   ),
                 ),
@@ -466,14 +458,7 @@ loading=false;
                                 color: Colors.black)),
                         SizedBox(height: 10),
                         Divider(),
-                        SizedBox(height: 10),
-                        Text('Reviews',
-                            style: TextStyle(
-                                fontSize: deviceWidth * 0.030,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey)),
-                        SizedBox(height: 10),
-                        Divider(),
+                       
                         SizedBox(height: 10),
                         Text(widget.product.price.toString(),
                             style: TextStyle(
@@ -555,40 +540,92 @@ loading=false;
                         ],
                       ),
                     ),
-                    Expanded(
-                      flex: 61,
-                      child: ScopedModelDescendant<MainModel>(
+                    
+                      
+       
+ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
         return model.isLoading
             ? Center(child: CircularProgressIndicator())
-            : RaisedButton(
-                color: Theme.of(context).accentColor,
-                textColor: Colors.white,
-                child: Text('SAVE'),
-                onPressed:(){
-                 
-                  
-                    Product cartItem = Product(
-                                id: widget.product.id, 
+            : ElevatedButton(
+                          child:loading==false? Text("Add to Cart"):CircularProgressIndicator(),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.hovered)) {
+                                  return Colors.yellow;
+                                } else {
+                                  return Colors.black;
+                                }
+                              },
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              
+                              loading =true;
+                                                           Timer(Duration(seconds: 2), (){
+                                                             model.providerids.add(widget.product.userId);
+                             print(model.providerids.length);
+Product cartItem = Product(
+                                id: widget.product.id,
                                 tittle: widget.product.tittle,
-                                description:
-                                    widget.product.description,
+                                description:widget.product.description,
                                 image: widget.product. image,
                                 price: widget.product. price,
-                                isfavourite:
-                                   widget.product.isfavourite,
-                                userId: widget.product. userId,
-                                isFeatured:widget.product. isFeatured,
+                                isfavourite: widget.product.isfavourite,
+                                userId:widget.product. userId,
+                                isFeatured: widget.product. isFeatured,
                                 quantity: _counter);
-                        model.addToCart(cartItem);               
-                  
-                  
-                }  
-                  
-                   
-              );
+                                
+                              
+                            try {
+                                    if(model.cartItems.contains(cartItem)){
+                                      showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Product Already Added'),
+                  content: Text('Please Try another product'),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: () =>{
+                         setState(() {
+                              loading=false;  
+                              }),
+                         Navigator.of(context).pop(),
+                      },
+                      child: Text('Okay'),
+                    )
+                  ],
+                );
+              });
+                                    }
+                                    else{
+                                
+model.addToCart(cartItem);
+
+loading=false;
+
+                                    }
+
+
+                              
+                              
+                            // print(widcartItems.length);
+                            } catch (e) {
+                              print('Not ok');
+                              print(e);
+                            }
+                          });
+
+                            });
+                            
+                          },
+                        );
       },
-    ) ,
+    ),
                       // child: ElevatedButton(
 
                       //   child: Text("Add to Cart"),
@@ -624,7 +661,7 @@ loading=false;
                       //    });
                       //   },
                       // ),
-                    ),
+                    
                    
                   ],
                 ),
@@ -638,6 +675,7 @@ loading=false;
       ),
     );
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -649,135 +687,162 @@ loading=false;
     return Scaffold(
         drawer: deviceWidth < 500 ? _buildDrawer(context) : null,
         backgroundColor: Colors.white,
-        appBar: deviceWidth > 500
-            ? AppBar(
-                toolbarHeight: 120,
-                backgroundColor: Colors.grey[850],
-                //   backgroundColor: Color(0xff36332e),
+        appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.black,
+        toolbarHeight: 120,
+        title: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 30),
+        child:
+        //  Container(
+        //   height: 70,
+        //   width: 90,
+        //   child:Image.asset('assets/logoo.jpeg'))
+        
+        // Text('FreeBiees',
+        //     style: TextStyle(
+        //         fontSize: 30.0,
+        //         fontWeight: FontWeight.bold,
+        //         color: Color(0xFFFF335C))),
+        GestureDetector(
+          onTap: (){
+Navigator.pushNamed(context, "/homes");
 
-                elevation: 0,
-                title: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 70, vertical: 30),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/homes');
-                    },
-                    child: Text('FreeBiees',
-                        style: TextStyle(
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFFFF335C))),
-                  ),
-                ),
-                actions: <Widget>[
-                  Container(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 58),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 58),
-                                  child: Row(
-                                    children: [
-                                      Text('Games'),
-                                      Icon(
-                                        Icons.games,
-                                        color: Color(0xFFFF335C),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Text('Wallet'),
-                                Icon(Icons.account_balance_wallet,
-                                    color: Color(0xFFFF335C))
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 58),
-                            child: Row(
-                              children: [
-                                Text('SIGN IN'),
-                                Icon(Icons.supervised_user_circle,
-                                    color: Colors.yellow)
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 58),
-                            child: Row(
-                              children: [
-                                Text('Cart'),
-                                GestureDetector(
-                                  onTap: () {
+          },
+          child: Image(image:AssetImage('assets/Untitled.png',),height: MediaQuery.of(context).size.height*0.12,width:MediaQuery.of(context).size.width<=750?MediaQuery.of(context).size.width*0.10:MediaQuery.of(context).size.width*0.05 ,fit:BoxFit.fill ,)),
+   
+     ),
+        // centerTitle: true,
+      ),
+        // appBar: deviceWidth > 500
+        //     ? AppBar(
+        //         toolbarHeight: 120,
+        //         backgroundColor: Colors.grey[850],
+        //         //   backgroundColor: Color(0xff36332e),
+
+        //         elevation: 0,
+        //         title: Padding(
+        //           padding:
+        //               const EdgeInsets.symmetric(horizontal: 70, vertical: 30),
+        //           child: GestureDetector(
+        //             onTap: () {
+        //               Navigator.pushNamed(context, '/homes');
+        //             },
+        //             child: Text('FreeBiees',
+        //                 style: TextStyle(
+        //                     fontSize: 30.0,
+        //                     fontWeight: FontWeight.bold,
+        //                     color: Color(0xFFFF335C))),
+        //           ),
+        //         ),
+        //         actions: <Widget>[
+        //           Container(
+        //             child: SingleChildScrollView(
+        //               scrollDirection: Axis.horizontal,
+        //               child: Row(
+        //                 children: [
+        //                   Padding(
+        //                     padding: const EdgeInsets.only(right: 58),
+        //                     child: Row(
+        //                       children: [
+        //                         Padding(
+        //                           padding: const EdgeInsets.only(right: 58),
+        //                           child: Row(
+        //                             children: [
+        //                               Text('Games'),
+        //                               Icon(
+        //                                 Icons.games,
+        //                                 color: Color(0xFFFF335C),
+        //                               )
+        //                             ],
+        //                           ),
+        //                         ),
+        //                         Text('Wallet'),
+        //                         Icon(Icons.account_balance_wallet,
+        //                             color: Color(0xFFFF335C))
+        //                       ],
+        //                     ),
+        //                   ),
+        //                   Padding(
+        //                     padding: const EdgeInsets.only(right: 58),
+        //                     child: Row(
+        //                       children: [
+        //                         Text('SIGN IN'),
+        //                         Icon(Icons.supervised_user_circle,
+        //                             color: Colors.yellow)
+        //                       ],
+        //                     ),
+        //                   ),
+        //                   Padding(
+        //                     padding: const EdgeInsets.only(right: 58),
+        //                     child: Row(
+        //                       children: [
+        //                         Text('Cart'),
+        //                         GestureDetector(
+        //                           onTap: () {
                                     
-                                  },
-                                  child: Icon(
-                                    Icons.shopping_cart,
-                                    color: Colors.yellow,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            : AppBar(
-                toolbarHeight: 120,
-                backgroundColor: Colors.grey[850],
-                //   backgroundColor: Color(0xff36332e),
-                elevation: 0,
-                //centerTitle:true ,
-                title: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
-                  child: Text('FreeBiees',
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white)),
-                ),
-                actions: <Widget>[
-                  Container(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 18),
-                            child: Row(
-                              children: [
-                                Text('Games'),
-                                Icon(
-                                  Icons.games,
-                                )
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 18),
-                            child: Row(
-                              children: [
-                                Text('Wallet'),
-                                Icon(Icons.account_balance_wallet)
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+        //                           },
+        //                           child: Icon(
+        //                             Icons.shopping_cart,
+        //                             color: Colors.yellow,
+        //                           ),
+        //                         )
+        //                       ],
+        //                     ),
+        //                   ),
+        //                 ],
+        //               ),
+        //             ),
+        //           ),
+        //         ],
+        //       )
+        //     : AppBar(
+        //         toolbarHeight: 120,
+        //         backgroundColor: Colors.grey[850],
+        //         //   backgroundColor: Color(0xff36332e),
+        //         elevation: 0,
+        //         //centerTitle:true ,
+        //         title: Padding(
+        //           padding:
+        //               const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+        //           child: Text('FreeBiees',
+        //               style: TextStyle(
+        //                   fontSize: 20.0,
+        //                   fontWeight: FontWeight.bold,
+        //                   color: Colors.white)),
+        //         ),
+        //         actions: <Widget>[
+        //           Container(
+        //             child: SingleChildScrollView(
+        //               scrollDirection: Axis.horizontal,
+        //               child: Row(
+        //                 children: [
+        //                   Padding(
+        //                     padding: const EdgeInsets.only(right: 18),
+        //                     child: Row(
+        //                       children: [
+        //                         Text('Games'),
+        //                         Icon(
+        //                           Icons.games,
+        //                         )
+        //                       ],
+        //                     ),
+        //                   ),
+        //                   Padding(
+        //                     padding: const EdgeInsets.only(right: 18),
+        //                     child: Row(
+        //                       children: [
+        //                         Text('Wallet'),
+        //                         Icon(Icons.account_balance_wallet)
+        //                       ],
+        //                     ),
+        //                   ),
+        //                 ],
+        //               ),
+        //             ),
+        //           ),
+        //         ],
+        //       ),
         body: SafeArea(child: LayoutBuilder(builder: (context, constraints) {
           if (constraints.maxWidth <= 600) {
             return mobilepageContent(context);

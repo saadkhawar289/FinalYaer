@@ -20,7 +20,7 @@ class CartTile extends StatelessWidget {
         colorFilter:
             ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.screen),
         image:
-            image == null ? AssetImage('assets/ccc.jpg') : NetworkImage(image));
+            image == null ? AssetImage('assets/ccc.jpg') : NetworkImage(product.image));
   }
 
   // Future<bool> _settServiceID(String id) async {
@@ -165,9 +165,9 @@ class CartTile extends StatelessWidget {
                     child: Container(
                        width:deviceWidth<600?targetWidth*0.75: targetWidth*0.95,
                       decoration: BoxDecoration(
-                 border: Border.all(width: 2,
-                 color: Colors.black,
-                 ),
+                //  border: Border.all(width: 2,
+                //  color: Colors.black,
+                //  ),
                   color:Colors.white54,
                 
                   ),
@@ -175,7 +175,7 @@ class CartTile extends StatelessWidget {
                       child: Row(
                         children: [
                           CircleAvatar(
-                            backgroundImage: AssetImage('assets/bbb.jpg'),
+                            backgroundImage: NetworkImage(product.image),
                             radius: 25,
                           ),
                           Expanded(child: _buildProductName()),

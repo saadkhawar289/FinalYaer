@@ -204,8 +204,13 @@ Navigator.pushNamed(context, '/auth');
         //         fontSize: 30.0,
         //         fontWeight: FontWeight.bold,
         //         color: Color(0xFFFF335C))),
-        Image(image:AssetImage('assets/Untitled.png',),height: MediaQuery.of(context).size.height*0.12,width:MediaQuery.of(context).size.width*0.05 ,fit:BoxFit.fill ,),
-     ),
+  GestureDetector(
+          onTap: (){
+Navigator.pushNamed(context, "/homes");
+
+          },
+          child: Image(image:AssetImage('assets/Untitled.png',),height: MediaQuery.of(context).size.height*0.12,width:MediaQuery.of(context).size.width*0.05 ,fit:BoxFit.fill ,)),
+        ),
       actions: <Widget>[
         Container(
           child: SingleChildScrollView(
@@ -376,7 +381,7 @@ final targetWidth=deviceWidth<650?deviceWidth*0.30:0.30;
                   children: [
                     Center(
                       child: Padding(
-                        padding: EdgeInsets.only(top: 30,left: MediaQuery.of(context).size.width*0.30,right: MediaQuery.of(context).size.width*0.30,),
+                        padding: EdgeInsets.only(top: 30,left: MediaQuery.of(context).size.width==550? MediaQuery.of(context).size.width*0.05:MediaQuery.of(context).size.width*0.30,right: MediaQuery.of(context).size.width*0.30,),
                         child: Container(
                           child: TextFormField(
       decoration: InputDecoration(

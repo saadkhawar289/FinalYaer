@@ -192,7 +192,7 @@ Widget _buildPriceTextField(Product product) {
 void _submitForm(
       Function addProduct,Function updateProduct, Function setSelectedProduct,
       [int selectedProductIndex]) async{
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState.validate()&& widget.model.uploadedImage==null) {
       //this if is used to check the validation and here it is chechking that k agr  validate ni hoa wa to kch mat return krna matlb save mat krna
       return;
     }
@@ -245,17 +245,62 @@ void _submitForm(
         }
       });
     } else {
+      if(widget.model.uploadedImage==null){
+ showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Please Upload Image'),
+                  content: Text('Please Try Again'),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: (){
+
+                        Navigator.of(context).pop();
+                        return;
+                        
+                      }, 
+                      child: Text('Okay'),
+                    )
+                  ],
+                );
+              });
+      return;
+      }
+
       updateProduct(
         _formValues['tittle'],
         _formValues['description'],
          widget.model.uploadedImage,
         _formValues['price'],
-        widget.model.singleUser.id,
         widget.model.singleUser.id
         
 
-      ).then((_) => Navigator.pushReplacementNamed(context, '/admin')
-          .then((value) => setSelectedProduct(null)));
+      ).then((value) {
+if (value) {
+          Navigator.pushReplacementNamed(context, '/providerOrders').then((value) => setSelectedProduct(null));
+
+} else {
+showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Some Thing Went Wrong'),
+                  content: Text('Please Try Again'),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('Okay'),
+                    )
+                  ],
+                );
+              });
+}
+
+
+        
+        } 
+      );    
     }
   }
 

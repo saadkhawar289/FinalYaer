@@ -15,7 +15,7 @@ import '../../Scoped-Model/mainModel.dart';
 
 
 
-class Products extends StatelessWidget {
+class VendorProducts extends StatelessWidget {
 final String typeOfCard;
 final BuildContext context;
 
@@ -24,7 +24,7 @@ final BuildContext context;
 
 
 
-Products(this.typeOfCard,this.context);
+VendorProducts(this.typeOfCard,this.context);
 Widget _buildServiceList(List<Product> products){
 Widget serviceCard;
 
@@ -33,7 +33,7 @@ if(products.length > 0) {
       var target= width <=500?0.55:0.70;
       double target2= width <=500?290:260;
   serviceCard =  typeOfCard=='zzzz'? GridView.builder(padding: EdgeInsets.all(10), gridDelegate:SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: target2,childAspectRatio:target) ,
-        itemBuilder: (BuildContext context, int index) => ProductCard(products[index],index),
+        itemBuilder: (BuildContext context, int index) => VendorProductCard(products[index],index),
           addAutomaticKeepAlives: true, 
         itemCount: products.length,
         scrollDirection: Axis.vertical,

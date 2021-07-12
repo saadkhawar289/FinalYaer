@@ -62,12 +62,24 @@ class _CartPageState extends State<Cart> {
       //centerTitle:true ,
       title: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 30),
-        child: Text('FreeBiees',
-            style: TextStyle(
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFFFF335C))),
-      ),
+        child:
+        //  Container(
+        //   height: 70,
+        //   width: 90,
+        //   child:Image.asset('assets/logoo.jpeg'))
+        
+        // Text('FreeBiees',
+        //     style: TextStyle(
+        //         fontSize: 30.0,
+        //         fontWeight: FontWeight.bold,
+        //         color: Color(0xFFFF335C))),
+  GestureDetector(
+          onTap: (){
+Navigator.pushNamed(context, "/homes");
+
+          },
+          child: Image(image:AssetImage('assets/Untitled.png',),height: MediaQuery.of(context).size.height*0.12,width:MediaQuery.of(context).size.width*0.05 ,fit:BoxFit.fill ,)),
+        ),
       actions: <Widget>[
         Container(
           child: SingleChildScrollView(
@@ -83,7 +95,7 @@ class _CartPageState extends State<Cart> {
                   padding: const EdgeInsets.only(right: 58),
                   child: Row(
                     children: [
-                      Text('Entertainment'),
+                      Text('ENTERTAINMENT'),
                       GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(context, '/entertainment');
@@ -99,7 +111,15 @@ class _CartPageState extends State<Cart> {
                   padding: const EdgeInsets.only(right: 58),
                   child: Row(
                     children: [
-                      Text('Wallet'),
+
+ ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        return  Text(model.wallet==null?'WALLET'.toString():model.wallet.toString(),style: TextStyle(color: Colors.white,fontSize: 14, ));
+      },
+    ),
+
+
+                     // Text(widget.model.wallet==null?'':widget.model.wallet.toString(),style: TextStyle(color: Color(0xFFFF335C),fontSize: 18,fontWeight:FontWeight.bold ),),
                       GestureDetector(
                           onTap: () {
                             //   Navigator.pushNamed(context, '/games');
@@ -113,10 +133,17 @@ class _CartPageState extends State<Cart> {
                   padding: const EdgeInsets.only(right: 58),
                   child: Row(
                     children: [
-                      Text('SIGN IN'),
+                      widget.model.singleUser==null? Text('LOGIN'):Text('LOGOUT'),
                       GestureDetector(
                           onTap: () {
-                            //   Navigator.pushNamed(context, '/entertainment');
+                            if(widget.model.singleUser==null){
+Navigator.pushNamed(context, '/auth');
+                            }
+                            else{
+                              widget.model.logout();
+                              Navigator.pushReplacementNamed(context, '/homes');
+                            }
+                               
                           },
                           child: Icon(Icons.supervised_user_circle,
                               color: Colors.yellow))
@@ -127,7 +154,7 @@ class _CartPageState extends State<Cart> {
                   padding: const EdgeInsets.only(right: 58),
                   child: Row(
                     children: [
-                      Text('Cart'),
+                      Text('CART'),
                       GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(context, '/cart');
@@ -139,6 +166,25 @@ class _CartPageState extends State<Cart> {
                     ],
                   ),
                 ),
+                  Padding(
+                  padding: const EdgeInsets.only(right: 58),
+                  child: Visibility(
+                    visible:widget.model.singleUser==null?false:true,
+                    child: Row(
+                      children: [
+                        Text('ORDERS'),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/UserDashBoard');
+                            },
+                            child: Icon(
+                              Icons.book,
+                              color: Colors.yellow,
+                            ))
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -147,69 +193,32 @@ class _CartPageState extends State<Cart> {
     );
   }
 
-  Widget mobileAppBar() {
+    Widget mobileAppBar() {
     final double deviceWidth = MediaQuery.of(context).size.width;
-
+final targetWidth=deviceWidth<650?deviceWidth*0.30:0.30;
     return AppBar(
       toolbarHeight: 120,
-      backgroundColor: Colors.grey[850],
+      backgroundColor: Colors.black,
       //   backgroundColor: Color(0xff36332e),
       elevation: 0,
       //centerTitle:true ,
       title: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
-        child: Text('FreeBiees',
-            style: TextStyle(
-                fontSize: deviceWidth * 0.045,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFFFF335C))),
+        child:         Image(image:AssetImage('assets/Untitled.png',),height: MediaQuery.of(context).size.height*0.12,width:targetWidth ,fit:BoxFit.fill ,),
+
       ),
       actions: <Widget>[
-        Container(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 18),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Games',
-                        style: TextStyle(fontSize: deviceWidth * 0.030),
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/AllVedios');
-                          },
-                          child: Icon(
-                            Icons.extension_sharp,
-                            color: Colors.yellow,
-                          ))
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 18),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Wallet',
-                        style: TextStyle(fontSize: deviceWidth * 0.030),
-                      ),
-                      Icon(Icons.account_balance_wallet, color: Colors.yellow)
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        // Container(
+        //   child: SingleChildScrollView(
+        //     scrollDirection: Axis.horizontal,
+        //     child:
+        //   ),
+      
       ],
     );
   }
 
-  Widget _buildDrawer(BuildContext context) {
+   Widget _buildDrawer(BuildContext context) {
     return Drawer(
       child: Column(
         children: <Widget>[
@@ -217,28 +226,39 @@ class _CartPageState extends State<Cart> {
             backgroundColor: Color(0xff36332e),
             automaticallyImplyLeading:
                 false, // this for the button to hide when drawer is open
-            title: Text('Choose'),
+            title: ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        return  Text(model.wallet==null?'WALLET'.toString():model.wallet.toString(),style: TextStyle(color: Colors.white,fontSize: 14, ));
+      },
+    ),
           ),
 
           ListTile(
             leading: Icon(Icons.shopping_cart_rounded),
             title: Text('Cart'),
             onTap: () {
-              Navigator.pushNamed(context, '/productEdit');
+              Navigator.pushNamed(context, '/cart');
             },
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.favorite),
-            title: Text('Wish List'),
+            title:widget.model.singleUser==null? Text('LOGIN'):Text('LOGOUT'),
+
             onTap: () {
-              Navigator.pushNamed(context, '/aboutUS');
+                 if(widget.model.singleUser==null){
+Navigator.pushNamed(context, '/auth');
+                            }
+                            else{
+                              widget.model.logout();
+                              Navigator.pushReplacementNamed(context, '/homes');
+                            }
             },
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.pan_tool),
-            title: Text('Logout'),
+            title: Text('Orders'),
             onTap: () {
               Navigator.pushNamed(context, '/privacy');
             },
@@ -246,9 +266,9 @@ class _CartPageState extends State<Cart> {
           Divider(),
           ListTile(
             leading: Icon(Icons.pan_tool),
-            title: Text('Admin'),
+            title: Text('Entertainment'),
             onTap: () {
-              Navigator.pushNamed(context, '/admin');
+              Navigator.pushNamed(context, '/entertainment');
             },
           ),
           //  LogoutListTile()
@@ -290,8 +310,8 @@ class _CartPageState extends State<Cart> {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
         return Scaffold(
-            drawer: deviceWidth < 500 ? _buildDrawer(context) : null,
-            appBar: deviceWidth < 500 ? mobileAppBar() : webAppBar(),
+            drawer: deviceWidth <= 650 ? _buildDrawer(context) : null,
+        appBar: deviceWidth < 650 ? mobileAppBar() : webAppBar(),
             body: model.cartItems.length == 0
                 ? Scaffold(body: Center(child: Text("Cart Empty")))
                 : Center(
@@ -404,9 +424,9 @@ class _CartPageState extends State<Cart> {
                                     width: deviceWidth < 650
                                         ? deviceWidth * 0.43
                                         : deviceWidth * 0.30,
-                                    height: deviceWidth < 650
-                                        ? deviceHeight * 0.30
-                                        : deviceHeight * 0.37,
+                                    height: deviceWidth <= 650
+                                        ? deviceHeight * 0.35
+                                        : deviceHeight * 0.42,
                                     decoration: BoxDecoration(
                                       color: Color(0xffFAFBFD),
                                       borderRadius: BorderRadius.circular(20),
@@ -570,16 +590,44 @@ class _CartPageState extends State<Cart> {
                                               ],
                                             ),
                                           )),
-                                Padding(
+                                          Container(
+
+                                    /// idr main info box aye ga
+                                   // alignment: Alignment.topLeft,
+                                    // margin: EdgeInsets.symmetric(
+                                    //     horizontal: deviceWidth < 600
+                                    //         ? deviceWidth * 0.05
+                                    //         : deviceWidth * 0.13),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 0),
+                                    width: deviceWidth < 650
+                                        ? deviceWidth * 0.33
+                                        : deviceWidth * 0.20,
+                                    height: deviceWidth <= 650
+                                        ? deviceHeight * 0.30
+                                        : deviceHeight * 0.22,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xffFAFBFD),
+                                      borderRadius: BorderRadius.circular(20),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            offset: Offset(0, 10),
+                                            blurRadius: 10,
+                                            color: Color(0xff36332e))
+                                      ],
+                                    ),
+                                    child:Padding(
                                   padding: const EdgeInsets.all(0),
                                   child: Container(
                                       width: deviceWidth < 650
-                                          ? deviceWidth * 0.40
-                                          : deviceWidth * 0.20,
+                                          ? deviceWidth * 0.30
+                                          : deviceWidth * 0.25,
                                       height: deviceWidth < 650
-                                          ? deviceHeight * 0.30
-                                          : deviceHeight * 0.22,
+                                          ? deviceHeight * 0.40
+                                          : deviceHeight * 0.25,
                                       decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+
                                         border: Border.all(
                                             width: 2, color: Colors.red),
                                         // color:Colors.white54,
@@ -604,8 +652,8 @@ class _CartPageState extends State<Cart> {
                                                   var val= _walletAmountController.text.toString();
                                                  int enterdAmount =int.parse(val);
                                                  print(enterdAmount);
-
-                                                  if (model.wallet!=0 && enterdAmount <=  model.wallet) {
+if(model.singleUser!=null){
+  if (model.wallet!=0 && enterdAmount <=  model.wallet) {
                                                     setState(() {
                                                     loading = true;
 
@@ -618,13 +666,38 @@ class _CartPageState extends State<Cart> {
                                                     model.subtotal = zz - xx;
                                                     loading = false;
                                                   });
-                                                  } else {
+                                                  } 
+                                                  else{
+                                                                                        showDialog(
+            context: context,
+              builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('An Error Occured'),
+                content:Text('Insufficent Balance') ,
+                actions: [
+                  FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Okay'))
+                ],
+              );
+            },
+            );
+                  
+                                                  }
+
+
+
+
+}
+                                                  else {
                                                     showDialog(
             context: context,
               builder: (BuildContext context) {
               return AlertDialog(
                 title: Text('An Error Occured'),
-                content:Text('Insufficent balance') ,
+                content:Text('You are not logedin') ,
                 actions: [
                   FlatButton(
                       onPressed: () {
@@ -641,7 +714,8 @@ class _CartPageState extends State<Cart> {
                                               )))
                                         ],
                                       )),
-                                ),
+                                ),),
+                                
                               ],
                             ),
                           ),
@@ -665,11 +739,11 @@ class _CartPageState extends State<Cart> {
                                 margin: EdgeInsets.only(top: 20, right: 30),
                                 child: Center(
                                     child: FlatButton(
-                                        hoverColor: Colors.red,
+                                        
                                         child: Text('Checkout',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.white)),
+                                                color: Colors.yellow)),
                                         onPressed: () async {
                                           if (model.singleUser == null) {
                                             print('object');

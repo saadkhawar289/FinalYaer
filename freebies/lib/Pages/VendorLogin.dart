@@ -368,23 +368,28 @@ class _VendorLoginState extends State<VendorLogin> {
       backgroundColor: Colors.white, //Color(0xfff2e1cf),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xff36332e),
-        toolbarHeight: 80,
-        title: _authMode == AuthMode.SignUp
-            ? Text(
-                'ezentu',
-                style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              )
-            : Text(
-                'ezentu',
-                style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
+        backgroundColor: Colors.black,
+        toolbarHeight: 120,
+        title: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 30),
+        child:
+        //  Container(
+        //   height: 70,
+        //   width: 90,
+        //   child:Image.asset('assets/logoo.jpeg'))
+        
+        // Text('FreeBiees',
+        //     style: TextStyle(
+        //         fontSize: 30.0,
+        //         fontWeight: FontWeight.bold,
+        //         color: Color(0xFFFF335C))),
+  GestureDetector(
+          onTap: (){
+Navigator.pushNamed(context, "/homes");
+
+          },
+          child: Image(image:AssetImage('assets/Untitled.png',),height: MediaQuery.of(context).size.height*0.12,width:MediaQuery.of(context).size.width*0.05 ,fit:BoxFit.fill ,)),
+        ),
         // centerTitle: true,
       ),
       body: Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freebies/Scoped-Model/mainModel.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class Entertainment extends StatefulWidget {
   MainModel model;
@@ -18,94 +19,173 @@ class _IntertainmentState extends State<Entertainment> {
     return SingleChildScrollView(
           child: Column(
         children: [
-         Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.red,
-                        ),
-                        color: Colors.white54,
-                        image: _buildGameBoxImage()),
-                    width: deviceWidth * 0.99,
-                    height: deviceHeight * 0.50,
-                    child: Center(
-                        child: FlatButton(
-                      onPressed: () {
+        SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: (){
                         if(widget.model.singleUser!=null){
-                        Navigator.pushNamed(context, '/AllGames');
+                            Navigator.pushNamed(context, '/AllGames');
 
-                        }
-                        else{
-                                                                      showDialog(
-            context: context,
-              builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Attention'),
-                content:Text('you are not login') ,
-                actions: [
-                  FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('Okay'))
-                ],
+                            }
+                            else{
+                                                                          showDialog(
+              context: context,
+                builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Attention'),
+                  content:Text('you are not login') ,
+                  actions: [
+                      FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Okay'))
+                  ],
+                );
+              },
               );
-            },
-            );
-                        }
+                            }
                       },
-                      child: Text(
-                        'Games',
-                        style: TextStyle(
-                          fontSize: 45,
-                          foreground: Paint()
-                            ..style = PaintingStyle.stroke
-                            ..strokeWidth = 3.1
-                            ..color = Color(0xFFFF335C),
-                        ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.red,
+                            ),
+                            color: Colors.white54,
+                            image: _buildGameBoxImage()),
+                        width:MediaQuery.of(context).size.width,
+                        height: deviceHeight * 0.50,
+                        child: Center(
+                            child: FlatButton(
+                          onPressed: () {
+                            if(widget.model.singleUser!=null){
+                            Navigator.pushNamed(context, '/AllGames');
+
+                            }
+                            else{
+                                                                          showDialog(
+              context: context,
+                builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Attention'),
+                  content:Text('you are not login') ,
+                  actions: [
+                      FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Okay'))
+                  ],
+                );
+              },
+              );
+                            }
+                          },
+                          child: Text(
+                            'Games',
+                            style: TextStyle(
+                              fontSize: 45,
+                              color : Color(0xFFFF335C)
+                            
+                            ),
+                          ),
+                         // hoverColor: Colors.amber,
+                        )),
                       ),
-                      hoverColor: Colors.amber,
-                    )),
+                    ),
                   ),
                 ),
-              ),
-          Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.red,
-                        ),
-                        color: Colors.white54,
-                        image: _buildVedioBoxImage()),
-                   width: deviceWidth * 0.99,
-                    height: deviceHeight * 0.50,
-                    child: Center(
-                        child: FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/AllVedios');
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: (){
+                        if(widget.model.singleUser!=null){
+                            Navigator.pushNamed(context, '/AllVedios');
+
+                            }
+                            else{
+                                                                          showDialog(
+              context: context,
+                builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Attention'),
+                  content:Text('you are not login') ,
+                  actions: [
+                      FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Okay'))
+                  ],
+                );
+              },
+              );
+                            }
                       },
-                      child: Text(
-                        'Vedios',
-                        style: TextStyle(
-                            fontSize: 45,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 3.1
-                              ..color = Color(0xFFFF335C),),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.red,
+                            ),
+                            color: Colors.white54,
+                            image: _buildVedioBoxImage()),
+                        width:MediaQuery.of(context).size.width,
+                        height: deviceHeight * 0.50,
+                        child: Center(
+                            child: FlatButton(
+                          onPressed: () {
+
+
+                             if(widget.model.singleUser!=null){
+                            Navigator.pushNamed(context, '/AllVedios');
+
+                            }
+                            else{
+                                                                          showDialog(
+              context: context,
+                builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Attention'),
+                  content:Text('you are not login') ,
+                  actions: [
+                      FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Okay'))
+                  ],
+                );
+              },
+              );
+                            }
+
+
+                            //Navigator.pushNamed(context, '/AllVedios');
+                          },
+                          child: Text(
+                            'Vedios',
+                            style: TextStyle(
+                                fontSize: 45,
+                                color : Color(0xFFFF335C),),
+                          ),
+                          hoverColor: Colors.amber,
+                        )),
                       ),
-                      hoverColor: Colors.amber,
-                    )),
+                    ),
                   ),
                 ),
-              ),
-        ],
-      ),
+              ],
+            ),
+          ),
+        ])
     );
   }
 
@@ -115,168 +195,171 @@ class _IntertainmentState extends State<Entertainment> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: GestureDetector(
-                    onTap: (){
-                      if(widget.model.singleUser!=null){
-                          Navigator.pushNamed(context, '/AllGames');
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: (){
+                        if(widget.model.singleUser!=null){
+                            Navigator.pushNamed(context, '/AllGames');
 
-                          }
-                          else{
-                                                                        showDialog(
-            context: context,
-              builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Attention'),
-                content:Text('you are not login') ,
-                actions: [
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text('Okay'))
-                ],
+                            }
+                            else{
+                                                                          showDialog(
+              context: context,
+                builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Attention'),
+                  content:Text('you are not login') ,
+                  actions: [
+                      FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Okay'))
+                  ],
+                );
+              },
               );
-            },
-            );
-                          }
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 2,
-                            color: Colors.red,
-                          ),
-                          color: Colors.white54,
-                          image: _buildGameBoxImage()),
-                      width: deviceWidth * 0.49,
-                      height: deviceHeight * 0.75,
-                      child: Center(
-                          child: FlatButton(
-                        onPressed: () {
-                          if(widget.model.singleUser!=null){
-                          Navigator.pushNamed(context, '/AllGames');
+                            }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.red,
+                            ),
+                            color: Colors.white54,
+                            image: _buildGameBoxImage()),
+                        width:MediaQuery.of(context).size.width* 0.49,
+                        height: deviceHeight * 0.75,
+                        child: Center(
+                            child: FlatButton(
+                          onPressed: () {
+                            if(widget.model.singleUser!=null){
+                            Navigator.pushNamed(context, '/AllGames');
 
-                          }
-                          else{
-                                                                        showDialog(
-            context: context,
-              builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Attention'),
-                content:Text('you are not login') ,
-                actions: [
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text('Okay'))
-                ],
+                            }
+                            else{
+                                                                          showDialog(
+              context: context,
+                builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Attention'),
+                  content:Text('you are not login') ,
+                  actions: [
+                      FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Okay'))
+                  ],
+                );
+              },
               );
-            },
-            );
-                          }
-                        },
-                        child: Text(
-                          'Games',
-                          style: TextStyle(
-                            fontSize: 45,
-                            color : Color(0xFFFF335C)
-                          
-                          ),
-                        ),
-                       // hoverColor: Colors.amber,
-                      )),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: GestureDetector(
-                    onTap: (){
-                      if(widget.model.singleUser!=null){
-                          Navigator.pushNamed(context, '/AllVedios');
-
-                          }
-                          else{
-                                                                        showDialog(
-            context: context,
-              builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Attention'),
-                content:Text('you are not login') ,
-                actions: [
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text('Okay'))
-                ],
-              );
-            },
-            );
-                          }
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 2,
-                            color: Colors.red,
-                          ),
-                          color: Colors.white54,
-                          image: _buildVedioBoxImage()),
-                      width: deviceWidth * 0.49,
-                      height: deviceHeight * 0.75,
-                      child: Center(
-                          child: FlatButton(
-                        onPressed: () {
-
-
-                           if(widget.model.singleUser!=null){
-                          Navigator.pushNamed(context, '/AllVedios');
-
-                          }
-                          else{
-                                                                        showDialog(
-            context: context,
-              builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Attention'),
-                content:Text('you are not login') ,
-                actions: [
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text('Okay'))
-                ],
-              );
-            },
-            );
-                          }
-
-
-                          //Navigator.pushNamed(context, '/AllVedios');
-                        },
-                        child: Text(
-                          'Vedios',
-                          style: TextStyle(
+                            }
+                          },
+                          child: Text(
+                            'Games',
+                            style: TextStyle(
                               fontSize: 45,
-                              color : Color(0xFFFF335C),),
-                        ),
-                        hoverColor: Colors.amber,
-                      )),
+                              color : Color(0xFFFF335C)
+                            
+                            ),
+                          ),
+                         // hoverColor: Colors.amber,
+                        )),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: (){
+                        if(widget.model.singleUser!=null){
+                            Navigator.pushNamed(context, '/AllVedios');
+
+                            }
+                            else{
+                                                                          showDialog(
+              context: context,
+                builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Attention'),
+                  content:Text('you are not login') ,
+                  actions: [
+                      FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Okay'))
+                  ],
+                );
+              },
+              );
+                            }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.red,
+                            ),
+                            color: Colors.white54,
+                            image: _buildVedioBoxImage()),
+                        width: deviceWidth * 0.49,
+                        height: deviceHeight * 0.75,
+                        child: Center(
+                            child: FlatButton(
+                          onPressed: () {
+
+
+                             if(widget.model.singleUser!=null){
+                            Navigator.pushNamed(context, '/AllVedios');
+
+                            }
+                            else{
+                                                                          showDialog(
+              context: context,
+                builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Attention'),
+                  content:Text('you are not login') ,
+                  actions: [
+                      FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Okay'))
+                  ],
+                );
+              },
+              );
+                            }
+
+
+                            //Navigator.pushNamed(context, '/AllVedios');
+                          },
+                          child: Text(
+                            'Vedios',
+                            style: TextStyle(
+                                fontSize: 45,
+                                color : Color(0xFFFF335C),),
+                          ),
+                          hoverColor: Colors.amber,
+                        )),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
          
                     SizedBox(height: 10,),
@@ -328,12 +411,24 @@ class _IntertainmentState extends State<Entertainment> {
       //centerTitle:true ,
       title: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 30),
-        child: Text('FreeBiees',
-            style: TextStyle(
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.red[900])),
-      ),
+        child:
+        //  Container(
+        //   height: 70,
+        //   width: 90,
+        //   child:Image.asset('assets/logoo.jpeg'))
+        
+        // Text('FreeBiees',
+        //     style: TextStyle(
+        //         fontSize: 30.0,
+        //         fontWeight: FontWeight.bold,
+        //         color: Color(0xFFFF335C))),
+  GestureDetector(
+          onTap: (){
+Navigator.pushNamed(context, "/homes");
+
+          },
+          child: Image(image:AssetImage('assets/Untitled.png',),height: MediaQuery.of(context).size.height*0.12,width:MediaQuery.of(context).size.width*0.05 ,fit:BoxFit.fill ,)),
+        ),
       actions: <Widget>[
         Container(
           child: SingleChildScrollView(
@@ -349,13 +444,13 @@ class _IntertainmentState extends State<Entertainment> {
                   padding: const EdgeInsets.only(right: 58),
                   child: Row(
                     children: [
-                      Text('Games'),
+                      Text('ENTERTAINMENT'),
                       GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, '/vedios');
+                            Navigator.pushNamed(context, '/entertainment');
                           },
                           child: Icon(
-                            Icons.games,
+                            Icons.extension_sharp,
                             color: Colors.yellow,
                           ))
                     ],
@@ -365,10 +460,18 @@ class _IntertainmentState extends State<Entertainment> {
                   padding: const EdgeInsets.only(right: 58),
                   child: Row(
                     children: [
-                      Text('Wallet'),
+
+ ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        return  Text(model.wallet==null?'WALLET'.toString():model.wallet.toString(),style: TextStyle(color: Colors.white,fontSize: 14, ));
+      },
+    ),
+
+
+                     // Text(widget.model.wallet==null?'':widget.model.wallet.toString(),style: TextStyle(color: Color(0xFFFF335C),fontSize: 18,fontWeight:FontWeight.bold ),),
                       GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, '/games');
+                            //   Navigator.pushNamed(context, '/games');
                           },
                           child: Icon(Icons.account_balance_wallet,
                               color: Colors.yellow))
@@ -379,10 +482,17 @@ class _IntertainmentState extends State<Entertainment> {
                   padding: const EdgeInsets.only(right: 58),
                   child: Row(
                     children: [
-                      Text('SIGN IN'),
+                      widget.model.singleUser==null? Text('LOGIN'):Text('LOGOUT'),
                       GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, '/entertainment');
+                            if(widget.model.singleUser==null){
+Navigator.pushNamed(context, '/auth');
+                            }
+                            else{
+                              widget.model.logout();
+                              Navigator.pushReplacementNamed(context, '/homes');
+                            }
+                               
                           },
                           child: Icon(Icons.supervised_user_circle,
                               color: Colors.yellow))
@@ -393,7 +503,7 @@ class _IntertainmentState extends State<Entertainment> {
                   padding: const EdgeInsets.only(right: 58),
                   child: Row(
                     children: [
-                      Text('Cart'),
+                      Text('CART'),
                       GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(context, '/cart');
@@ -403,6 +513,25 @@ class _IntertainmentState extends State<Entertainment> {
                             color: Colors.yellow,
                           ))
                     ],
+                  ),
+                ),
+                  Padding(
+                  padding: const EdgeInsets.only(right: 58),
+                  child: Visibility(
+                    visible:widget.model.singleUser==null?false:true,
+                    child: Row(
+                      children: [
+                        Text('ORDERS'),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/UserDashBoard');
+                            },
+                            child: Icon(
+                              Icons.book,
+                              color: Colors.yellow,
+                            ))
+                      ],
+                    ),
                   ),
                 ),
               ],

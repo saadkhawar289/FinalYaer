@@ -166,7 +166,6 @@ mixin ProductModel on ConnectedServicesModel {
       String description,
       String image,
       int price,
-      bool isFavourite,
       String userId) {
     _isLoading = true;
     notifyListeners();
@@ -182,17 +181,10 @@ mixin ProductModel on ConnectedServicesModel {
       'rating':0
     };
 
-    Map<String, dynamic> updatedData = {
-      'tittle': tittle,
-      'description': description,
-      'image':
-          'https://www.bentleymotors.com/content/dam/bentley/Master/Models/Hero/New%20Continental%20GT%20V8/Bentley-Continental-GT-V8-static-front-1920x670.jpg/_jcr_content/renditions/Bentley-Continental-GT-V8-static-front-699x309.jpg./Bentley-Continental-GT-V8-static-front-699x309.jpg',
-      'price': price,
-      'userId': _authenticationUser.id
-    };
+   
     return http
         .put(
-            'https://freebies-96dc8-default-rtdb.firebaseio.com/Poducts/${selectedProduct.id}.json}',
+            'https://freebies-96dc8-default-rtdb.firebaseio.com/Products/${selectedProduct.id}.json',
             body: json.encode(productData))
         .then((http.Response response) {
       _isLoading = false;
@@ -202,14 +194,16 @@ mixin ProductModel on ConnectedServicesModel {
           description: description,
           image: image,
           price: price,
-          isfavourite: isFavourite,
+          isfavourite: false,
           userId: userId,
           isFeatured: selectedProduct.isFeatured);
       _products[selectedProductIndex] = updatedProduct;
       notifyListeners();
+      print('done updating');
       return true;
     }).catchError((error) {
       _isLoading = false;
+      print(error);
       notifyListeners();
       return false;
     });

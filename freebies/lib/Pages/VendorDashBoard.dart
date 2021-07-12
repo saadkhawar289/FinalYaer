@@ -6,6 +6,7 @@ import 'package:freebies/Models/Product.dart';
 import 'package:freebies/Models/User.dart';
 import 'package:freebies/Pages/AddUpdateProduct.dart';
 import 'package:freebies/Widgets/WidgetsControllers/GameController.dart';
+import 'package:freebies/Widgets/WidgetsControllers/VendorProduct.dart';
 import 'package:freebies/Widgets/WidgetsControllers/productWidget.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../Scoped-Model/mainModel.dart';
@@ -41,7 +42,7 @@ Widget _buildFeaturedProductsList(BuildContext context){
       
 
       if(model.allproducts.length > 0 && !model.isLoading) {
-          content = Products(widget.typeOfCard,context);
+          content = VendorProducts(widget.typeOfCard,context);
       }
       else if(model.isLoading){
         content = Center(child:CircularProgressIndicator());
@@ -178,7 +179,7 @@ return Padding(
                     margin: EdgeInsets.only(top: 0),
                     color: Colors.white,
                     width: targetWidth,
-                    height: //300,
+                    height: //300, 
                         deviceHeight * 0.70,
                     child: Padding(
                       padding:  EdgeInsets.symmetric(
