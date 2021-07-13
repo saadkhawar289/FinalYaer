@@ -71,16 +71,7 @@ Widget _buildDrawer(BuildContext context) {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(builder: (BuildContext context,Widget child,MainModel model){
 
-return Scaffold(appBar: AppBar(
-       backgroundColor: Color(0xff36332e),
-          elevation: 0,
-          automaticallyImplyLeading: true,
-          // leading: Icon(Icons.perm_identity),
-          centerTitle:true ,
-          title: Text('My Orders', 
-          style:TextStyle(fontSize: 30.0, fontWeight:FontWeight.bold,color:Colors.black )),
-          
-        ),
+return Scaffold(
         drawer: _buildDrawer(context),
         body:model.orders.length == 0 ?  Center(child:Text("No Orders Avaliable")):ListView.builder(
       itemBuilder: (BuildContext context, int index) {

@@ -762,7 +762,23 @@ if(model.singleUser!=null){
                                                 model.deductFromUSerWallet(model.singleUser).then((value) => {
                                                       
                                                     if(value){
-                                                        model.placeOrder(model.cartItems,model.providerids,model.singleUser.fireBaseID,model.totalBill,TimeOfDay.now().toString(),DateTime.now().toString())
+                                                        model.placeOrder(model.cartItems,model.providerids,model.singleUser.fireBaseID,model.totalBill,TimeOfDay.now().toString(),DateTime.now().toString()),
+                                                        
+                                                         showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Confirmation'),
+                  content: Text('Order Placed'),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: () =>Navigator.pushNamed(context,'/homes'),
+                      child: Text('Okay'),
+                    )
+                  ],
+                );
+              }),
+                                                        
                                                                                                               }
                                                       else{
                                                         print(value)

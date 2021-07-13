@@ -20,6 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 mixin ConnectedServicesModel on Model {
   List<Product> _products = [];
+  List<Product>_featuredProducts=[];
   List<Games> _games = [];
   List<User> _users = [];
   List<Product> cartItems = [];
@@ -83,7 +84,9 @@ mixin ProductModel on ConnectedServicesModel {
   List<Product> get allproducts {
     return List.from(_products);
   }
-
+List<Product> get allFeaturedproducts {
+    return List.from(_featuredProducts);
+  }
   List<Product> get displayWishLIstProducts {
     if (_showFavorites) {
       return _products.where((Product product) => product.isfavourite).toList();
@@ -208,6 +211,114 @@ mixin ProductModel on ConnectedServicesModel {
       return false;
     });
   }
+
+Future<Null> fetchFeaturedWishlistProducts({onlyForUser = false}) {
+    _isLoading = true;
+    notifyListeners();
+    return http
+        .get(
+            'https://freebies-96dc8-default-rtdb.firebaseio.com/Products.json') // here in the of this link we are accessing the token of authenticated user
+        .then<Null>((http.Response response) {
+      final List<Product> fetchedProductslist = [];
+      final Map<String, dynamic> productListData = json.decode(response.body);
+      if (productListData == null) {
+        _isLoading = false;
+        notifyListeners();
+        return;
+      }
+
+      try {
+        productListData.forEach((productId, dynamic productData) {
+          final Product product = Product(
+              id: productId,
+              tittle: productData['tittle'],
+              description: productData['description'],
+              image: productData['image'],
+              price: productData['price'],
+              userId: productData['UserID'],
+               isfavourite:productData['wishlistUsers'] == null ? false : (productData['wishlistUsers'] as Map<String, dynamic>).containsKey(_authenticationUser.fireBaseID),
+              isFeatured: productData['isFeatured'],
+             );
+        print('status   ${product.isfavourite} ');
+          fetchedProductslist.add(product);
+          print(product.id);
+        });
+        _featuredProducts = onlyForUser
+            ? fetchedProductslist.where((Product product) {
+                // this 'WHERE method' will give all the products of authenticated userId
+                return product.userId == _authenticationUser.id && product.isFeatured==true;
+              }).toList()
+            : fetchedProductslist;
+        _isLoading = false;
+        notifyListeners();
+        _selServiceId = null;
+      } catch (e) {
+        print('xxxxxxxxxxx');
+        print('erroe;');
+        print(e);
+      }
+    }).catchError((error) {
+      _isLoading = false;
+      notifyListeners();
+      return;
+    });
+  }
+
+
+Future<Null> fetchFeaturedProducts({onlyForUser = false}) {
+    _isLoading = true;
+    notifyListeners();
+    return http
+        .get(
+            'https://freebies-96dc8-default-rtdb.firebaseio.com/Products.json') // here in the of this link we are accessing the token of authenticated user
+        .then<Null>((http.Response response) {
+      final List<Product> fetchedProductslist = [];
+      final Map<String, dynamic> productListData = json.decode(response.body);
+      if (productListData == null) {
+        _isLoading = false;
+        notifyListeners();
+        return;
+      }
+
+      try {
+        productListData.forEach((productId, dynamic productData) {
+          final Product product = Product(
+              id: productId,
+              tittle: productData['tittle'],
+              description: productData['description'],
+              image: productData['image'],
+              price: productData['price'],
+              userId: productData['UserID'],
+               isfavourite: productData['isFavourite'],
+
+              isFeatured: productData['isFeatured'],
+             );
+          fetchedProductslist.add(product);
+          print(product.id);
+        });
+        _featuredProducts = onlyForUser ?  fetchedProductslist.where((Product product)  {// this 'WHERE method' will give all the products of authenticated userId
+        return product.userId  == _authenticationUser.id && product.isFeatured==true;
+        
+      }).toList() : fetchedProductslist;
+      print('sadd');
+      print('length ${_products.length}');
+        _isLoading = false;
+        notifyListeners();
+        _selServiceId = null;
+      } catch (e) {
+        print('jjjjjjjjjjjjjj');
+        print('erroe;');
+        print(e);
+      }
+    }).catchError((error) {
+      _isLoading = false;
+      notifyListeners();
+      return;
+    });
+  }
+
+
+
 
 Future<Null> fetchWhishlitProducts({onlyForUser = false}) {
     _isLoading = true;

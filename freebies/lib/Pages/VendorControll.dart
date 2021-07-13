@@ -26,9 +26,9 @@ return Drawer(
               ListTile(
                 //this is good for options in a side drawer but if we have a long list in side drawr we shoukd use list veiw like used in products page
                 leading: Icon(Icons.store),
-                title: Text('All Products'),
+                title: Text('Logout'),
                 onTap: () {
-                  Navigator.pushReplacementNamed(context, '/');
+                  Navigator.pushReplacementNamed(context, '/VendorLogin');
                       
                 },
               ),
@@ -63,7 +63,7 @@ return Drawer(
               ),
               Tab(
                 icon:Icon(Icons.list),
-                text: 'Sellers Request'
+                text: 'Orders'
                 ),
                 
             ],

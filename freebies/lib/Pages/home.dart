@@ -24,11 +24,13 @@ class _AllProductPageState extends State<AllProductPage> {
     if(widget.model.singleUser == null){
       print('simple products');
  widget.model.fetchWhishlitProducts();
+//  widget.model.fetchFeaturedProducts();
 
     }
 else{
         print('wishlist products');
 widget.model.fetchProducts();
+//  widget.model.fetchFeaturedWishlistProducts();
 }
 
    

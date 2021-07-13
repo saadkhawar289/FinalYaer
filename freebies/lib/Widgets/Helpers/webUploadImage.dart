@@ -112,20 +112,20 @@ void upload()async{
               ),
               FlatButton(
                 textColor: Theme.of(context).primaryColor,
-                child: Text('Use Camera'),
+                child: Text('Upload Image'),
                 onPressed: () {
                
                  upload();
                 },
               ),
-              FlatButton(
-                textColor: Theme.of(context).primaryColor,
-                child: Text('Use Gallery'),
-                onPressed: () {
+              // FlatButton(
+              //   textColor: Theme.of(context).primaryColor,
+              //   child: Text('Use Gallery'),
+              //   onPressed: () {
                   
-                //  upload(context,ImageSource.gallery);
-                },
-              )
+              //   //  upload(context,ImageSource.gallery);
+              //   },
+              // )
             ]),
           );
         }

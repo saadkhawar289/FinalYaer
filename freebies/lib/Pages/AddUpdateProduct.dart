@@ -109,7 +109,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
     return EnsureVisibleWhenFocused(
       focusNode: _titleFocusNode,
       child:TextFormField(
-      decoration: InputDecoration(labelText: 'Product Title'),
+      decoration: InputDecoration(labelText: 'Product Description'),
      controller: _descpTextControllerzz,
      maxLines: 3,
   

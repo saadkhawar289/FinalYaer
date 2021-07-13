@@ -310,8 +310,8 @@ class _VendorLoginState extends State<VendorLogin> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('Something went wrong'),
-                          content: Text('Please try again'),
+                          title: Text('Yor Request For Venodr is Pending Now'),
+                          content: Text('Please try again later'),
                           actions: [
                             FlatButton(
                                 onPressed: () {
@@ -488,11 +488,11 @@ Navigator.pushNamed(context, "/homes");
                             );
                     }),
 
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/ResetPass');
-                        },
-                        child: Text('Forget Password'))
+                    // FlatButton(
+                    //     onPressed: () {
+                    //       Navigator.pushNamed(context, '/ResetPass');
+                    //     },
+                    //     child: Text('Forget Password'))
                   ],
                 ),
               ),

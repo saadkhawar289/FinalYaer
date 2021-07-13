@@ -50,7 +50,7 @@ return Drawer(
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         drawer: _buildSideDrawer(context),
         appBar: AppBar(
@@ -66,10 +66,10 @@ return Drawer(
                 icon:Icon(Icons.list),
                 text: 'Add Vedios'
                 ),
-                Tab(
-                icon:Icon(Icons.dashboard),
-                text: 'All Orders'
-                ),
+                // Tab(
+                // icon:Icon(Icons.dashboard),
+                // text: 'All Orders'
+                // ),
                  Tab(
                 icon:Icon(Icons.dashboard),
                 text: 'Requests'
@@ -80,7 +80,7 @@ return Drawer(
         body: TabBarView(children:<Widget>[
             AddGames(),
               AddVedios(), 
-              ProductEditPage(model: model,),
+            //  ProductEditPage(model: model,),
               ProviderListPage(model),
                          
 

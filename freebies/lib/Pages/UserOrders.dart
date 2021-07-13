@@ -598,7 +598,32 @@ return Padding(
         deviceHeight > 550.0 ? 420.0 : deviceHeight * 0.60;
 //   final double targetheight= deviceHeight * 0.60;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.black,
+        toolbarHeight: 120,
+        title: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 30),
+        child:
+        //  Container(
+        //   height: 70,
+        //   width: 90,
+        //   child:Image.asset('assets/logoo.jpeg'))
+        
+        // Text('FreeBiees',
+        //     style: TextStyle(
+        //         fontSize: 30.0,
+        //         fontWeight: FontWeight.bold,
+        //         color: Color(0xFFFF335C))),
+  GestureDetector(
+          onTap: (){
+Navigator.pushNamed(context, "/homes");
+
+          },
+          child: Image(image:AssetImage('assets/Untitled.png',),height: MediaQuery.of(context).size.height*0.12,width:MediaQuery.of(context).size.width*0.05 ,fit:BoxFit.fill ,)),
+        ),
+        // centerTitle: true,
+      ),
         drawer: deviceWidth < 500 ? _buildDrawer(context) : null,
         backgroundColor: Colors.white,
       

@@ -514,11 +514,11 @@ Navigator.pushNamed(context, "/homes");
                                               );
                                       }),
 
-                                      FlatButton(
-                                          onPressed: () {
-                                            Navigator.pushNamed(context, '/providerOrders');
-                                          },
-                                          child: Text('Forget Password'))
+                                      // FlatButton(
+                                      //     onPressed: () {
+                                      //       Navigator.pushNamed(context, '/providerOrders');
+                                      //     },
+                                      //     child: Text('Forget Password'))
                                     ],
                                   ),
                                 ),
