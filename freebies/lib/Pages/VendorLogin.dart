@@ -302,7 +302,7 @@ class _VendorLoginState extends State<VendorLogin> {
                 if (successInformation['success'])
                   {
                     Navigator.pushReplacementNamed(
-                        context, '/PendingVeriFication');
+                        context, '/PendingVerification');
                   }
                 else
                   {

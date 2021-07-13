@@ -29,45 +29,45 @@ class GameCard extends StatelessWidget {
 
 
 
-Widget _buildSubmitButton() {
-    return ScopedModelDescendant<MainModel>(
-      builder: (BuildContext context, Widget child, MainModel model) {
-        return IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    model.selectGame(model.allGames[gameIndex].id);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return  AddGames();
-                        },
-                      ),
-                    ).then((_) {
-                      model.selectProudct(null);
-                    });
-                  },
-                );
-      },
-    );
-  }
+// Widget _buildSubmitButton() {
+//     return ScopedModelDescendant<MainModel>(
+//       builder: (BuildContext context, Widget child, MainModel model) {
+//         return IconButton(
+//                   icon: Icon(Icons.edit),
+//                   onPressed: () {
+//                     model.selectGame(model.allGames[gameIndex].id);
+//                     Navigator.of(context).push(
+//                       MaterialPageRoute(
+//                         builder: (BuildContext context) {
+//                           return  AddGames();
+//                         },
+//                       ),
+//                     ).then((_) {
+//                       model.selectProudct(null);
+//                     });
+//                   },
+//                 );
+//       },
+//     );
+//   }
 
 
-Widget _buildSubmitButtondel() {
-    return ScopedModelDescendant<MainModel>(
-      builder: (BuildContext context, Widget child, MainModel model) {
-        return IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    model.selectGame(model.allGames[gameIndex].id);
-                    model.delGame();
+// Widget _buildSubmitButtondel() {
+//     return ScopedModelDescendant<MainModel>(
+//       builder: (BuildContext context, Widget child, MainModel model) {
+//         return IconButton(
+//                   icon: Icon(Icons.edit),
+//                   onPressed: () {
+//                     model.selectGame(model.allGames[gameIndex].id);
+//                     model.delGame();
                    
-                    //  model.selectProudct(null);
+//                     //  model.selectProudct(null);
                     
-                  },
-                );
-      },
-    );
-  }
+//                   },
+//                 );
+//       },
+//     );
+//   }
 
 
 
@@ -81,13 +81,13 @@ Widget _buildSubmitButtondel() {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(game.tittle),
+            Text(game.tittle,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
             SizedBox(
               //width: 90.0,
             ),
             //Text(game.link),
-           _buildSubmitButton(),
-           _buildSubmitButtondel()
+          //// _buildSubmitButton(),
+          // _buildSubmitButtondel()
                 
             //  Text(''),
           ],

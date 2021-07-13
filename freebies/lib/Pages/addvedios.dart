@@ -56,7 +56,7 @@ class _AddVediosPageState extends State<AddVedios> {
     return EnsureVisibleWhenFocused(
       focusNode: _linkFocusNode,
       child:TextFormField(
-      decoration: InputDecoration(labelText: 'Game link'),
+      decoration: InputDecoration(labelText: 'Vedio link'),
      controller: _linkTextController,
   
       // ignore: missing_return
@@ -91,7 +91,7 @@ if (product == null && _tittleTextController.text.trim() == '') {
     return EnsureVisibleWhenFocused(
       focusNode: _linkFocusNode,
       child:TextFormField(
-      decoration: InputDecoration(labelText: 'Name of Game'),
+      decoration: InputDecoration(labelText: 'Name of Vedio'),
      controller: _tittleTextController,
   
       // ignore: missing_return
@@ -165,7 +165,7 @@ void _submitForm(
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text('Confirmation'),
-                  content: Text('Service Added'),
+                  content: Text('Vedio Added'),
                   actions: <Widget>[
                     FlatButton(
                       onPressed: () => Navigator.pushNamed(context, '/admin'),

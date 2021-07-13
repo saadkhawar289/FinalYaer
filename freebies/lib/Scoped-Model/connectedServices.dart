@@ -1630,7 +1630,7 @@ print(response.body);
       try {
         productListData.forEach((productId, dynamic productData) {
           final Games product = Games(
-            tittle: productData['tittle'],
+            tittle: productData['name'],
             id:productId,
            link:productData ['link'], 
            picture:productData ['image']);

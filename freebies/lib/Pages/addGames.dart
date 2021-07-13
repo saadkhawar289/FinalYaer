@@ -164,7 +164,7 @@ void _submitForm(
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text('Confirmation'),
-                  content: Text('Service Added'),
+                  content: Text('Game Added'),
                   actions: <Widget>[
                     FlatButton(
                       onPressed: () => Navigator.pushNamed(context, '/admin'),

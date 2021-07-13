@@ -9,6 +9,7 @@ import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class YoutubeAppDemo extends StatefulWidget {
   Vedios vedio;
+  YoutubeAppDemo(this.vedio);
   @override
   _YoutubeAppDemoState createState() => _YoutubeAppDemoState();
 }
@@ -26,7 +27,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
     super.initState();
     print(vis);
     _controller = YoutubePlayerController(
-        initialVideoId: 'aKnjibWoyvc',
+        initialVideoId: widget.vedio.link,
         params: const YoutubePlayerParams(
           enableJavaScript: true,
           autoPlay: true,
@@ -55,7 +56,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
     return ss;
   }
 
-  void ff() {
+ Future <bool> ff() async{
     Timer(Duration(seconds: 3), () {
       print('done');
       setState(() {
@@ -96,6 +97,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
             )));
       });
     });
+    return true;
   }
 
   Widget withDrawButton() {
@@ -124,10 +126,15 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                       hoverColor: Colors.orange,
                       onPressed: () {
                        // model.ss(5);
-                        
+   
                             model.depositeToUserWallet(model.singleUser,sourceOfMoney: 'Vedio Points').then((value) => {
-                            Navigator.pushReplacementNamed(context, '/AllVedios')
+   
+                            ff().then((value) => {
+                                                          Navigator.pushReplacementNamed(context, '/AllVedios')
+
+                            })
                          
+
 
                                               });
                         
@@ -278,50 +285,32 @@ Widget webAppBar() {
       controller: _controller,
       child: Scaffold(
         key: _scaffoldState,
-        appBar: deviceWidth > 500
-            ?webAppBar()
-            : AppBar(
-          toolbarHeight: 120,
-       backgroundColor:Colors.grey[850],
-       //   backgroundColor: Color(0xff36332e),
-          elevation: 0,
-          //centerTitle:true ,
-          title: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 30),
-            child: Text('FreeBiees', 
-            style:TextStyle(fontSize:deviceWidth*0.045, fontWeight:FontWeight.bold,color: Color(0xFFFF335C) )),
-          ),
-          actions: <Widget>[
-            Container(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                              child: Row(
-                  children: [
-  Padding(
-            padding: const EdgeInsets.only(right: 18),
-            child:Row(children: [
-                Text('Games',style: TextStyle(fontSize:deviceWidth*0.030),),
-                 GestureDetector(onTap: (){
-                  Navigator.pushNamed(context, '/entertainment');
-                }, child: Icon(Icons.extension_sharp,color:Colors.yellow  ,))
-            ],) ,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 18),
-            child:Row(children: [
-                Text('Wallet',style: TextStyle(fontSize:deviceWidth*0.030),),
-                Icon(Icons.account_balance_wallet,color:Colors.yellow )
-            ],) ,
-          ),
-       
-         
-                  ],
-                ),
-              ),
-            ),
+        appBar:AppBar(
+        elevation: 0,
+        backgroundColor:Colors.black,
+        toolbarHeight: 120,
+        title: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 30),
+        child:
+        //  Container(
+        //   height: 70,
+        //   width: 90,
+        //   child:Image.asset('assets/logoo.jpeg'))
         
-          ],
+        // Text('FreeBiees',
+        //     style: TextStyle(
+        //         fontSize: 30.0,
+        //         fontWeight: FontWeight.bold,
+        //         color: Color(0xFFFF335C))),
+  GestureDetector(
+          onTap: (){
+Navigator.pushNamed(context, "/homes");
+
+          },
+          child: Image(image:AssetImage('assets/Untitled.png',),height: MediaQuery.of(context).size.height*0.12,width:MediaQuery.of(context).size.width*0.05 ,fit:BoxFit.fill ,)),
         ),
+        // centerTitle: true,
+      ),
         body: LayoutBuilder(
           builder: (context, constraints) {
             if (kIsWeb && constraints.maxWidth > 800) {

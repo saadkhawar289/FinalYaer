@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freebies/Models/Vedios.dart';
 import 'package:freebies/Pages/addvedios.dart';
+import 'package:freebies/Pages/video_player_widget.dart';
 import 'package:freebies/Scoped-Model/mainModel.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,51 +19,7 @@ class VedioCard extends StatelessWidget {
     this.vedioIndex,
   );
 
-Widget _buildSubmitButton() {
-    return ScopedModelDescendant<MainModel>(
-      builder: (BuildContext context, Widget child, MainModel model) {
-        return IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    model.selectVedio(model.allvedios[vedioIndex].id);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return  AddVedios();
-                        },
-                      ),
-                    ).then((_) {
-                      model.selectVedio(null);
-                    });
-                  },
-                );
-      },
-    );
-  }
 
-
-
-
-
-
-
-
-Widget _buildSubmitButtondel() {
-    return ScopedModelDescendant<MainModel>(
-      builder: (BuildContext context, Widget child, MainModel model) {
-        return IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    model.selectVedio(model.allvedios[vedioIndex].id);
-                    model.delVedio();
-                   
-                     model.selectProudct(null);
-                    
-                  },
-                );
-      },
-    );
-  }
   Widget _buildTitlePriceRow() {
     return Container(
       padding: EdgeInsets.only(top: 10.0),
@@ -73,7 +30,7 @@ Widget _buildSubmitButtondel() {
           children: <Widget>[
               Align(
                 alignment: Alignment.topRight,
-                child: Text(vedio.link)),
+                child: Center(child: Text(vedio.tittle))),
             //   SizedBox(
             //   width: 90.0,
             // ),
@@ -118,11 +75,13 @@ Future<bool> _settProviderID(String id) async {
         var id= vedio.id;
         _settProviderID(id);
         print(id);
-        Navigator.pushNamed(context, '/vedios');
+       Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext contetxt) => YoutubeAppDemo(vedio)));
       },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Card(
+
   shadowColor: Colors.amber,elevation: 30,
         child: Column(
             children: <Widget>[
@@ -151,27 +110,26 @@ Future<bool> _settProviderID(String id) async {
               ],
                             
               ),
-              _buildTitlePriceRow(),
-              _buildSubmitButton(),
-              _buildSubmitButtondel(),
-SizedBox(height: 20,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 100),
-                child: Row(children: [ 
+              Center(child: _buildTitlePriceRow()),
+              
+//SizedBox(height: 20,),
+        //       Padding(
+        //         padding: const EdgeInsets.symmetric(horizontal: 100),
+        //         child: Row(children: [ 
                   
-        //              FlatButton(onPressed: (){
-        //                   var id= service.providerID;
-        // _settProviderID(id);
-        // print(id);
-        // Navigator.pushNamed(context, '/ttt');
-        //              },child: Text('View All Providers ',style: TextStyle(fontFamily: 'Oswald', color: Color(0xff36332e),fontSize: 14,fontWeight:FontWeight.normal)),),
-                SizedBox(width: 20,),
-                Icon(Icons.person,size: 30,)
-                ],),
+        // //              FlatButton(onPressed: (){
+        // //                   var id= service.providerID;
+        // // _settProviderID(id);
+        // // print(id);
+        // // Navigator.pushNamed(context, '/ttt');
+        // //              },child: Text('View All Providers ',style: TextStyle(fontFamily: 'Oswald', color: Color(0xff36332e),fontSize: 14,fontWeight:FontWeight.normal)),),
+        //         SizedBox(width: 20,),
+        //         Icon(Icons.person,size: 30,)
+        //         ],),
                 
-              ),
+        //       ),
          
-              Container(height: 20,)
+             // Container(height: 20,)
             ],
         ),
       ),

@@ -7,6 +7,7 @@ import 'package:freebies/Pages/AddUpdateProduct.dart';
 import '../Scoped-Model/mainModel.dart';
 import 'VendorsRequest.dart';
 import 'addGames.dart';
+import 'addvedios.dart';
 
 class AdminControll extends StatelessWidget {
 final MainModel model;
@@ -53,17 +54,17 @@ return Drawer(
       child: Scaffold(
         drawer: _buildSideDrawer(context),
         appBar: AppBar(
-          title: Text('Dash Board'),
+          title: Text('Dashboard'),
           backgroundColor: Color(0xff36332e),
           bottom: TabBar(
             tabs: <Widget>[
               Tab(
                 icon:Icon(Icons.create),
-                text: 'Manage Product',
+                text: 'Add Games',
               ),
               Tab(
                 icon:Icon(Icons.list),
-                text: 'Sellers Request'
+                text: 'Add Vedios'
                 ),
                 Tab(
                 icon:Icon(Icons.dashboard),
@@ -71,16 +72,17 @@ return Drawer(
                 ),
                  Tab(
                 icon:Icon(Icons.dashboard),
-                text: 'Entertainment'
+                text: 'Requests'
                 ),
             ],
           ),
         ),
         body: TabBarView(children:<Widget>[
+            AddGames(),
+              AddVedios(), 
               ProductEditPage(model: model,),
               ProviderListPage(model),
-              ProductEditPage(),
-              ProductEditPage(),              
+                         
 
 
         ] ),
